@@ -43,7 +43,7 @@ public enum SearchRequest {
 }
 
 public struct Channel: CustomStringConvertible {
-   let id: String
+   public let id: String
    public let snippet: Snippet
 
    public var description: String {

@@ -15,7 +15,7 @@ public enum VideosRequest {
 }
 
 public struct Video: CustomStringConvertible {
-   let id: String
+   public let id: String
    public internal(set) var snippet: Snippet?
    public internal(set) var statistics: Statistics?
    public internal(set) var contentDetails: ContentDetails?
