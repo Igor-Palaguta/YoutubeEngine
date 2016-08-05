@@ -64,7 +64,7 @@ public struct Search {
    }
 }
 
-public enum SearchItem: CustomStringConvertible {
+public enum SearchItem {
    case ChannelItem(Channel)
    case VideoItem(Video)
 
@@ -80,15 +80,6 @@ public enum SearchItem: CustomStringConvertible {
          return channel
       }
       return nil
-   }
-
-   public var description: String {
-      switch self {
-      case .ChannelItem(let channel):
-         return channel.description
-      case .VideoItem(let video):
-         return video.description
-      }
    }
 }
 

@@ -48,4 +48,3 @@ extension ChannelStatistics: JSONRepresentable {
       self.videoCount = videoCount
    }
 }
-

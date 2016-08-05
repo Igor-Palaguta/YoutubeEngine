@@ -19,12 +19,8 @@ public enum Part: Parameter {
    }
 }
 
-public struct Snippet: CustomStringConvertible {
+public struct Snippet {
    public let title: String
    public let publishDate: NSDate
    public let thumbnailURL: NSURL
-
-   public var description: String {
-      return "Snippet(title: \(title), publishDate: \(publishDate), thumbnailURL: \(thumbnailURL))"
-   }
 }

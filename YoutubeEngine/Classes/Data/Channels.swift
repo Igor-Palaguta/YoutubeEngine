@@ -15,23 +15,15 @@ public struct Channels {
    }
 }
 
-public struct Channel: CustomStringConvertible {
+public struct Channel {
    public let id: String
-   public internal(set) var snippet: Snippet?
-   public internal(set) var statistics: ChannelStatistics?
-
-   public var description: String {
-      return "Channel(id: \(id), snippet: \(snippet?.description ?? "null"), statistics: \(statistics?.description ?? "null"))"
-   }
+   public let snippet: Snippet?
+   public let statistics: ChannelStatistics?
 }
 
-public struct ChannelStatistics: CustomStringConvertible {
+public struct ChannelStatistics {
    public let subscriberCount: String
    public let videoCount: String
-
-   public var description: String {
-      return "ChannelStatistics(subscriberCount: \(subscriberCount), videoCount: \(videoCount))"
-   }
 }
 
 extension Channels: PageRequest {
@@ -71,5 +63,3 @@ extension Channel: PartibleObject, SearchableObject {
       return item.channel
    }
 }
-
-

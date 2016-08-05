@@ -21,33 +21,21 @@ public struct Videos {
    }
 }
 
-public struct Video: CustomStringConvertible {
+public struct Video {
    public let id: String
-   public internal(set) var snippet: Snippet?
-   public internal(set) var statistics: VideoStatistics?
-   public internal(set) var contentDetails: VideoContentDetails?
-
-   public var description: String {
-      return "Video(id: \(id), snippet: \(snippet?.description ?? "null"), statistics: \(statistics?.description ?? "null"), contentDetails: \(contentDetails?.description ?? "null"))"
-   }
+   public let snippet: Snippet?
+   public let statistics: VideoStatistics?
+   public let contentDetails: VideoContentDetails?
 }
 
-public struct VideoStatistics: CustomStringConvertible {
+public struct VideoStatistics {
    public let viewCount: String
    public let likeCount: String
    public let dislikeCount: String
-
-   public var description: String {
-      return "VideoStatistics(viewCount: \(viewCount), likeCount: \(likeCount), dislikeCount: \(dislikeCount))"
-   }
 }
 
-public struct VideoContentDetails: CustomStringConvertible {
+public struct VideoContentDetails {
    public let duration: NSDateComponents
-
-   public var description: String {
-      return "VideoContentDetails(duration: \(duration))"
-   }
 }
 
 extension Videos: PageRequest {
