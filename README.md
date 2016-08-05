@@ -1,13 +1,18 @@
 # YoutubeEngine
 
-[![CI Status](http://img.shields.io/travis/Igor Palaguta/YoutubeEngine.svg?style=flat)](https://travis-ci.org/Igor Palaguta/YoutubeEngine)
-[![Version](https://img.shields.io/cocoapods/v/YoutubeEngine.svg?style=flat)](http://cocoapods.org/pods/YoutubeEngine)
-[![License](https://img.shields.io/cocoapods/l/YoutubeEngine.svg?style=flat)](http://cocoapods.org/pods/YoutubeEngine)
-[![Platform](https://img.shields.io/cocoapods/p/YoutubeEngine.svg?style=flat)](http://cocoapods.org/pods/YoutubeEngine)
-
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+```
+var engine = Engine(key: YOUR_API_KEY)
+engine.search(.Search(query: "VEVO", types: [.Video, .Channel], pageToken: nil), parts: [.Statistics, .ContentDetails])
+   .startWithNext {
+      page in
+      let formattedItems = page.items.enumerate().map { "[\($0)] = \($1)" }
+      print("VEVO:\n\(formattedItems.joinWithSeparator("\n"))")
+   }
+```
 
 ## Requirements
 
@@ -17,7 +22,7 @@ YoutubeEngine is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "YoutubeEngine"
+pod "YoutubeEngine", :git => "https://github.com/Igor-Palaguta/YoutubeEngine.git"
 ```
 
 ## Author
