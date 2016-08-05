@@ -1,24 +1,19 @@
-//
-//  ViewController.swift
-//  YoutubeEngine
-//
-//  Created by Igor Palaguta on 08/05/2016.
-//  Copyright (c) 2016 Igor Palaguta. All rights reserved.
-//
-
 import UIKit
+import YoutubeEngine
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
+   private lazy var engine = Engine(key: "AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg")
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+   override func viewDidLoad() {
+      super.viewDidLoad()
 
+      self.engine.search(.Search(query: "VEVO", types: [.Video, .Channel], pageToken: nil), parts: [.Statistics, .ContentDetails])
+         .startWithNext {
+            page in
+            let formattedItems = page.items.enumerate().map { "[\($0)] = \($1)" }
+            print("VEVO:\n\(formattedItems.joinWithSeparator("\n"))")
+      }
+   }
 }
 

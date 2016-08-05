@@ -12,18 +12,18 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		607FACEC1AFB9204008FA782 /* ISO8601DurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */; };
 		6AD72904AE22167FE0C08F72 /* Pods_YoutubeEngine_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F4BD16F020572BB41C1439 /* Pods_YoutubeEngine_Example.framework */; };
 		95160C30CCBD99ABC54B13E3 /* Pods_YoutubeEngine_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE5F90365E539B389A381FD /* Pods_YoutubeEngine_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
+		78E6F68F1D548D09006C531D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = YoutubeEngine;
+			remoteInfo = YoutubeEngine_Example;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -40,9 +40,10 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* YoutubeEngine_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YoutubeEngine_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DurationTests.swift; sourceTree = "<group>"; };
 		73F4BD16F020572BB41C1439 /* Pods_YoutubeEngine_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YoutubeEngine_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76C9D9FADA805D499DA15B12 /* Pods-YoutubeEngine_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoutubeEngine_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-YoutubeEngine_Example/Pods-YoutubeEngine_Example.release.xcconfig"; sourceTree = "<group>"; };
+		78E6F68D1D548C46006C531D /* YoutubeEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YoutubeEngine.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/YoutubeEngine-bfqcavlgyvroawgpejupfjlwtcso/Build/Products/Debug-iphonesimulator/YoutubeEngine/YoutubeEngine.framework"; sourceTree = "<group>"; };
 		93B2B1D10540D62174BDC807 /* YoutubeEngine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YoutubeEngine.podspec; path = ../YoutubeEngine.podspec; sourceTree = "<group>"; };
 		989EA293CFCE94962D55842F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A1866B2001C08069F16D5E15 /* Pods-YoutubeEngine_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoutubeEngine_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YoutubeEngine_Tests/Pods-YoutubeEngine_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -115,7 +116,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -153,6 +154,7 @@
 		D31503BD1A92E7E7B19C187C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78E6F68D1D548C46006C531D /* YoutubeEngine.framework */,
 				73F4BD16F020572BB41C1439 /* Pods_YoutubeEngine_Example.framework */,
 				3EE5F90365E539B389A381FD /* Pods_YoutubeEngine_Tests.framework */,
 			);
@@ -196,7 +198,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
+				78E6F6901D548D09006C531D /* PBXTargetDependency */,
 			);
 			name = YoutubeEngine_Tests;
 			productName = Tests;
@@ -368,17 +370,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				607FACEC1AFB9204008FA782 /* ISO8601DurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
+		78E6F6901D548D09006C531D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 607FACCF1AFB9204008FA782 /* YoutubeEngine_Example */;
-			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+			targetProxy = 78E6F68F1D548D09006C531D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -526,6 +528,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoutubeEngine_Example.app/YoutubeEngine_Example";
 			};
 			name = Debug;
 		};
@@ -541,6 +544,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoutubeEngine_Example.app/YoutubeEngine_Example";
 			};
 			name = Release;
 		};
