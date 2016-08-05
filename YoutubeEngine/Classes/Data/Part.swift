@@ -28,21 +28,3 @@ public struct Snippet: CustomStringConvertible {
       return "Snippet(title: \(title), publishDate: \(publishDate), thumbnailURL: \(thumbnailURL))"
    }
 }
-
-public struct Statistics: CustomStringConvertible {
-   public let viewCount: String
-   public let likeCount: String
-   public let dislikeCount: String
-
-   public var description: String {
-      return "Statistics(viewCount: \(viewCount), likeCount: \(likeCount), dislikeCount: \(dislikeCount))"
-   }
-}
-
-public struct ContentDetails: CustomStringConvertible {
-   public let duration: NSDateComponents
-
-   public var description: String {
-      return "ContentDetails(duration: \(duration))"
-   }
-}

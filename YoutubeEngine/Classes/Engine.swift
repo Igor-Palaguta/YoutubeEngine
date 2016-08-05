@@ -2,6 +2,7 @@ import Foundation
 import ReactiveCocoa
 import Alamofire
 import SwiftyJSON
+import enum Result.NoError
 
 public let YoutubeErrorDomain = "com.spangleapp.Youtube"
 
@@ -22,49 +23,69 @@ public final class Engine {
       self.manager.session.invalidateAndCancel()
    }
 
-   public func videos(request: VideosRequest) -> SignalProducer<Page<Video>, NSError> {
+   public func videos(request: Videos) -> SignalProducer<Page<Video>, NSError> {
       return self.page(request)
    }
 
-   public func search(request: SearchRequest) -> SignalProducer<Page<SearchItem>, NSError> {
+   public func channels(request: Channels) -> SignalProducer<Page<Channel>, NSError> {
       return self.page(request)
    }
 
-   public func search(request: SearchRequest, parts: [Part]) -> SignalProducer<Page<SearchItem>, NSError> {
-      return self.search(request)
+   public func search(request: Search) -> SignalProducer<Page<SearchItem>, NSError> {
+      return self.page(request)
          .flatMap(.Latest) { page -> SignalProducer<Page<SearchItem>, NSError> in
 
-            let parts = Set(parts).subtract(request.parts)
+            let videosParts =
+               self.loadParts(request.videoParts.filter { $0 != request.part },
+                              items: page.items,
+                              type: Video.self)
 
-            if parts.isEmpty {
-               return SignalProducer(value: page)
-            }
+            let channelParts =
+               self.loadParts(request.channelParts.filter { $0 != request.part },
+                              items: page.items,
+                              type: Channel.self)
 
-            let videoIds = page.items.flatMap { $0.video?.id }
-
-            if videoIds.isEmpty {
-               return SignalProducer(value: page)
-            }
-
-            return self.videos(.Videos(ids: videoIds, parts: Array(parts)))
-               .map { $0.items }
-               .map { videos in
-                  var videosById: [String: Video] = [:]
-                  videos.forEach {
-                     videosById[$0.id] = $0
-                  }
-                  let items: [SearchItem] = page.items.map {
-                     if let searchVideo = $0.video, let video = videosById[searchVideo.id] {
-                        return SearchItem.VideoItem(searchVideo.merge(video))
+            return combineLatest(videosParts, channelParts)
+               .map { videosById, channelsById -> Page<SearchItem> in
+                  let mergedItems: [SearchItem] = page.items.map { item in
+                     if let itemVideo = item.video, let video = videosById[itemVideo.id] {
+                        return itemVideo.mergeParts(video).toSearchItem()
+                     } else if let itemChannel = item.channel, let channel = channelsById[itemChannel.id] {
+                        return itemChannel.mergeParts(channel).toSearchItem()
                      }
-                     return $0
+                     return item
                   }
-                  return Page(items: items,
+                  return Page(items: mergedItems,
                      totalCount: page.totalCount,
                      nextPageToken: page.nextPageToken,
                      previousPageToken: page.previousPageToken)
-            }
+               }
+               .promoteErrors(NSError.self)
       }
+   }
+
+   private func loadParts<T where T: JSONRepresentable, T: PartibleObject, T: SearchableObject>(parts: [Part],
+                          items: [SearchItem],
+                          type: T.Type) -> SignalProducer<[String: T], NoError> {
+      if parts.isEmpty {
+         return SignalProducer(value: [:])
+      }
+
+      let objects = items.flatMap { T.fromSearchItem($0) }
+
+      if objects.isEmpty {
+         return SignalProducer(value: [:])
+      }
+
+      return self.page(T.requestForParts(parts, objects: objects))
+         .map { page in
+            var objectsById: [String: T] = [:]
+            page.items.forEach {
+               objectsById[$0.id] = $0
+            }
+            return objectsById
+         }
+         .flatMapError { _ in SignalProducer(value: [:]) }
    }
 
    private func jsonForRequest(request: YoutubeRequest) -> SignalProducer<JSON, NSError> {
@@ -79,7 +100,7 @@ public final class Engine {
          parameters[name] = value
       }
 
-      let logger: Logger? = logEnabled ? DefaultLogger() : nil
+      let logger: Logger? = self.logEnabled ? DefaultLogger() : nil
       return self.manager.signalForJSON(request.method, url, parameters: parameters, logger: logger)
    }
 
@@ -96,21 +117,5 @@ public final class Engine {
                nextPageToken: json["nextPageToken"].string,
                previousPageToken: json["prevPageToken"].string)
       }
-   }
-}
-
-private extension Video {
-   func merge(other: Video) -> Video {
-      var mergedVideo = self
-      if other.snippet != nil {
-         mergedVideo.snippet = other.snippet
-      }
-      if other.statistics != nil {
-         mergedVideo.statistics = other.statistics
-      }
-      if other.contentDetails != nil {
-         mergedVideo.contentDetails = other.contentDetails
-      }
-      return mergedVideo
    }
 }

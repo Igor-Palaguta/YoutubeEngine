@@ -1,4 +1,5 @@
 import Foundation
+import Alamofire
 
 public enum Type: Parameter {
    case Video
@@ -14,40 +15,52 @@ public enum Type: Parameter {
    }
 }
 
-public enum SearchRequest {
-   case Search(query: String, types: [Type], pageToken: String?)
-   case Channel(id: String, pageToken: String?)
-   case Related(id: String, pageToken: String?)
+public struct Search {
+   public enum Filter {
+      case Term(String, [Type: [Part]])
+      case FromChannel(String, [Part])
+      case RelatedTo(String, [Part])
+   }
 
-   var parts: [Part] {
-      return [.Snippet]
+   public let filter: Filter
+   public let limit: Int?
+   public let pageToken: String?
+
+   public init(_ filter: Filter, limit: Int? = nil, pageToken: String? = nil) {
+      self.filter = filter
+      self.limit = limit
+      self.pageToken = pageToken
    }
 
    var types: [Type] {
-      if case .Search(_, let types, _) = self {
-         return types
+      if case .Term(_, let parts) = self.filter {
+         return Array(parts.keys)
       }
       return [.Video]
    }
 
-   var pageToken: String? {
-      switch self {
-      case .Search(_, _, let pageToken):
-         return pageToken
-      case .Channel(_, let pageToken):
-         return pageToken
-      case .Related(_, let pageToken):
-         return pageToken
+   var videoParts: [Part] {
+      switch self.filter {
+      case .Term(_, let parts):
+         return parts[.Video] ?? []
+      case .FromChannel(_, let videoParts):
+         return videoParts
+      case .RelatedTo(_, let videoParts):
+         return videoParts
       }
    }
-}
 
-public struct Channel: CustomStringConvertible {
-   public let id: String
-   public let snippet: Snippet
+   var channelParts: [Part] {
+      switch self.filter {
+      case .Term(_, let parts):
+         return parts[.Channel] ?? []
+      default:
+         return []
+      }
+   }
 
-   public var description: String {
-      return "Channel(id: \(id), snippet: \(snippet))"
+   var part: Part {
+      return .Snippet
    }
 }
 
@@ -79,9 +92,36 @@ public enum SearchItem: CustomStringConvertible {
    }
 }
 
-public struct Page<Item> {
-   public let items: [Item]
-   public let totalCount: Int
-   public let nextPageToken: String?
-   public let previousPageToken: String?
+extension Search: PageRequest {
+
+   typealias Item = SearchItem
+
+   var method: Alamofire.Method { return .GET }
+   var command: String { return "search" }
+
+   var parameters: [String: AnyObject] {
+
+      var parameters: [String: AnyObject] = ["part": self.part.parameterValue,
+                                             "type": self.types.joinParameters()]
+
+      parameters["maxResults"] = self.limit
+      parameters["pageToken"] = self.pageToken
+
+      switch self.filter {
+      case .Term(let query, _):
+         parameters["q"] = query
+      case .FromChannel(let channelId, _):
+         parameters["channelId"] = channelId
+      case .RelatedTo(let videoId, _):
+         parameters["videoId"] = videoId
+      }
+      
+      return parameters
+   }
+}
+
+private extension SequenceType where Generator.Element: Equatable {
+   func substractArray(array: [Generator.Element]) -> [Generator.Element] {
+      return self.filter { !array.contains($0) }
+   }
 }

@@ -9,7 +9,9 @@ class ViewController: UIViewController {
       super.viewDidLoad()
 
       self.engine.logEnabled = true
-      self.engine.search(.Search(query: "VEVO", types: [.Video, .Channel], pageToken: nil), parts: [.Statistics, .ContentDetails])
+
+      let request = Search(.Term("VEVO", [.Video: [.Statistics, .ContentDetails], .Channel: [.Statistics]]))
+      self.engine.search(request)
          .startWithNext {
             page in
             let formattedItems = page.items.enumerate().map { "[\($0)] = \($1)" }

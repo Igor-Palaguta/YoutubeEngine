@@ -6,7 +6,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ```
 var engine = Engine(key: YOUR_API_KEY)
-engine.search(.Search(query: "VEVO", types: [.Video, .Channel], pageToken: nil), parts: [.Statistics, .ContentDetails])
+let request = Search(.Term("VEVO", [.Video: [.Statistics, .ContentDetails], .Channel: [.Statistics]]))
+engine.search(request)
    .startWithNext {
       page in
       let formattedItems = page.items.enumerate().map { "[\($0)] = \($1)" }

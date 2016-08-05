@@ -1,73 +1,31 @@
 import Foundation
-import enum Alamofire.Method
+import Alamofire
 
 protocol YoutubeRequest {
-   var method: Method { get }
+   var method: Alamofire.Method { get }
    var command: String { get }
    var parameters: [String: AnyObject] { get }
 }
 
 protocol PageRequest: YoutubeRequest {
    associatedtype Item
+   var pageToken: String? { get }
+   var limit: Int? { get }
 }
 
-extension SearchRequest: PageRequest {
+struct AnyPageRequest<ItemType>: PageRequest {
+   typealias Item = ItemType
+   let method: Alamofire.Method
+   let command: String
+   let parameters: [String: AnyObject]
+   let pageToken: String?
+   let limit: Int?
 
-   typealias Item = SearchItem
-
-   var method: Method {
-      return .GET
-   }
-
-   var command: String {
-      return "search"
-   }
-
-   var parameters: [String: AnyObject] {
-
-      var parameters: [String: AnyObject] = ["part": self.parts.joinParameters(),
-                                             "type": self.types.joinParameters()]
-
-      if let pageToken = self.pageToken {
-         parameters["pageToken"] = pageToken
-      }
-
-      switch self {
-      case .Search(let query, _, _):
-         parameters["q"] = query
-      case .Channel(let channelId, _):
-         parameters["channelId"] = channelId
-      case .Related(let videoId, _):
-         parameters["videoId"] = videoId
-      }
-
-      return parameters
-   }
-}
-
-extension VideosRequest: PageRequest {
-
-   typealias Item = Video
-
-   var method: Method {
-      return .GET
-   }
-
-   var command: String {
-      return "videos"
-   }
-
-   var parameters: [String: AnyObject] {
-
-      var parameters: [String: AnyObject] = ["part": self.parts.joinParameters()]
-
-      switch self {
-      case .Popular(_):
-         parameters["chart"] = "mostPopular"
-      case .Videos(let ids, _):
-         parameters["id"] = ids.joinWithSeparator(",")
-      }
-
-      return parameters
+   init<R: PageRequest where R.Item == Item>(_ request: R) {
+      self.method = request.method
+      self.command = request.command
+      self.parameters = request.parameters
+      self.pageToken = request.pageToken
+      self.limit = request.limit
    }
 }

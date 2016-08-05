@@ -15,7 +15,7 @@ extension Snippet: JSONRepresentable {
    }
 }
 
-extension Statistics: JSONRepresentable {
+extension VideoStatistics: JSONRepresentable {
    init?(json: JSON) {
       guard let viewCount = json["viewCount"].string,
          let likeCount = json["likeCount"].string,
@@ -29,7 +29,7 @@ extension Statistics: JSONRepresentable {
    }
 }
 
-extension ContentDetails: JSONRepresentable {
+extension VideoContentDetails: JSONRepresentable {
    init?(json: JSON) {
       guard let duration = json["duration"].string.flatMap({ NSDateComponents(ISO8601String: $0) }) else {
          return nil
@@ -37,3 +37,15 @@ extension ContentDetails: JSONRepresentable {
       self.duration = duration
    }
 }
+
+extension ChannelStatistics: JSONRepresentable {
+   init?(json: JSON) {
+      guard let subscriberCount = json["subscriberCount"].string,
+         let videoCount = json["videoCount"].string else {
+            return nil
+      }
+      self.subscriberCount = subscriberCount
+      self.videoCount = videoCount
+   }
+}
+
