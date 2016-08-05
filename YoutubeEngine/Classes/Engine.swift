@@ -6,7 +6,7 @@ import SwiftyJSON
 public let YoutubeErrorDomain = "com.spangleapp.Youtube"
 
 public final class Engine {
-   var logEnabled = false
+   public var logEnabled = false
 
    private let manager: Manager
    private let key: String
@@ -60,6 +60,7 @@ public final class Engine {
                      return $0
                   }
                   return Page(items: items,
+                     totalCount: page.totalCount,
                      nextPageToken: page.nextPageToken,
                      previousPageToken: page.previousPageToken)
             }
@@ -91,6 +92,7 @@ public final class Engine {
                .flatMap { R.Item(json: $0) }
 
             return Page(items: items,
+               totalCount: json["pageInfo"]["totalResults"].intValue,
                nextPageToken: json["nextPageToken"].string,
                previousPageToken: json["prevPageToken"].string)
       }

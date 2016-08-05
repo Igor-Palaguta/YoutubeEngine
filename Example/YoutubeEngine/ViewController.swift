@@ -8,11 +8,12 @@ class ViewController: UIViewController {
    override func viewDidLoad() {
       super.viewDidLoad()
 
+      self.engine.logEnabled = true
       self.engine.search(.Search(query: "VEVO", types: [.Video, .Channel], pageToken: nil), parts: [.Statistics, .ContentDetails])
          .startWithNext {
             page in
             let formattedItems = page.items.enumerate().map { "[\($0)] = \($1)" }
-            print("VEVO:\n\(formattedItems.joinWithSeparator("\n"))")
+            print("VEVO (total: \(page.totalCount)):\n\(formattedItems.joinWithSeparator("\n"))")
       }
    }
 }
