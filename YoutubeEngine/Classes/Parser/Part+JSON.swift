@@ -17,15 +17,9 @@ extension Snippet: JSONRepresentable {
 
 extension VideoStatistics: JSONRepresentable {
    init?(json: JSON) {
-      guard let viewCount = json["viewCount"].string,
-         let likeCount = json["likeCount"].string,
-         let dislikeCount = json["dislikeCount"].string
-         else {
-            return nil
-      }
-      self.viewCount = viewCount
-      self.likeCount = likeCount
-      self.dislikeCount = dislikeCount
+      self.viewCount = json["viewCount"].string
+      self.likeCount = json["likeCount"].string
+      self.dislikeCount = json["dislikeCount"].string
    }
 }
 
@@ -40,11 +34,7 @@ extension VideoContentDetails: JSONRepresentable {
 
 extension ChannelStatistics: JSONRepresentable {
    init?(json: JSON) {
-      guard let subscriberCount = json["subscriberCount"].string,
-         let videoCount = json["videoCount"].string else {
-            return nil
-      }
-      self.subscriberCount = subscriberCount
-      self.videoCount = videoCount
+      self.subscriberCount = json["subscriberCount"].string
+      self.videoCount = json["videoCount"].string
    }
 }

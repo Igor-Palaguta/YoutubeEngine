@@ -29,9 +29,9 @@ public struct Video {
 }
 
 public struct VideoStatistics {
-   public let viewCount: String
-   public let likeCount: String
-   public let dislikeCount: String
+   public let viewCount: String?
+   public let likeCount: String?
+   public let dislikeCount: String?
 }
 
 public struct VideoContentDetails {

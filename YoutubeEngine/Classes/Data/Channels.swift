@@ -22,8 +22,8 @@ public struct Channel {
 }
 
 public struct ChannelStatistics {
-   public let subscriberCount: String
-   public let videoCount: String
+   public let subscriberCount: String?
+   public let videoCount: String?
 }
 
 extension Channels: PageRequest {
