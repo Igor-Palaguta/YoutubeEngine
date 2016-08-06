@@ -14,6 +14,11 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* ISO8601DurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */; };
 		6AD72904AE22167FE0C08F72 /* Pods_YoutubeEngine_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F4BD16F020572BB41C1439 /* Pods_YoutubeEngine_Example.framework */; };
+		78A0BEF41D560B53001E0B4E /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A0BEF21D560AA3001E0B4E /* EngineTests.swift */; };
+		78A0BEF71D560D53001E0B4E /* search_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEF61D560D53001E0B4E /* search_VEVO.json */; };
+		78A0BEF91D561862001E0B4E /* channels_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEF81D561862001E0B4E /* channels_VEVO.json */; };
+		78A0BEFD1D561932001E0B4E /* videos_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEFC1D561932001E0B4E /* videos_VEVO.json */; };
+		78CA48AC1D56787B00A5B1C9 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 78CA48AA1D56756700A5B1C9 /* error.json */; };
 		95160C30CCBD99ABC54B13E3 /* Pods_YoutubeEngine_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE5F90365E539B389A381FD /* Pods_YoutubeEngine_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +48,11 @@
 		607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DurationTests.swift; sourceTree = "<group>"; };
 		73F4BD16F020572BB41C1439 /* Pods_YoutubeEngine_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YoutubeEngine_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76C9D9FADA805D499DA15B12 /* Pods-YoutubeEngine_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoutubeEngine_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-YoutubeEngine_Example/Pods-YoutubeEngine_Example.release.xcconfig"; sourceTree = "<group>"; };
+		78A0BEF21D560AA3001E0B4E /* EngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
+		78A0BEF61D560D53001E0B4E /* search_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_VEVO.json; sourceTree = "<group>"; };
+		78A0BEF81D561862001E0B4E /* channels_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels_VEVO.json; sourceTree = "<group>"; };
+		78A0BEFC1D561932001E0B4E /* videos_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = videos_VEVO.json; sourceTree = "<group>"; };
+		78CA48AA1D56756700A5B1C9 /* error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error.json; sourceTree = "<group>"; };
 		78E6F68D1D548C46006C531D /* YoutubeEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YoutubeEngine.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/YoutubeEngine-bfqcavlgyvroawgpejupfjlwtcso/Build/Products/Debug-iphonesimulator/YoutubeEngine/YoutubeEngine.framework"; sourceTree = "<group>"; };
 		93B2B1D10540D62174BDC807 /* YoutubeEngine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YoutubeEngine.podspec; path = ../YoutubeEngine.podspec; sourceTree = "<group>"; };
 		989EA293CFCE94962D55842F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -116,7 +126,9 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				78A0BEF51D560D36001E0B4E /* Responses */,
 				607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */,
+				78A0BEF21D560AA3001E0B4E /* EngineTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -138,6 +150,17 @@
 				989EA293CFCE94962D55842F /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		78A0BEF51D560D36001E0B4E /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				78A0BEF61D560D53001E0B4E /* search_VEVO.json */,
+				78A0BEF81D561862001E0B4E /* channels_VEVO.json */,
+				78A0BEFC1D561932001E0B4E /* videos_VEVO.json */,
+				78CA48AA1D56756700A5B1C9 /* error.json */,
+			);
+			path = Responses;
 			sourceTree = "<group>";
 		};
 		B110C2FB8259E843CC53411D /* Pods */ = {
@@ -258,6 +281,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78CA48AC1D56787B00A5B1C9 /* error.json in Resources */,
+				78A0BEFD1D561932001E0B4E /* videos_VEVO.json in Resources */,
+				78A0BEF71D560D53001E0B4E /* search_VEVO.json in Resources */,
+				78A0BEF91D561862001E0B4E /* channels_VEVO.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACEC1AFB9204008FA782 /* ISO8601DurationTests.swift in Sources */,
+				78A0BEF41D560B53001E0B4E /* EngineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

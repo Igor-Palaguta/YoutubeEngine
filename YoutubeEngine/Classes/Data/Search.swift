@@ -64,7 +64,7 @@ public struct Search {
    }
 }
 
-public enum SearchItem {
+public enum SearchItem: Equatable {
    case ChannelItem(Channel)
    case VideoItem(Video)
 
@@ -80,6 +80,17 @@ public enum SearchItem {
          return channel
       }
       return nil
+   }
+}
+
+public func == (lhs: SearchItem, rhs: SearchItem) -> Bool {
+   switch (lhs, rhs) {
+   case (.ChannelItem(let lhsChannel), .ChannelItem(let rhsChannel)):
+      return lhsChannel == rhsChannel
+   case (.VideoItem(let lhsVideo), .VideoItem(let rhsVideo)):
+      return lhsVideo == rhsVideo
+   default:
+      return false
    }
 }
 

@@ -1,10 +1,8 @@
-// https://github.com/Quick/Quick
-
 import Quick
 import Nimble
 @testable import YoutubeEngine
 
-private func components(year year: Int? = nil, month: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> NSDateComponents {
+func components(year year: Int? = nil, month: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> NSDateComponents {
    let components = NSDateComponents()
    let _ = year.map { components.year = $0 }
    let _ = month.map { components.month = $0 }

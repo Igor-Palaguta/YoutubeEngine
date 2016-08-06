@@ -19,8 +19,14 @@ public enum Part: Parameter {
    }
 }
 
-public struct Snippet {
+public struct Snippet: Equatable {
    public let title: String
    public let publishDate: NSDate
    public let thumbnailURL: NSURL
+}
+
+public func == (lhs: Snippet, rhs: Snippet) -> Bool {
+   return lhs.title == rhs.title &&
+      lhs.publishDate == rhs.publishDate &&
+      lhs.thumbnailURL == rhs.thumbnailURL
 }

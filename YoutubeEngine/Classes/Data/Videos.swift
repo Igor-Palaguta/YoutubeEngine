@@ -21,21 +21,38 @@ public struct Videos {
    }
 }
 
-public struct Video {
+public struct Video: Equatable {
    public let id: String
    public let snippet: Snippet?
    public let statistics: VideoStatistics?
    public let contentDetails: VideoContentDetails?
 }
 
-public struct VideoStatistics {
+public func == (lhs: Video, rhs: Video) -> Bool {
+   return lhs.id == rhs.id &&
+      lhs.snippet == rhs.snippet &&
+      lhs.statistics == rhs.statistics &&
+      lhs.contentDetails == rhs.contentDetails
+}
+
+public struct VideoStatistics: Equatable {
    public let viewCount: String?
    public let likeCount: String?
    public let dislikeCount: String?
 }
 
-public struct VideoContentDetails {
+public func == (lhs: VideoStatistics, rhs: VideoStatistics) -> Bool {
+   return lhs.viewCount == rhs.viewCount &&
+      lhs.likeCount == rhs.likeCount &&
+      lhs.dislikeCount == rhs.dislikeCount
+}
+
+public struct VideoContentDetails: Equatable {
    public let duration: NSDateComponents
+}
+
+public func == (lhs: VideoContentDetails, rhs: VideoContentDetails) -> Bool {
+   return lhs.duration == rhs.duration
 }
 
 extension Videos: PageRequest {

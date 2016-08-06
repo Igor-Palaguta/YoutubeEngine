@@ -8,5 +8,6 @@ target 'YoutubeEngine_Example' do
 
     pod 'Quick', '~> 0.8'
     pod 'Nimble', '~> 3.0'
+    pod 'Mockingjay'
   end
 end

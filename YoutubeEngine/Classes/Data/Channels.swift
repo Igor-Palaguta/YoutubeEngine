@@ -15,15 +15,26 @@ public struct Channels {
    }
 }
 
-public struct Channel {
+public struct Channel: Equatable {
    public let id: String
    public let snippet: Snippet?
    public let statistics: ChannelStatistics?
 }
 
-public struct ChannelStatistics {
+public func == (lhs: Channel, rhs: Channel) -> Bool {
+   return lhs.id == rhs.id &&
+      lhs.snippet == rhs.snippet &&
+      lhs.statistics == rhs.statistics
+}
+
+public struct ChannelStatistics: Equatable {
    public let subscriberCount: String?
    public let videoCount: String?
+}
+
+public func == (lhs: ChannelStatistics, rhs: ChannelStatistics) -> Bool {
+   return lhs.subscriberCount == rhs.subscriberCount &&
+      lhs.videoCount == rhs.videoCount
 }
 
 extension Channels: PageRequest {

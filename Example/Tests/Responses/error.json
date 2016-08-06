@@ -1,0 +1,15 @@
+{
+   "error": {
+      "errors": [
+                 {
+                 "domain": "global",
+                 "reason": "invalidParameter",
+                 "message": "Invalid value '1000'. Values must be within the range: [0, 50]",
+                 "locationType": "parameter",
+                 "location": "maxResults"
+                 }
+                 ],
+      "code": 400,
+      "message": "Invalid value '1000'. Values must be within the range: [0, 50]"
+   }
+}
