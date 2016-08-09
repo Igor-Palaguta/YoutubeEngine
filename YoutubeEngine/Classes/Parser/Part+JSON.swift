@@ -12,5 +12,8 @@ extension Snippet: JSONRepresentable {
       self.title = title
       self.publishDate = publishDate
       self.thumbnailURL = thumbnailURL
+
+      //in video/channel snippet channelTitle is nil
+      self.channelTitle = json["channelTitle"].string
    }
 }

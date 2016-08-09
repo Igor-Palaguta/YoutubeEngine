@@ -23,10 +23,12 @@ public struct Snippet: Equatable {
    public let title: String
    public let publishDate: NSDate
    public let thumbnailURL: NSURL
+   public let channelTitle: String?
 }
 
 public func == (lhs: Snippet, rhs: Snippet) -> Bool {
    return lhs.title == rhs.title &&
       lhs.publishDate == rhs.publishDate &&
-      lhs.thumbnailURL == rhs.thumbnailURL
+      lhs.thumbnailURL == rhs.thumbnailURL &&
+      lhs.channelTitle == rhs.channelTitle
 }
