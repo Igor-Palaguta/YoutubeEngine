@@ -68,14 +68,14 @@ public enum SearchItem: Equatable {
    case ChannelItem(Channel)
    case VideoItem(Video)
 
-   var video: Video? {
+   public var video: Video? {
       if case .VideoItem(let video) = self {
          return video
       }
       return nil
    }
 
-   var channel: Channel? {
+   public var channel: Channel? {
       if case .ChannelItem(let channel) = self {
          return channel
       }
