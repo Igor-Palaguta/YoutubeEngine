@@ -28,13 +28,13 @@ public func == (lhs: Channel, rhs: Channel) -> Bool {
 }
 
 public struct ChannelStatistics: Equatable {
-   public let subscriberCount: Int64?
-   public let videoCount: Int64?
+   public let subscribers: Int64?
+   public let videos: Int64?
 }
 
 public func == (lhs: ChannelStatistics, rhs: ChannelStatistics) -> Bool {
-   return lhs.subscriberCount == rhs.subscriberCount &&
-      lhs.videoCount == rhs.videoCount
+   return lhs.subscribers == rhs.subscribers &&
+      lhs.videos == rhs.videos
 }
 
 extension Channels: PageRequest {

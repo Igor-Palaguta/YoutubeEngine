@@ -36,15 +36,15 @@ public func == (lhs: Video, rhs: Video) -> Bool {
 }
 
 public struct VideoStatistics: Equatable {
-   public let viewCount: Int64?
-   public let likeCount: Int64?
-   public let dislikeCount: Int64?
+   public let views: Int64?
+   public let likes: Int64?
+   public let dislikes: Int64?
 }
 
 public func == (lhs: VideoStatistics, rhs: VideoStatistics) -> Bool {
-   return lhs.viewCount == rhs.viewCount &&
-      lhs.likeCount == rhs.likeCount &&
-      lhs.dislikeCount == rhs.dislikeCount
+   return lhs.views == rhs.views &&
+      lhs.likes == rhs.likes &&
+      lhs.dislikes == rhs.dislikes
 }
 
 public struct VideoContentDetails: Equatable {

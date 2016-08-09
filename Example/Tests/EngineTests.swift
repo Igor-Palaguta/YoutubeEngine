@@ -53,8 +53,8 @@ class EngineSpec: QuickSpec {
                   publishDate: ISO8601Formatter.dateFromString("2006-04-14T17:07:29.000Z")!,
                   thumbnailURL: NSURL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s88-c-k-no-rj-c0xffffff/photo.jpg")!),
                     statistics:
-               ChannelStatistics(subscriberCount: 12397460,
-                  videoCount: 975))
+               ChannelStatistics(subscribers: 12397460,
+                  videos: 975))
 
          let video1 =
             Video(id: "FASkBnLAHEw",
@@ -63,9 +63,9 @@ class EngineSpec: QuickSpec {
                   publishDate: ISO8601Formatter.dateFromString("2016-08-05T19:30:01.000Z")!,
                   thumbnailURL: NSURL(string: "https://i.ytimg.com/vi/FASkBnLAHEw/default.jpg")!),
                   statistics:
-               VideoStatistics(viewCount: 94170,
-                  likeCount: 1537,
-                  dislikeCount: 78),
+               VideoStatistics(views: 94170,
+                  likes: 1537,
+                  dislikes: 78),
                   contentDetails: VideoContentDetails(duration: components(minute: 3, second: 25)))
 
          let video2 =
@@ -75,9 +75,9 @@ class EngineSpec: QuickSpec {
                   publishDate: ISO8601Formatter.dateFromString("2016-08-03T16:52:56.000Z")!,
                   thumbnailURL: NSURL(string: "https://i.ytimg.com/vi/Ho1oF_P3X00/default.jpg")!),
                   statistics:
-               VideoStatistics(viewCount: 84236,
-                  likeCount: 2503,
-                  dislikeCount: 70),
+               VideoStatistics(views: 84236,
+                  likes: 2503,
+                  dislikes: 70),
                   contentDetails: VideoContentDetails(duration: components(minute: 15, second: 15)))
 
          let engine = Engine(key: "TEST")

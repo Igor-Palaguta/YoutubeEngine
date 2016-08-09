@@ -16,9 +16,9 @@ extension Video: JSONRepresentable {
 
 extension VideoStatistics: JSONRepresentable {
    init?(json: JSON) {
-      self.viewCount = json["viewCount"].string.flatMap { Int64($0) }
-      self.likeCount = json["likeCount"].string.flatMap { Int64($0) }
-      self.dislikeCount = json["dislikeCount"].string.flatMap { Int64($0) }
+      self.views = json["viewCount"].string.flatMap { Int64($0) }
+      self.likes = json["likeCount"].string.flatMap { Int64($0) }
+      self.dislikes = json["dislikeCount"].string.flatMap { Int64($0) }
    }
 }
 
