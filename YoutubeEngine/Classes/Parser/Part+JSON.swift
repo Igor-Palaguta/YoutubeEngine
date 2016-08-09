@@ -14,27 +14,3 @@ extension Snippet: JSONRepresentable {
       self.thumbnailURL = thumbnailURL
    }
 }
-
-extension VideoStatistics: JSONRepresentable {
-   init?(json: JSON) {
-      self.viewCount = json["viewCount"].string
-      self.likeCount = json["likeCount"].string
-      self.dislikeCount = json["dislikeCount"].string
-   }
-}
-
-extension VideoContentDetails: JSONRepresentable {
-   init?(json: JSON) {
-      guard let duration = json["duration"].string.flatMap({ NSDateComponents(ISO8601String: $0) }) else {
-         return nil
-      }
-      self.duration = duration
-   }
-}
-
-extension ChannelStatistics: JSONRepresentable {
-   init?(json: JSON) {
-      self.subscriberCount = json["subscriberCount"].string
-      self.videoCount = json["videoCount"].string
-   }
-}

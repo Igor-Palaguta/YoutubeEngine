@@ -28,8 +28,8 @@ public func == (lhs: Channel, rhs: Channel) -> Bool {
 }
 
 public struct ChannelStatistics: Equatable {
-   public let subscriberCount: String?
-   public let videoCount: String?
+   public let subscriberCount: Int64?
+   public let videoCount: Int64?
 }
 
 public func == (lhs: ChannelStatistics, rhs: ChannelStatistics) -> Bool {

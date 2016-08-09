@@ -12,3 +12,10 @@ extension Channel: JSONRepresentable {
       self.statistics = ChannelStatistics(json: json[Part.Statistics.parameterValue])
    }
 }
+
+extension ChannelStatistics: JSONRepresentable {
+   init?(json: JSON) {
+      self.subscriberCount = json["subscriberCount"].string.flatMap { Int64($0) }
+      self.videoCount = json["videoCount"].string.flatMap { Int64($0) }
+   }
+}
