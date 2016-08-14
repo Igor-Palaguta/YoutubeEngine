@@ -64,9 +64,11 @@ public final class Engine {
       }
    }
 
-   private func loadParts<T where T: JSONRepresentable, T: PartibleObject, T: SearchableObject>(parts: [Part],
-                          items: [SearchItem],
-                          type: T.Type) -> SignalProducer<[String: T], NoError> {
+   private func loadParts<T: protocol<JSONRepresentable,
+      PartibleObject,
+      SearchableObject>>(parts: [Part],
+                         items: [SearchItem],
+                         type: T.Type) -> SignalProducer<[String: T], NoError> {
       if parts.isEmpty {
          return SignalProducer(value: [:])
       }
@@ -101,7 +103,10 @@ public final class Engine {
       }
 
       let logger: Logger? = self.logEnabled ? DefaultLogger() : nil
-      return self.manager.signalForJSON(request.method, url, parameters: parameters, logger: logger)
+      return self.manager.signalForJSON(request.method,
+                                        url,
+                                        parameters: parameters,
+                                        logger: logger)
    }
 
    private func page<R: PageRequest where R.Item: JSONRepresentable>(request: R) -> SignalProducer<Page<R.Item>, NSError> {

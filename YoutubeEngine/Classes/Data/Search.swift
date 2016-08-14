@@ -117,7 +117,7 @@ extension Search: PageRequest {
       case .RelatedTo(let videoId, _):
          parameters["videoId"] = videoId
       }
-      
+
       return parameters
    }
 }

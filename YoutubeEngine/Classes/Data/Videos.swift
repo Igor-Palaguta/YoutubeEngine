@@ -36,9 +36,9 @@ public func == (lhs: Video, rhs: Video) -> Bool {
 }
 
 public struct VideoStatistics: Equatable {
-   public let views: Int64?
-   public let likes: Int64?
-   public let dislikes: Int64?
+   public let views: Int?
+   public let likes: Int?
+   public let dislikes: Int?
 }
 
 public func == (lhs: VideoStatistics, rhs: VideoStatistics) -> Bool {

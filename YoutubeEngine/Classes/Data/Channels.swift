@@ -28,8 +28,8 @@ public func == (lhs: Channel, rhs: Channel) -> Bool {
 }
 
 public struct ChannelStatistics: Equatable {
-   public let subscribers: Int64?
-   public let videos: Int64?
+   public let subscribers: Int?
+   public let videos: Int?
 }
 
 public func == (lhs: ChannelStatistics, rhs: ChannelStatistics) -> Bool {
@@ -44,7 +44,8 @@ extension Channels: PageRequest {
    var command: String { return "channels" }
 
    var parameters: [String: AnyObject] {
-      var parameters: [String: AnyObject] = ["id": ids.joinParameters(), "part": parts.joinParameters()]
+      var parameters: [String: AnyObject] = ["id": ids.joinParameters(),
+                                             "part": parts.joinParameters()]
       parameters["maxResults"] = self.limit
       parameters["pageToken"] = self.pageToken
       return parameters

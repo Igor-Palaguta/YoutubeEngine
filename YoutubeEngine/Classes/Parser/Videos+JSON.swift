@@ -16,17 +16,23 @@ extension Video: JSONRepresentable {
 
 extension VideoStatistics: JSONRepresentable {
    init?(json: JSON) {
-      self.views = json["viewCount"].string.flatMap { Int64($0) }
-      self.likes = json["likeCount"].string.flatMap { Int64($0) }
-      self.dislikes = json["dislikeCount"].string.flatMap { Int64($0) }
+      self.views = json["viewCount"].string.flatMap { Int($0) }
+      self.likes = json["likeCount"].string.flatMap { Int($0) }
+      self.dislikes = json["dislikeCount"].string.flatMap { Int($0) }
    }
 }
 
 extension VideoContentDetails: JSONRepresentable {
    init?(json: JSON) {
-      guard let duration = json["duration"].string.flatMap({ NSDateComponents(ISO8601String: $0) }) else {
+      guard let duration = json["duration"].duration else {
          return nil
       }
       self.duration = duration
+   }
+}
+
+private extension JSON {
+   var duration: NSDateComponents? {
+      return self.string.flatMap { NSDateComponents(ISO8601String: $0) }
    }
 }

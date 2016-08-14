@@ -29,7 +29,11 @@ struct DefaultLogger: Logger {
 
 extension Manager {
 
-   final func signalForJSON(method: Alamofire.Method, _ URLString: URLStringConvertible, parameters: [String: AnyObject]? = nil, headers: [String: String]? = nil, logger: Logger?) -> SignalProducer<JSON, NSError> {
+   final func signalForJSON(method: Alamofire.Method,
+                            _ URLString: URLStringConvertible,
+                              parameters: [String: AnyObject]? = nil,
+                              headers: [String: String]? = nil,
+                              logger: Logger?) -> SignalProducer<JSON, NSError> {
       return SignalProducer {
          observer, disposable in
          let encoding: ParameterEncoding = method == .GET ? .URL : .JSON
