@@ -2,35 +2,20 @@ import Foundation
 
 extension NSDateComponents {
    convenience init?(ISO8601String string: String) {
-      guard let (date, time) = string.durationParts,
-         let dateComponents = date.durationComponents,
-         let timeComponents = time.durationComponents else {
-            return nil
+      guard let unitValues = string.durationUnitValues else {
+         return nil
       }
 
       self.init()
 
-      for (value, identifier) in dateComponents {
-         if identifier == "Y" {
-            self.year = value
-         } else if identifier == "M" {
-            self.month = value
-         } else if identifier == "D" {
-            self.day = value
-         }
-      }
-
-      for (value, identifier) in timeComponents {
-         if identifier == "H" {
-            self.hour = value
-         } else if identifier == "M" {
-            self.minute = value
-         } else if identifier == "S" {
-            self.second = value
-         }
+      for (unit, value) in unitValues {
+         self.setValue(value, forComponent: unit)
       }
    }
 }
+
+private let dateUnitMapping: [String: NSCalendarUnit] = ["Y": .Year, "M": .Month, "D": .Day]
+private let timeUnitMapping: [String: NSCalendarUnit] = ["H": .Hour, "M": .Minute, "S": .Second]
 
 private extension String {
    var durationParts: (date: String, time: String)? {
@@ -49,10 +34,20 @@ private extension String {
       return (duration, "")
    }
 
-   var durationComponents: [(Int, String)]? {
-      var components: [(Int, String)] = []
+   var durationUnitValues: [(NSCalendarUnit, Int)]? {
+      guard let (date, time) = self.durationParts,
+         let dateUnitValues = date.unitValuesWithMapping(dateUnitMapping),
+         let timeUnitValues = time.unitValuesWithMapping(timeUnitMapping) else {
+            return nil
+      }
 
-      let identifiersSet = NSCharacterSet(charactersInString: "YMDHMS")
+      return dateUnitValues + timeUnitValues
+   }
+
+   func unitValuesWithMapping(mapping: [String: NSCalendarUnit]) -> [(NSCalendarUnit, Int)]? {
+      var components: [(NSCalendarUnit, Int)] = []
+
+      let identifiersSet = NSCharacterSet(charactersInString: mapping.keys.joinWithSeparator(""))
 
       let scanner = NSScanner(string: self)
       while !scanner.atEnd {
@@ -64,7 +59,8 @@ private extension String {
          if !scanner.scanCharactersFromSet(identifiersSet, intoString: &identifier) || identifier?.length != 1 {
             return nil
          }
-         components.append((value, identifier! as String))
+         let unit = mapping[identifier! as String]!
+         components.append((unit, value))
       }
       return components
    }
