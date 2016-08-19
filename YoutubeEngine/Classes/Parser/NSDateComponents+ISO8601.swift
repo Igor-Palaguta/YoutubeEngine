@@ -18,33 +18,32 @@ private let dateUnitMapping: [Character: NSCalendarUnit] = ["Y": .Year, "M": .Mo
 private let timeUnitMapping: [Character: NSCalendarUnit] = ["H": .Hour, "M": .Minute, "S": .Second]
 
 private extension String {
-   var durationParts: (date: String, time: String)? {
+   var durationUnitValues: [(NSCalendarUnit, Int)]? {
       guard self.hasPrefix("P") else {
          return nil
       }
 
       let duration = self.substringFromIndex(self.startIndex.advancedBy(1))
 
-      if let separatorRange = duration.rangeOfString("T") {
-         let date = duration.substringToIndex(separatorRange.startIndex)
-         let time = duration.substringFromIndex(separatorRange.endIndex)
-         return (date, time)
+      guard let separatorRange = duration.rangeOfString("T") else {
+         return duration.unitValuesWithMapping(dateUnitMapping)
       }
 
-      return (duration, "")
-   }
-
-   var durationUnitValues: [(NSCalendarUnit, Int)]? {
-      guard let (date, time) = self.durationParts,
-         let dateUnitValues = date.unitValuesWithMapping(dateUnitMapping),
-         let timeUnitValues = time.unitValuesWithMapping(timeUnitMapping) else {
+      let date = duration.substringToIndex(separatorRange.startIndex)
+      let time = duration.substringFromIndex(separatorRange.endIndex)
+      guard let dateUnits = date.unitValuesWithMapping(dateUnitMapping),
+         let timeUnits = time.unitValuesWithMapping(timeUnitMapping) else {
             return nil
       }
 
-      return dateUnitValues + timeUnitValues
+      return dateUnits + timeUnits
    }
 
    func unitValuesWithMapping(mapping: [Character: NSCalendarUnit]) -> [(NSCalendarUnit, Int)]? {
+      if self.isEmpty {
+         return []
+      }
+
       var components: [(NSCalendarUnit, Int)] = []
 
       let identifiersSet = NSCharacterSet(charactersInString: String(mapping.keys))
