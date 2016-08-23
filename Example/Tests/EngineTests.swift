@@ -51,8 +51,12 @@ class EngineSpec: QuickSpec {
                     snippet:
                Snippet(title: "Vevo",
                   publishDate: ISO8601Formatter.dateFromString("2006-04-14T17:07:29.000Z")!,
-                  thumbnailURL: NSURL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s88-c-k-no-rj-c0xffffff/photo.jpg")!,
-                  channelTitle: "Vevo"),
+                  channelId: "UC2pmfLm7iq6Ov1UwYrWYkZA",
+                  channelTitle: "Vevo",
+                  defaultImage: Image(url: NSURL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s88-c-k-no-rj-c0xffffff/photo.jpg")!, size: nil),
+                  mediumImage: Image(url: NSURL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s240-c-k-no-rj-c0xffffff/photo.jpg")!, size: nil),
+                  highImage: Image(url: NSURL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s240-c-k-no-rj-c0xffffff/photo.jpg")!, size: nil)
+               ),
                     statistics:
                ChannelStatistics(subscribers: 12397460,
                   videos: 975))
@@ -62,8 +66,11 @@ class EngineSpec: QuickSpec {
                   snippet:
                Snippet(title: "Vevo - HOT THIS WEEK: Aug 5, 2016",
                   publishDate: ISO8601Formatter.dateFromString("2016-08-05T19:30:01.000Z")!,
-                  thumbnailURL: NSURL(string: "https://i.ytimg.com/vi/FASkBnLAHEw/default.jpg")!,
-                  channelTitle: "Vevo"),
+                  channelId: "UC2pmfLm7iq6Ov1UwYrWYkZA",
+                  channelTitle: "Vevo",
+                  defaultImage: Image(url: NSURL(string: "https://i.ytimg.com/vi/FASkBnLAHEw/default.jpg")!, size: CGSize(width: 120, height: 90)),
+                  mediumImage: Image(url: NSURL(string: "https://i.ytimg.com/vi/FASkBnLAHEw/mqdefault.jpg")!, size: CGSize(width: 320, height: 180)),
+                  highImage: Image(url: NSURL(string: "https://i.ytimg.com/vi/FASkBnLAHEw/hqdefault.jpg")!, size: CGSize(width: 480, height: 360))),
                   statistics:
                VideoStatistics(views: 94170,
                   likes: 1537,
@@ -75,8 +82,11 @@ class EngineSpec: QuickSpec {
                   snippet:
                Snippet(title: "Top 100 Most Viewed Songs Of All Time (VEVO) (Updated August 2016)",
                   publishDate: ISO8601Formatter.dateFromString("2016-08-03T16:52:56.000Z")!,
-                  thumbnailURL: NSURL(string: "https://i.ytimg.com/vi/Ho1oF_P3X00/default.jpg")!,
-                  channelTitle: "TopMusicMafia"),
+                  channelId: "UCVDKPOPmcsZuEjLVqFgQDcg",
+                  channelTitle: "TopMusicMafia",
+                  defaultImage: Image(url: NSURL(string: "https://i.ytimg.com/vi/Ho1oF_P3X00/default.jpg")!, size: CGSize(width: 120, height: 90)),
+                  mediumImage: Image(url: NSURL(string: "https://i.ytimg.com/vi/Ho1oF_P3X00/mqdefault.jpg")!, size: CGSize(width: 320, height: 180)),
+                  highImage: Image(url: NSURL(string: "https://i.ytimg.com/vi/Ho1oF_P3X00/hqdefault.jpg")!, size: CGSize(width: 480, height: 360))),
                   statistics:
                VideoStatistics(views: 84236,
                   likes: 2503,

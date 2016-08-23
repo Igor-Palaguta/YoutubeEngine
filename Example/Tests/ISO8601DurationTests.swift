@@ -45,6 +45,7 @@ class NSDateComponentsISO8601Spec: QuickSpec {
                expect(ISO8601("P1MM")).to(beNil())
                expect(ISO8601("1M")).to(beNil())
                expect(ISO8601("P1H")).to(beNil())
+               expect(ISO8601("PT1D")).to(beNil())
             }
          }
       }
