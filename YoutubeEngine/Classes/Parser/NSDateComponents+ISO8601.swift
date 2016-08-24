@@ -23,7 +23,7 @@ private extension String {
          return nil
       }
 
-      let duration = self.substringFromIndex(self.startIndex.advancedBy(1))
+      let duration = String(self.characters.dropFirst())
 
       guard let separatorRange = duration.rangeOfString("T") else {
          return duration.unitValuesWithMapping(dateUnitMapping)
