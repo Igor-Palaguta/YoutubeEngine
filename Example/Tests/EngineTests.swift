@@ -211,6 +211,35 @@ class EngineSpec: QuickSpec {
                }
             }
          }
+
+         it("cancels") {
+            self.stubCommand("search", fileName: "search_VEVO")
+            let request = Search(.Term("VEVO", [.Video: [], .Channel: []]), limit: 1000)
+            waitUntil(timeout: 1) { done in
+               engine.search(request)
+                  .on(failed: { _ in
+                     fatalError()
+                     })
+                  .startWithInterrupted {
+                     done()
+               }
+               engine.cancelAllRequests()
+            }
+         }
+
+         it("request lives longer than engine") {
+            self.stubCommand("channels", fileName: "channels_VEVO")
+            waitUntil(timeout: 1) { done in
+               {
+                  let localEngine = Engine(.Key("TEST"))
+                  localEngine
+                     .channels(Channels(.Mine))
+                     .startWithNext { _ in
+                        done()
+                  }
+               }()
+            }
+         }
       }
    }
 }

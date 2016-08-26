@@ -62,7 +62,11 @@ extension Manager {
                   observer.sendCompleted()
                }
             case .Failure(let error):
-               observer.sendFailed(error)
+               if error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
+                  observer.sendInterrupted()
+               } else {
+                  observer.sendFailed(error)
+               }
             }
          }
          disposable.addDisposable {
