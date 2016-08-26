@@ -93,7 +93,7 @@ class EngineSpec: QuickSpec {
                   dislikes: 70),
                   contentDetails: VideoContentDetails(duration: components(minute: 15, second: 15)))
 
-         let engine = Engine(key: "TEST")
+         let engine = Engine(.Key("TEST"))
          afterEach {
             self.removeAllStubs()
          }

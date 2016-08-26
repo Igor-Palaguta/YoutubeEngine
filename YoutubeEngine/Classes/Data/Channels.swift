@@ -2,14 +2,20 @@ import Foundation
 import Alamofire
 
 public struct Channels {
-   public let ids: [String]
+
+   public enum Filter {
+      case Mine
+      case ByIds([String])
+   }
+
+   public let filter: Filter
    public let parts: [Part]
    public let limit: Int?
    public let pageToken: String?
 
-   public init(ids: [String], parts: [Part], limit: Int? = nil, pageToken: String? = nil) {
-      self.ids = ids
-      self.parts = parts
+   public init(_ filter: Filter, parts: [Part], limit: Int? = nil, pageToken: String? = nil) {
+      self.filter = filter
+      self.parts = parts.isEmpty ? [.Snippet] : parts
       self.limit = limit
       self.pageToken = pageToken
    }
@@ -44,8 +50,15 @@ extension Channels: PageRequest {
    var command: String { return "channels" }
 
    var parameters: [String: AnyObject] {
-      var parameters: [String: AnyObject] = ["id": ids.joinParameters(),
-                                             "part": parts.joinParameters()]
+      var parameters: [String: AnyObject] = ["part": self.parts.joinParameters()]
+
+      switch self.filter {
+      case .Mine:
+         parameters["mine"] = "true"
+      case .ByIds(let ids):
+         parameters["id"] = ids.joinParameters()
+      }
+
       parameters["maxResults"] = self.limit
       parameters["pageToken"] = self.pageToken
       return parameters
@@ -60,7 +73,7 @@ extension Channel: PartibleObject, SearchableObject {
    }
 
    static func requestForParts(parts: [Part], objects: [Channel]) -> AnyPageRequest<Channel> {
-      return AnyPageRequest(Channels(ids: objects.map { $0.id }, parts: parts))
+      return AnyPageRequest(Channels(.ByIds(objects.map { $0.id }), parts: parts))
    }
 
    var searchItemType: Type {

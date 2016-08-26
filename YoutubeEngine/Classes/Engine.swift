@@ -7,16 +7,20 @@ import enum Result.NoError
 public let YoutubeErrorDomain = "com.spangleapp.Youtube"
 
 public final class Engine {
+   public enum Authorization {
+      case Key(String)
+      case AccessToken(String)
+   }
+
    public var logEnabled = false
 
    private let manager: Manager
-   private let key: String
+   private let authorization: Authorization
    private let baseURL = NSURL(string: "https://www.googleapis.com/youtube/v3")!
 
-   public init(key: String) {
-      precondition(!key.isEmpty)
+   public init(_ authorization: Authorization) {
       self.manager = Manager(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-      self.key = key
+      self.authorization = authorization
    }
 
    public func cancelAllRequests() {
@@ -97,7 +101,14 @@ public final class Engine {
          let url = self.baseURL.URLByAppendingPathComponent(request.command)
       #endif
 
-      var parameters: [String: AnyObject] = ["key": self.key]
+      var parameters: [String: AnyObject] = [:]
+      switch self.authorization {
+      case .AccessToken(let token):
+         parameters["access_token"] = token
+      case .Key(let key):
+         parameters["key"] = key
+      }
+
       for (name, value) in request.parameters {
          parameters[name] = value
       }

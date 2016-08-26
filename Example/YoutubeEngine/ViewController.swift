@@ -3,7 +3,7 @@ import YoutubeEngine
 
 class ViewController: UIViewController {
 
-   private lazy var engine = Engine(key: "AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg")
+   private lazy var engine = Engine(.Key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
 
    override func viewDidLoad() {
       super.viewDidLoad()

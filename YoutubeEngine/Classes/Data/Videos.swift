@@ -15,7 +15,7 @@ public struct Videos {
 
    public init(_ filter: Filter, parts: [Part], limit: Int? = nil, pageToken: String? = nil) {
       self.filter = filter
-      self.parts = parts
+      self.parts = parts.isEmpty ? [.Snippet] : parts
       self.limit = limit
       self.pageToken = pageToken
    }
@@ -64,14 +64,17 @@ extension Videos: PageRequest {
 
    var parameters: [String: AnyObject] {
       var parameters: [String: AnyObject] = ["part": self.parts.joinParameters()]
-      parameters["maxResults"] = self.limit
-      parameters["pageToken"] = self.pageToken
+
       switch self.filter {
       case .Popular(_):
          parameters["chart"] = "mostPopular"
       case .ByIds(let ids):
          parameters["id"] = ids.joinParameters()
       }
+
+      parameters["maxResults"] = self.limit
+      parameters["pageToken"] = self.pageToken
+
       return parameters
    }
 }
