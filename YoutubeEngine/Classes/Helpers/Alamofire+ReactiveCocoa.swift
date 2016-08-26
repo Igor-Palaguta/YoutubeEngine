@@ -73,6 +73,16 @@ extension Manager {
             error in
             logger?.logError(error)
          })
-
+         .retainWhileWorking(self)
    }
 }
+
+private extension SignalProducerType {
+   final func retainWhileWorking(object: AnyObject) -> SignalProducer<Self.Value, Self.Error> {
+      var retainedObject: AnyObject? = object
+      return self.on(terminated: {
+         retainedObject = nil
+      })
+   }
+}
+

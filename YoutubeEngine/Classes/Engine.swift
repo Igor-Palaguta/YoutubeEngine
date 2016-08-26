@@ -28,11 +28,11 @@ public final class Engine {
    }
 
    public func videos(request: Videos) -> SignalProducer<Page<Video>, NSError> {
-      return self.page(request).retainWhileWorking(self.manager)
+      return self.page(request)
    }
 
    public func channels(request: Channels) -> SignalProducer<Page<Channel>, NSError> {
-      return self.page(request).retainWhileWorking(self.manager)
+      return self.page(request)
    }
 
    public func search(request: Search) -> SignalProducer<Page<SearchItem>, NSError> {
@@ -66,7 +66,6 @@ public final class Engine {
                }
                .promoteErrors(NSError.self)
          }
-         .retainWhileWorking(self.manager)
    }
 
    private func loadParts<T: protocol<JSONRepresentable,
@@ -134,14 +133,5 @@ public final class Engine {
                nextPageToken: json["nextPageToken"].string,
                previousPageToken: json["prevPageToken"].string)
       }
-   }
-}
-
-private extension SignalProducerType {
-   final func retainWhileWorking(object: AnyObject) -> SignalProducer<Self.Value, Self.Error> {
-      var retainedObject: AnyObject? = object
-      return self.on(terminated: {
-         retainedObject = nil
-      })
    }
 }
