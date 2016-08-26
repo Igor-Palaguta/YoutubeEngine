@@ -13,7 +13,7 @@ public struct Videos {
    public let limit: Int?
    public let pageToken: String?
 
-   public init(_ filter: Filter, parts: [Part], limit: Int? = nil, pageToken: String? = nil) {
+   public init(_ filter: Filter, parts: [Part] = [.Snippet], limit: Int? = nil, pageToken: String? = nil) {
       self.filter = filter
       self.parts = parts.isEmpty ? [.Snippet] : parts
       self.limit = limit
