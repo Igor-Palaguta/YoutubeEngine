@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary          = 'Swift ReactiveCocoa lib for Youtube api.'
 
   s.description      = <<-DESC
-Swift lib for search and videos Youtube api
+Swift library for searching Youtube channels and videos
                        DESC
 
   s.homepage         = 'https://github.com/Igor-Palaguta/YoutubeEngine'
@@ -17,7 +17,7 @@ Swift lib for search and videos Youtube api
 
   s.source_files = 'YoutubeEngine/Classes/**/*'
 
-  s.dependency 'Alamofire', '~> 3'
-  s.dependency 'ReactiveCocoa', '~> 4'
+  s.dependency 'Alamofire', '~> 3.5'
+  s.dependency 'ReactiveCocoa', '~> 4.1'
   s.dependency 'SwiftyJSON'
 end

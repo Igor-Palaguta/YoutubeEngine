@@ -15,6 +15,8 @@ final class SearchViewController: UITableViewController {
 
       self.navigationItem.titleView = self.searchBar
 
+      self.tableView.keyboardDismissMode = .OnDrag
+
       self.model
          .provider
          .producer
@@ -68,5 +70,9 @@ final class SearchViewController: UITableViewController {
 extension SearchViewController: UISearchBarDelegate {
    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
       self.model.keyword.value = searchText
+   }
+
+   func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+      searchBar.resignFirstResponder()
    }
 }
