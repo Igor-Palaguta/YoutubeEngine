@@ -1,5 +1,11 @@
 # YoutubeEngine
 
+Library with RAC4 api for Youtube. Allows easy access required parts of videos and channels in one call.
+
+## Screenshots
+
+![YoutubeEngine](https://raw.githubusercontent.com/Igor-Palaguta/YoutubeEngine/master/Screenshots/ScreenRecord.gif)
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
