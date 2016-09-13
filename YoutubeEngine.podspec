@@ -17,7 +17,7 @@ Swift lib for search and videos Youtube api
 
   s.source_files = 'YoutubeEngine/Classes/**/*'
 
-  s.dependency 'Alamofire'
-  s.dependency 'ReactiveCocoa'
+  s.dependency 'Alamofire', '~> 3'
+  s.dependency 'ReactiveCocoa', '~> 4'
   s.dependency 'SwiftyJSON'
 end
