@@ -7,7 +7,7 @@ public typealias Builder = (NSURLRequest) -> (Response)
 
 func lastPathComponent(component: String) -> NSURLRequest -> Bool {
    return { request in
-      guard let components = NSURLComponents(string: request.URLString),
+      guard let components = NSURLComponents(URL: request.URL!, resolvingAgainstBaseURL: false),
          let path = components.path else {
             return false
       }
@@ -150,7 +150,7 @@ class EngineSpec: QuickSpec {
             var justChannelsType = true
 
             self.stubCommand("search", fileName: "search_VEVO") { request in
-               let components = NSURLComponents(string: request.URLString)
+               let components = NSURLComponents(string: request.URL!.absoluteString)
                if let queryItems = components?.queryItems,
                   let typeIndex = queryItems.indexOf({ $0.name == "type" }) {
                      justChannelsType = queryItems[typeIndex].value == Type.Channel.parameterValue
@@ -204,7 +204,7 @@ class EngineSpec: QuickSpec {
                engine.search(request)
                   .startWithFailed {
                      error in
-                     expect(error.domain) == YoutubeErrorDomain
+                     expect(error.domain) == Error.Domain
                      expect(error.code) == 400
                      expect(error.localizedDescription) == "Invalid value '1000'. Values must be within the range: [0, 50]"
                      done()

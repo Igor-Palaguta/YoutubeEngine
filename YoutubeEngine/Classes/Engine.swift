@@ -1,10 +1,7 @@
 import Foundation
 import ReactiveCocoa
-import Alamofire
 import SwiftyJSON
 import enum Result.NoError
-
-public let YoutubeErrorDomain = "com.spangleapp.Youtube"
 
 public final class Engine {
    public enum Authorization {
@@ -14,17 +11,17 @@ public final class Engine {
 
    public var logEnabled = false
 
-   private let manager: Manager
+   private let session: NSURLSession
    private let authorization: Authorization
    private let baseURL = NSURL(string: "https://www.googleapis.com/youtube/v3")!
 
    public init(_ authorization: Authorization) {
-      self.manager = Manager(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+      self.session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
       self.authorization = authorization
    }
 
    public func cancelAllRequests() {
-      self.manager.session.invalidateAndCancel()
+      self.session.invalidateAndCancel()
    }
 
    public func videos(request: Videos) -> SignalProducer<Page<Video>, NSError> {
@@ -101,7 +98,7 @@ public final class Engine {
          let url = self.baseURL.URLByAppendingPathComponent(request.command)
       #endif
 
-      var parameters: [String: AnyObject] = [:]
+      var parameters: [String: String] = request.parameters
       switch self.authorization {
       case .AccessToken(let token):
          parameters["access_token"] = token
@@ -109,12 +106,8 @@ public final class Engine {
          parameters["key"] = key
       }
 
-      for (name, value) in request.parameters {
-         parameters[name] = value
-      }
-
       let logger: Logger? = self.logEnabled ? DefaultLogger() : nil
-      return self.manager.signalForJSON(request.method,
+      return self.session.signalForJSON(request.method,
                                         url,
                                         parameters: parameters,
                                         logger: logger)

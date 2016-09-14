@@ -1,5 +1,4 @@
 import Foundation
-import Alamofire
 
 public enum Type: Parameter {
    case Video
@@ -98,15 +97,15 @@ extension Search: PageRequest {
 
    typealias Item = SearchItem
 
-   var method: Alamofire.Method { return .GET }
+   var method: Method { return .GET }
    var command: String { return "search" }
 
-   var parameters: [String: AnyObject] {
+   var parameters: [String: String] {
 
-      var parameters: [String: AnyObject] = ["part": self.part.parameterValue,
+      var parameters: [String: String] = ["part": self.part.parameterValue,
                                              "type": self.types.joinParameters()]
 
-      parameters["maxResults"] = self.limit
+      parameters["maxResults"] = self.limit.map(String.init)
       parameters["pageToken"] = self.pageToken
 
       switch self.filter {

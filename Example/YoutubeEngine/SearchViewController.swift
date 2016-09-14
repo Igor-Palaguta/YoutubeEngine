@@ -1,8 +1,8 @@
 import UIKit
-import Rex
 import YoutubeEngine
 import ReactiveCocoa
 import Reusable
+import enum Result.NoError
 
 final class SearchViewController: UITableViewController {
 
@@ -20,18 +20,21 @@ final class SearchViewController: UITableViewController {
       self.model
          .provider
          .producer
-         .ignoreNil()
-         .flatMap(.Latest) { $0.pageLoader ?? .empty }
-         .ignoreError()
+         .flatMap(.Latest) {
+            provider -> SignalProducer<Void, NoError> in
+            if let pageLoader = provider?.pageLoader {
+               return pageLoader.flatMapError { _ in .empty }
+            }
+            return .empty
+         }
          .startWithCompleted {}
 
       self.model
          .items
          .producer
-         .takeUntil(self.rex_willDealloc)
          .startWithNext {
-            [unowned self] _ in
-            self.tableView.reloadData()
+            [weak self] _ in
+            self?.tableView.reloadData()
       }
    }
 

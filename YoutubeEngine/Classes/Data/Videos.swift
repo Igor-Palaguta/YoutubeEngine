@@ -1,5 +1,4 @@
 import Foundation
-import Alamofire
 
 public struct Videos {
 
@@ -59,11 +58,11 @@ extension Videos: PageRequest {
 
    typealias Item = Video
 
-   var method: Alamofire.Method { return .GET }
+   var method: Method { return .GET }
    var command: String { return "videos" }
 
-   var parameters: [String: AnyObject] {
-      var parameters: [String: AnyObject] = ["part": self.parts.joinParameters()]
+   var parameters: [String: String] {
+      var parameters: [String: String] = ["part": self.parts.joinParameters()]
 
       switch self.filter {
       case .Popular(_):
@@ -72,7 +71,7 @@ extension Videos: PageRequest {
          parameters["id"] = ids.joinParameters()
       }
 
-      parameters["maxResults"] = self.limit
+      parameters["maxResults"] = self.limit.map(String.init)
       parameters["pageToken"] = self.pageToken
 
       return parameters

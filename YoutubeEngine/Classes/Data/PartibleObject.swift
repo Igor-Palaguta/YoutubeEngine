@@ -1,5 +1,4 @@
 import Foundation
-import Alamofire
 
 protocol PartibleObject {
    func mergeParts(other: Self) -> Self

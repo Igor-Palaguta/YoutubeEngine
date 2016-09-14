@@ -1,10 +1,16 @@
 import Foundation
-import Alamofire
+
+enum Method: String {
+   case GET
+   case POST
+   case PUT
+   case DELETE
+}
 
 protocol YoutubeRequest {
-   var method: Alamofire.Method { get }
+   var method: Method { get }
    var command: String { get }
-   var parameters: [String: AnyObject] { get }
+   var parameters: [String: String] { get }
 }
 
 protocol PageRequest: YoutubeRequest {
@@ -15,9 +21,9 @@ protocol PageRequest: YoutubeRequest {
 
 struct AnyPageRequest<ItemType>: PageRequest {
    typealias Item = ItemType
-   let method: Alamofire.Method
+   let method: Method
    let command: String
-   let parameters: [String: AnyObject]
+   let parameters: [String: String]
    let pageToken: String?
    let limit: Int?
 

@@ -3,30 +3,6 @@ import Alamofire
 import SwiftyJSON
 import ReactiveCocoa
 
-protocol Logger {
-   func logRequest(request: NSURLRequest, parameters: [String: AnyObject]?)
-   func logResponse(response: NSHTTPURLResponse, body: NSData?)
-   func logError(error: NSError)
-}
-
-struct DefaultLogger: Logger {
-   func logRequest(request: NSURLRequest, parameters: [String: AnyObject]?) {
-      NSLog("%@ %@", request.HTTPMethod!, request.URL!)
-      if let parameters = parameters {
-         NSLog("%@", parameters)
-      }
-   }
-
-   func logResponse(response: NSHTTPURLResponse, body: NSData?) {
-      let body = body.flatMap { NSString(data: $0, encoding: NSUTF8StringEncoding) } ?? ""
-      NSLog("%d %@\n%@", response.statusCode, response.URL!, body)
-   }
-
-   func logError(error: NSError) {
-      NSLog("%@", error.localizedDescription)
-   }
-}
-
 extension Manager {
 
    final func signalForJSON(method: Alamofire.Method,
