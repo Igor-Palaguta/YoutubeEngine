@@ -103,7 +103,7 @@ extension Search: PageRequest {
    var parameters: [String: String] {
 
       var parameters: [String: String] = ["part": self.part.parameterValue,
-                                             "type": self.types.joinParameters()]
+                                          "type": self.types.joinParameters()]
 
       parameters["maxResults"] = self.limit.map(String.init)
       parameters["pageToken"] = self.pageToken

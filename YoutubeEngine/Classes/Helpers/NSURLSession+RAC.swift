@@ -3,17 +3,14 @@ import ReactiveCocoa
 import SwiftyJSON
 
 protocol Logger {
-   func logRequest(request: NSURLRequest, parameters: [String: AnyObject]?)
+   func logRequest(request: NSURLRequest)
    func logResponse(response: NSHTTPURLResponse, body: NSData?)
    func logError(error: NSError)
 }
 
 struct DefaultLogger: Logger {
-   func logRequest(request: NSURLRequest, parameters: [String: AnyObject]?) {
+   func logRequest(request: NSURLRequest) {
       NSLog("%@ %@", request.HTTPMethod!, request.URL!)
-      if let parameters = parameters {
-         NSLog("%@", parameters)
-      }
    }
 
    func logResponse(response: NSHTTPURLResponse, body: NSData?) {
@@ -35,7 +32,7 @@ extension NSURLSession {
          observer, disposable in
          guard let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else {
             observer.sendFailed(Error.error(code: .InvalidURL))
-            return 
+            return
          }
 
          if let parameters = parameters {
@@ -52,6 +49,7 @@ extension NSURLSession {
          let request = NSMutableURLRequest(URL: url)
          request.HTTPMethod = method.rawValue
 
+         logger?.logRequest(request)
          let task = self.dataTaskWithRequest(request) {
             data, response, error in
 
@@ -63,6 +61,8 @@ extension NSURLSession {
                }
                return
             }
+
+            logger?.logResponse(response as! NSHTTPURLResponse, body: data)
 
             guard let data = data,
                let JSONObject = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) else {
@@ -85,7 +85,10 @@ extension NSURLSession {
          disposable.addDisposable {
             task.cancel()
          }
-      }
-      .observeOn(UIScheduler())
+         }
+         .on(failed: { error in
+            logger?.logError(error)
+         })
+         .observeOn(UIScheduler())
    }
 }

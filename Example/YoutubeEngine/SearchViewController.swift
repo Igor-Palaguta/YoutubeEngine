@@ -8,7 +8,11 @@ final class SearchViewController: UITableViewController {
 
    @IBOutlet private var searchBar: UISearchBar!
 
-   private let model = SearchViewModel(engine: Engine(.Key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg")))
+   private lazy var model: SearchViewModel = {
+      let engine = Engine(.Key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
+      engine.logEnabled = true
+      return SearchViewModel(engine: engine)
+   }()
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -23,7 +27,12 @@ final class SearchViewController: UITableViewController {
          .flatMap(.Latest) {
             provider -> SignalProducer<Void, NoError> in
             if let pageLoader = provider?.pageLoader {
-               return pageLoader.flatMapError { _ in .empty }
+               return pageLoader
+                  .on(failed: {
+                     [weak self] error in
+                     self?.presentError(error)
+                     })
+                  .flatMapError { _ in .empty }
             }
             return .empty
          }
@@ -66,7 +75,20 @@ final class SearchViewController: UITableViewController {
          return
       }
 
-      provider.pageLoader?.startWithCompleted {}
+      provider.pageLoader?.startWithFailed {
+         [weak self] error in
+         self?.presentError(error)
+      }
+   }
+
+   private func presentError(error: NSError) {
+      let alert = UIAlertController(title: "Request failed",
+                                    message: error.localizedDescription,
+                                    preferredStyle: .Alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+      self.presentViewController(alert,
+                                 animated: true,
+                                 completion: nil)
    }
 }
 
