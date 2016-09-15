@@ -24,6 +24,7 @@ engine.search(request)
 ## Requirements
 
 Supports both swift2.3 and swift2.2
+
 ReactiveCocoa 4.2 (was tested on 4.2, probably earlier will work too)
 
 ## Installation
