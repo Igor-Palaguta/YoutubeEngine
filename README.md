@@ -23,13 +23,19 @@ engine.search(request)
 
 ## Requirements
 
+Supports both swift2.3 and swift2.2
+ReactiveCocoa 4.2 (was tested on 4.2, probably earlier will work too)
+
 ## Installation
 
-YoutubeEngine is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
+Cocoapods
 ```ruby
 pod "YoutubeEngine", :git => "https://github.com/Igor-Palaguta/YoutubeEngine.git"
+```
+
+Carthage
+```
+github "Igor-Palaguta/YoutubeEngine" "master"
 ```
 
 ## Author

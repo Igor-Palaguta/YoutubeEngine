@@ -9,6 +9,7 @@ final class SearchViewController: UITableViewController {
    @IBOutlet private var searchBar: UISearchBar!
 
    private lazy var model: SearchViewModel = {
+      //Generate your own https://developers.google.com/youtube/v3/getting-started
       let engine = Engine(.Key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
       engine.logEnabled = true
       return SearchViewModel(engine: engine)
