@@ -11,32 +11,33 @@ Library with RAC4 api for Youtube. Allows easy access required parts of videos a
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ```
-var engine = Engine(key: YOUR_API_KEY)
-let request = Search(.Term("VEVO", [.Video: [.Statistics, .ContentDetails], .Channel: [.Statistics]]))
+let engine = Engine(.key(YOUR_API_KEY))
+let request = Search(.term("VEVO", [.video: [.statistics, .contentDetails], .channel: [.statistics]]))
 engine.search(request)
-   .startWithNext {
-      page in
-      let formattedItems = page.items.enumerate().map { "[\($0)] = \($1)" }
-      print("VEVO:\n\(formattedItems.joinWithSeparator("\n"))")
-   }
+   .startWithResult {
+      result in
+      guard case .success(let page) = result else {
+         return
+      }
+      let formattedItems = page.items.enumerated().map { "[\($0)] = \($1)" }
+      print("VEVO:\n\(formattedItems.joined(separator: "\n"))")
+}
 ```
 
 ## Requirements
 
-Supports both swift2.3 and swift2.2
-
-ReactiveCocoa 4.2 (was tested on 4.2, probably earlier will work too)
+Supports both swift2.2, swift2.3 and swift. Use 'swift-3' branch for swift3
 
 ## Installation
 
 Cocoapods
 ```ruby
-pod "YoutubeEngine"
+pod 'YoutubeEngine', :git => 'https://github.com/Igor-Palaguta/YoutubeEngine.git', :branch => 'swift-3'
 ```
 
 Carthage
 ```
-github "Igor-Palaguta/YoutubeEngine"
+github "Igor-Palaguta/YoutubeEngine" "swift-3"
 ```
 
 ## Author
