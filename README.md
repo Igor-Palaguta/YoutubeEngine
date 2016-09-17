@@ -1,6 +1,6 @@
 # YoutubeEngine
 
-Library with RAC4 api for Youtube. Allows easy access required parts of videos and channels in one call.
+Library with ReactiveCocoa api for Youtube. Allows easy access required parts of videos and channels in one call.
 
 ## Screenshots
 
@@ -11,7 +11,7 @@ Library with RAC4 api for Youtube. Allows easy access required parts of videos a
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ```
-var engine = Engine(key: YOUR_API_KEY)
+let engine = Engine(key: YOUR_API_KEY)
 let request = Search(.Term("VEVO", [.Video: [.Statistics, .ContentDetails], .Channel: [.Statistics]]))
 engine.search(request)
    .startWithNext {
@@ -23,20 +23,18 @@ engine.search(request)
 
 ## Requirements
 
-Supports both swift2.3 and swift2.2
-
-ReactiveCocoa 4.2 (was tested on 4.2, probably earlier will work too)
+Supports swift2.2, swift2.3 and swift3. Use 'swift-3' branch for swift3
 
 ## Installation
 
 Cocoapods
 ```ruby
-pod "YoutubeEngine", :git => "https://github.com/Igor-Palaguta/YoutubeEngine.git"
+pod "YoutubeEngine"
 ```
 
 Carthage
 ```
-github "Igor-Palaguta/YoutubeEngine" "master"
+github "Igor-Palaguta/YoutubeEngine"
 ```
 
 ## Author

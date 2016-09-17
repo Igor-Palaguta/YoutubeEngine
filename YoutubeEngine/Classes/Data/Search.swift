@@ -120,9 +120,3 @@ extension Search: PageRequest {
       return parameters
    }
 }
-
-private extension SequenceType where Generator.Element: Equatable {
-   func substractArray(array: [Generator.Element]) -> [Generator.Element] {
-      return self.filter { !array.contains($0) }
-   }
-}
