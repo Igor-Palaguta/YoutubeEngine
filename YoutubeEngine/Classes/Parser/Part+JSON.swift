@@ -39,7 +39,7 @@ extension Image: JSONRepresentable {
 }
 
 private extension JSON {
-   var date: NSDate? {
-      return self.string.flatMap { ISO8601Formatter.dateFromString($0) }
+   var date: Date? {
+      return self.string.flatMap { ISO8601Formatter.date(from: $0) }
    }
 }

@@ -1,16 +1,15 @@
 import UIKit
 import YoutubeEngine
-import ReactiveCocoa
-import Reusable
+import ReactiveSwift
 import enum Result.NoError
 
 final class SearchViewController: UITableViewController {
 
    @IBOutlet private var searchBar: UISearchBar!
 
-   private lazy var model: SearchViewModel = {
+   fileprivate lazy var model: SearchViewModel = {
       //Generate your own https://developers.google.com/youtube/v3/getting-started
-      let engine = Engine(.Key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
+      let engine = Engine(.key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
       engine.logEnabled = true
       return SearchViewModel(engine: engine)
    }()
@@ -20,12 +19,12 @@ final class SearchViewController: UITableViewController {
 
       self.navigationItem.titleView = self.searchBar
 
-      self.tableView.keyboardDismissMode = .OnDrag
+      self.tableView.keyboardDismissMode = .onDrag
 
       self.model
          .provider
          .producer
-         .flatMap(.Latest) {
+         .flatMap(.latest) {
             provider -> SignalProducer<Void, NoError> in
             if let pageLoader = provider?.pageLoader {
                return pageLoader
@@ -42,37 +41,37 @@ final class SearchViewController: UITableViewController {
       self.model
          .items
          .producer
-         .startWithNext {
+         .startWithValues {
             [weak self] _ in
             self?.tableView.reloadData()
       }
    }
 
-   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return self.model.items.value.count
    }
 
-   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let item = self.model.items.value[indexPath.row]
       switch item {
-      case .ChannelItem(let channel):
-         let cell: ChannelCell = tableView.dequeueReusableCell(indexPath: indexPath)
+      case .channelItem(let channel):
+         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath) as! ChannelCell
          cell.channel = channel
          return cell
-      case .VideoItem(let video):
-         let cell: VideoCell = tableView.dequeueReusableCell(indexPath: indexPath)
+      case .videoItem(let video):
+         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as! VideoCell
          cell.video = video
          return cell
       }
    }
 
-   override func scrollViewDidScroll(scrollView: UIScrollView) {
-      guard let provider = self.model.provider.value where !provider.items.value.isEmpty && !provider.isLoadingPage else {
+   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+      guard let provider = self.model.provider.value, !provider.items.value.isEmpty && !provider.isLoadingPage else {
          return
       }
 
-      let lastCellIndexPath = NSIndexPath(forRow: provider.items.value.count - 1, inSection: 0)
-      if tableView.cellForRowAtIndexPath(lastCellIndexPath) == nil {
+      let lastCellIndexPath = IndexPath(row: provider.items.value.count - 1, section: 0)
+      if tableView.cellForRow(at: lastCellIndexPath) == nil {
          return
       }
 
@@ -82,23 +81,21 @@ final class SearchViewController: UITableViewController {
       }
    }
 
-   private func presentError(error: NSError) {
+   private func presentError(_ error: NSError) {
       let alert = UIAlertController(title: "Request failed",
                                     message: error.localizedDescription,
-                                    preferredStyle: .Alert)
-      alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-      self.presentViewController(alert,
-                                 animated: true,
-                                 completion: nil)
+                                    preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+      self.present(alert, animated: true, completion: nil)
    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
-   func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
       self.model.keyword.value = searchText
    }
 
-   func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
       searchBar.resignFirstResponder()
    }
 }

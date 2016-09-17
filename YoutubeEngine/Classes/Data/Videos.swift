@@ -3,8 +3,8 @@ import Foundation
 public struct Videos {
 
    public enum Filter {
-      case Popular
-      case ByIds([String])
+      case popular
+      case byIds([String])
    }
 
    public let filter: Filter
@@ -12,9 +12,9 @@ public struct Videos {
    public let limit: Int?
    public let pageToken: String?
 
-   public init(_ filter: Filter, parts: [Part] = [.Snippet], limit: Int? = nil, pageToken: String? = nil) {
+   public init(_ filter: Filter, parts: [Part] = [.snippet], limit: Int? = nil, pageToken: String? = nil) {
       self.filter = filter
-      self.parts = parts.isEmpty ? [.Snippet] : parts
+      self.parts = parts.isEmpty ? [.snippet] : parts
       self.limit = limit
       self.pageToken = pageToken
    }
@@ -47,7 +47,7 @@ public func == (lhs: VideoStatistics, rhs: VideoStatistics) -> Bool {
 }
 
 public struct VideoContentDetails: Equatable {
-   public let duration: NSDateComponents
+   public let duration: DateComponents
 }
 
 public func == (lhs: VideoContentDetails, rhs: VideoContentDetails) -> Bool {
@@ -65,9 +65,9 @@ extension Videos: PageRequest {
       var parameters: [String: String] = ["part": self.parts.joinParameters()]
 
       switch self.filter {
-      case .Popular(_):
+      case .popular(_):
          parameters["chart"] = "mostPopular"
-      case .ByIds(let ids):
+      case .byIds(let ids):
          parameters["id"] = ids.joinParameters()
       }
 
@@ -79,26 +79,26 @@ extension Videos: PageRequest {
 }
 
 extension Video: PartibleObject, SearchableObject {
-   func mergeParts(other: Video) -> Video {
+   func merge(with other: Video) -> Video {
       return Video(id: self.id,
                    snippet: self.snippet ?? other.snippet,
                    statistics: self.statistics ?? other.statistics,
                    contentDetails: self.contentDetails ?? other.contentDetails)
    }
 
-   static func requestForParts(parts: [Part], objects: [Video]) -> AnyPageRequest<Video> {
-      return AnyPageRequest(Videos(.ByIds(objects.map { $0.id }), parts: parts))
+   static func request(for parts: [Part], objects: [Video]) -> AnyPageRequest<Video> {
+      return AnyPageRequest(Videos(.byIds(objects.map { $0.id }), parts: parts))
    }
 
    var searchItemType: Type {
-      return .Video
+      return .video
    }
 
    func toSearchItem() -> SearchItem {
-      return .VideoItem(self)
+      return .videoItem(self)
    }
 
-   static func fromSearchItem(item: SearchItem) -> Video? {
-      return item.video
+   static func from(searchItem: SearchItem) -> Video? {
+      return searchItem.video
    }
 }

@@ -31,12 +31,12 @@ ReactiveCocoa 4.2 (was tested on 4.2, probably earlier will work too)
 
 Cocoapods
 ```ruby
-pod "YoutubeEngine", :git => "https://github.com/Igor-Palaguta/YoutubeEngine.git"
+pod "YoutubeEngine"
 ```
 
 Carthage
 ```
-github "Igor-Palaguta/YoutubeEngine" "master"
+github "Igor-Palaguta/YoutubeEngine"
 ```
 
 ## Author

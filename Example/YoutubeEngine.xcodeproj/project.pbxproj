@@ -18,10 +18,10 @@
 		786048801D87F7F200677773 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7860487F1D87F7F200677773 /* SearchViewModel.swift */; };
 		786048821D87F80A00677773 /* SearchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786048811D87F80A00677773 /* SearchProvider.swift */; };
 		789000711D8800EA00F794B2 /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789000701D8800EA00F794B2 /* ChannelCell.swift */; };
-		78A0BEF41D560B53001E0B4E /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A0BEF21D560AA3001E0B4E /* EngineTests.swift */; };
 		78A0BEF71D560D53001E0B4E /* search_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEF61D560D53001E0B4E /* search_VEVO.json */; };
 		78A0BEF91D561862001E0B4E /* channels_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEF81D561862001E0B4E /* channels_VEVO.json */; };
 		78A0BEFD1D561932001E0B4E /* videos_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEFC1D561932001E0B4E /* videos_VEVO.json */; };
+		78B5B9201D8CA1A2008DFDA0 /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A0BEF21D560AA3001E0B4E /* EngineTests.swift */; };
 		78CA48AC1D56787B00A5B1C9 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 78CA48AA1D56756700A5B1C9 /* error.json */; };
 		95160C30CCBD99ABC54B13E3 /* Pods_YoutubeEngine_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE5F90365E539B389A381FD /* Pods_YoutubeEngine_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -252,6 +252,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0800;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -415,7 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACEC1AFB9204008FA782 /* ISO8601DurationTests.swift in Sources */,
-				78A0BEF41D560B53001E0B4E /* EngineTests.swift in Sources */,
+				78B5B9201D8CA1A2008DFDA0 /* EngineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,7 +548,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -562,7 +563,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -583,7 +584,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoutubeEngine_Example.app/YoutubeEngine_Example";
 			};
 			name = Debug;
@@ -601,7 +602,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoutubeEngine_Example.app/YoutubeEngine_Example";
 			};
 			name = Release;

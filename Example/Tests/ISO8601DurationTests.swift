@@ -2,19 +2,19 @@ import Quick
 import Nimble
 @testable import YoutubeEngine
 
-func components(year year: Int? = nil, month: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> NSDateComponents {
-   let components = NSDateComponents()
-   let _ = year.map { components.year = $0 }
-   let _ = month.map { components.month = $0 }
-   let _ = day.map { components.day = $0 }
-   let _ = hour.map { components.hour = $0 }
-   let _ = minute.map { components.minute = $0 }
-   let _ = second.map { components.second = $0 }
+func components(year: Int? = nil, month: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> DateComponents {
+   var components = DateComponents()
+   _ = year.map { components.year = $0 }
+   _ = month.map { components.month = $0 }
+   _ = day.map { components.day = $0 }
+   _ = hour.map { components.hour = $0 }
+   _ = minute.map { components.minute = $0 }
+   _ = second.map { components.second = $0 }
    return components
 }
 
-private func ISO8601(string: String) -> NSDateComponents? {
-   return NSDateComponents(ISO8601String: string)
+private func ISO8601(_ string: String) -> DateComponents? {
+   return dateComponents(ISO8601String: string)
 }
 
 class NSDateComponentsISO8601Spec: QuickSpec {

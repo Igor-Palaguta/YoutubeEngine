@@ -1,26 +1,26 @@
 import Foundation
 
 public enum Part: Parameter {
-   case Snippet
-   case ContentDetails
-   case Statistics
+   case snippet
+   case contentDetails
+   case statistics
 
-   static let all: [Part] = [.Snippet, .ContentDetails, .Statistics]
+   static let all: [Part] = [.snippet, .contentDetails, .statistics]
 
    var parameterValue: String {
       switch self {
-      case .Snippet:
+      case .snippet:
          return "snippet"
-      case .ContentDetails:
+      case .contentDetails:
          return "contentDetails"
-      case .Statistics:
+      case .statistics:
          return "statistics"
       }
    }
 }
 
 public struct Image: Equatable {
-   public let url: NSURL
+   public let url: URL
    public let size: CGSize?
 }
 
@@ -30,7 +30,7 @@ public func == (lhs: Image, rhs: Image) -> Bool {
 
 public struct Snippet: Equatable {
    public let title: String
-   public let publishDate: NSDate
+   public let publishDate: Date
    public let channelId: String
    public let channelTitle: String?
    public let defaultImage: Image

@@ -1,14 +1,14 @@
 import Foundation
 
 public enum Type: Parameter {
-   case Video
-   case Channel
+   case video
+   case channel
 
    var parameterValue: String {
       switch self {
-      case .Video:
+      case .video:
          return "video"
-      case .Channel:
+      case .channel:
          return "channel"
       }
    }
@@ -16,9 +16,9 @@ public enum Type: Parameter {
 
 public struct Search {
    public enum Filter {
-      case Term(String, [Type: [Part]])
-      case FromChannel(String, [Part])
-      case RelatedTo(String, [Part])
+      case term(String, [Type: [Part]])
+      case fromChannel(String, [Part])
+      case relatedTo(String, [Part])
    }
 
    public let filter: Filter
@@ -32,50 +32,50 @@ public struct Search {
    }
 
    var types: [Type] {
-      if case .Term(_, let parts) = self.filter {
+      if case .term(_, let parts) = self.filter {
          return Array(parts.keys)
       }
-      return [.Video]
+      return [.video]
    }
 
    var videoParts: [Part] {
       switch self.filter {
-      case .Term(_, let parts):
-         return parts[.Video] ?? []
-      case .FromChannel(_, let videoParts):
+      case .term(_, let parts):
+         return parts[.video] ?? []
+      case .fromChannel(_, let videoParts):
          return videoParts
-      case .RelatedTo(_, let videoParts):
+      case .relatedTo(_, let videoParts):
          return videoParts
       }
    }
 
    var channelParts: [Part] {
       switch self.filter {
-      case .Term(_, let parts):
-         return parts[.Channel] ?? []
+      case .term(_, let parts):
+         return parts[.channel] ?? []
       default:
          return []
       }
    }
 
    var part: Part {
-      return .Snippet
+      return .snippet
    }
 }
 
 public enum SearchItem: Equatable {
-   case ChannelItem(Channel)
-   case VideoItem(Video)
+   case channelItem(Channel)
+   case videoItem(Video)
 
    public var video: Video? {
-      if case .VideoItem(let video) = self {
+      if case .videoItem(let video) = self {
          return video
       }
       return nil
    }
 
    public var channel: Channel? {
-      if case .ChannelItem(let channel) = self {
+      if case .channelItem(let channel) = self {
          return channel
       }
       return nil
@@ -84,9 +84,9 @@ public enum SearchItem: Equatable {
 
 public func == (lhs: SearchItem, rhs: SearchItem) -> Bool {
    switch (lhs, rhs) {
-   case (.ChannelItem(let lhsChannel), .ChannelItem(let rhsChannel)):
+   case (.channelItem(let lhsChannel), .channelItem(let rhsChannel)):
       return lhsChannel == rhsChannel
-   case (.VideoItem(let lhsVideo), .VideoItem(let rhsVideo)):
+   case (.videoItem(let lhsVideo), .videoItem(let rhsVideo)):
       return lhsVideo == rhsVideo
    default:
       return false
@@ -109,20 +109,14 @@ extension Search: PageRequest {
       parameters["pageToken"] = self.pageToken
 
       switch self.filter {
-      case .Term(let query, _):
+      case .term(let query, _):
          parameters["q"] = query
-      case .FromChannel(let channelId, _):
+      case .fromChannel(let channelId, _):
          parameters["channelId"] = channelId
-      case .RelatedTo(let videoId, _):
+      case .relatedTo(let videoId, _):
          parameters["videoId"] = videoId
       }
 
       return parameters
-   }
-}
-
-private extension SequenceType where Generator.Element: Equatable {
-   func substractArray(array: [Generator.Element]) -> [Generator.Element] {
-      return self.filter { !array.contains($0) }
    }
 }

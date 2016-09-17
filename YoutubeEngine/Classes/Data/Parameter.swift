@@ -10,8 +10,8 @@ extension String: Parameter {
    }
 }
 
-extension SequenceType where Generator.Element: Parameter {
+extension Sequence where Iterator.Element: Parameter {
    func joinParameters() -> String {
-      return self.map { $0.parameterValue }.joinWithSeparator(",")
+      return self.map { $0.parameterValue }.joined(separator: ",")
    }
 }

@@ -1,30 +1,30 @@
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 import YoutubeEngine
 import enum Result.NoError
 
 final class SearchViewModel {
-   let provider: AnyProperty<SearchProvider?>
+   let provider: Property<SearchProvider?>
    let keyword = MutableProperty("")
 
-   let items: AnyProperty<[SearchItem]>
+   let items: Property<[SearchItem]>
 
    init(engine: Engine) {
-      self.provider = AnyProperty(
-         initialValue: nil,
-         signal: self.keyword.signal
-            .debounce(0.5, onScheduler: QueueScheduler.mainQueueScheduler)
+      self.provider = Property(
+         initial: nil,
+         then: self.keyword.signal
+            .debounce(0.5, on: QueueScheduler.main)
             .map { $0.isEmpty ? nil : SearchProvider(keyword: $0, engine: engine) })
 
-      self.items = AnyProperty(
-         initialValue: [],
-         producer: self.provider.producer.flatMap(.Latest) {
+      self.items = Property(
+         initial: [],
+         then: self.provider.producer.flatMap(.latest) {
             provider -> SignalProducer<[SearchItem], NoError> in
             guard let provider = provider else {
                return SignalProducer(value: [])
             }
 
             return provider.items.producer
-         })
+      })
    }
 }

@@ -1,10 +1,10 @@
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 import YoutubeEngine
 
 final class SearchProvider {
 
-   let items: AnyProperty<[SearchItem]>
+   let items: Property<[SearchItem]>
    private(set) var isLoadingPage = false
 
    private var nextPageToken: String?
@@ -28,12 +28,12 @@ final class SearchProvider {
          return nil
       }
 
-      let request = Search(.Term(self.keyword, [.Video: [.Statistics, .ContentDetails], .Channel: [.Statistics]]),
+      let request = Search(.term(self.keyword, [.video: [.statistics, .contentDetails], .channel: [.statistics]]),
                            limit: 20,
                            pageToken: self.nextPageToken)
       return self.engine
          .search(request)
-         .on(next: {
+         .on(value: {
             page in
             self.nextPageToken = page.nextPageToken
             self.mutableItems.value = self.items.value + page.items

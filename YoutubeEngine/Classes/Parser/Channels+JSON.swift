@@ -8,8 +8,8 @@ extension Channel: JSONRepresentable {
       }
 
       self.id = id
-      self.snippet = Snippet(json: json[Part.Snippet.parameterValue])
-      self.statistics = ChannelStatistics(json: json[Part.Statistics.parameterValue])
+      self.snippet = Snippet(json: json[Part.snippet.parameterValue])
+      self.statistics = ChannelStatistics(json: json[Part.statistics.parameterValue])
    }
 }
 

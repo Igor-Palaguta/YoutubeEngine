@@ -8,9 +8,9 @@ extension Video: JSONRepresentable {
       }
 
       self.id = id
-      self.snippet = Snippet(json: json[Part.Snippet.parameterValue])
-      self.contentDetails = VideoContentDetails(json: json[Part.ContentDetails.parameterValue])
-      self.statistics = VideoStatistics(json: json[Part.Statistics.parameterValue])
+      self.snippet = Snippet(json: json[Part.snippet.parameterValue])
+      self.contentDetails = VideoContentDetails(json: json[Part.contentDetails.parameterValue])
+      self.statistics = VideoStatistics(json: json[Part.statistics.parameterValue])
    }
 }
 
@@ -32,7 +32,7 @@ extension VideoContentDetails: JSONRepresentable {
 }
 
 private extension JSON {
-   var duration: NSDateComponents? {
-      return self.string.flatMap { NSDateComponents(ISO8601String: $0) }
+   var duration: DateComponents? {
+      return self.string.flatMap { dateComponents(ISO8601String: $0) }
    }
 }
