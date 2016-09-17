@@ -1,6 +1,6 @@
 # YoutubeEngine
 
-Library with RAC4 api for Youtube. Allows easy access required parts of videos and channels in one call.
+Library with ReactiveCocoa api for Youtube. Allows easy access required parts of videos and channels in one call.
 
 ## Screenshots
 
@@ -26,7 +26,7 @@ engine.search(request)
 
 ## Requirements
 
-Supports both swift2.2, swift2.3 and swift. Use 'swift-3' branch for swift3
+Supports swift2.2, swift2.3 and swift3. Use 'swift-3' branch for swift3
 
 ## Installation
 
