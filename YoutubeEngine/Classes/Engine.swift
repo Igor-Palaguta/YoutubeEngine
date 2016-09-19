@@ -25,34 +25,32 @@ public final class Engine {
    }
 
    public func videos(_ request: Videos) -> SignalProducer<Page<Video>, NSError> {
-      return self.page(with: request)
+      return self.page(for: request)
    }
 
    public func channels(_ request: Channels) -> SignalProducer<Page<Channel>, NSError> {
-      return self.page(with: request)
+      return self.page(for: request)
    }
 
    public func search(_ request: Search) -> SignalProducer<Page<SearchItem>, NSError> {
-      return self.page(with: request)
+      return self.page(for: request)
          .flatMap(.latest) { page -> SignalProducer<Page<SearchItem>, NSError> in
 
             let videosParts =
                self.load(parts: request.videoParts.filter { $0 != request.part },
-                  items: page.items,
-                  type: Video.self)
+                         for: page.items.flatMap { $0.video })
 
             let channelParts =
                self.load(parts: request.channelParts.filter { $0 != request.part },
-                  items: page.items,
-                  type: Channel.self)
+                         for: page.items.flatMap { $0.channel })
 
             return SignalProducer.combineLatest(videosParts, channelParts)
                .map { videosById, channelsById -> Page<SearchItem> in
                   let mergedItems: [SearchItem] = page.items.map { item in
                      if let itemVideo = item.video, let video = videosById[itemVideo.id] {
-                        return itemVideo.merge(with: video).toSearchItem()
+                        return .videoItem(itemVideo.merge(with: video))
                      } else if let itemChannel = item.channel, let channel = channelsById[itemChannel.id] {
-                        return itemChannel.merge(with: channel).toSearchItem()
+                        return .channelItem(itemChannel.merge(with: channel))
                      }
                      return item
                   }
@@ -65,20 +63,18 @@ public final class Engine {
          }
    }
 
-   private func load<T: JSONRepresentable & PartibleObject & SearchableObject>(parts: [Part],
-                     items: [SearchItem],
-                     type: T.Type) -> SignalProducer<[String: T], NoError> {
+   private func load<T: JSONRepresentable & PartibleObject & SearchableObject>(
+      parts: [Part],
+      for objects: [T]) -> SignalProducer<[String: T], NoError> {
       if parts.isEmpty {
          return SignalProducer(value: [:])
       }
-
-      let objects = items.flatMap { T.from(searchItem: $0) }
 
       if objects.isEmpty {
          return SignalProducer(value: [:])
       }
 
-      return self.page(with: T.request(for: parts, objects: objects))
+      return self.page(for: T.request(for: parts, objects: objects))
          .map { page in
             var objectsById: [String: T] = [:]
             page.items.forEach {
@@ -101,13 +97,13 @@ public final class Engine {
       }
 
       let logger: Logger? = self.logEnabled ? DefaultLogger() : nil
-      return self.session.signalForJSON(request.method,
-                                        url,
-                                        parameters: parameters,
-                                        logger: logger)
+      return self.session.jsonSignal(request.method,
+                                     url,
+                                     parameters: parameters,
+                                     logger: logger)
    }
 
-   private func page<R: PageRequest>(with request: R) -> SignalProducer<Page<R.Item>, NSError> where R.Item: JSONRepresentable {
+   private func page<R: PageRequest>(for request: R) -> SignalProducer<Page<R.Item>, NSError> where R.Item: JSONRepresentable {
       return self.json(for: request)
          .map {
             json in

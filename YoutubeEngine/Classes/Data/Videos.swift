@@ -93,12 +93,4 @@ extension Video: PartibleObject, SearchableObject {
    var searchItemType: Type {
       return .video
    }
-
-   func toSearchItem() -> SearchItem {
-      return .videoItem(self)
-   }
-
-   static func from(searchItem: SearchItem) -> Video? {
-      return searchItem.video
-   }
 }

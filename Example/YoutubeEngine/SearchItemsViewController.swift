@@ -3,21 +3,14 @@ import YoutubeEngine
 import ReactiveSwift
 import enum Result.NoError
 
-final class SearchViewController: UITableViewController {
+final class SearchItemsViewController: UITableViewController {
 
    @IBOutlet private var searchBar: UISearchBar!
 
-   fileprivate lazy var model: SearchViewModel = {
-      //Generate your own https://developers.google.com/youtube/v3/getting-started
-      let engine = Engine(.key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
-      engine.logEnabled = true
-      return SearchViewModel(engine: engine)
-   }()
+   let model = MutableItemsViewModel<SearchItem>()
 
    override func viewDidLoad() {
       super.viewDidLoad()
-
-      self.navigationItem.titleView = self.searchBar
 
       self.tableView.keyboardDismissMode = .onDrag
 
@@ -39,8 +32,15 @@ final class SearchViewController: UITableViewController {
          .startWithCompleted {}
 
       self.model
-         .items
-         .producer
+         .provider
+         .producer.flatMap(.latest) {
+            provider -> SignalProducer<[SearchItem], NoError> in
+            guard let provider = provider else {
+               return SignalProducer(value: [])
+            }
+
+            return provider.items.producer
+         }
          .startWithValues {
             [weak self] _ in
             self?.tableView.reloadData()
@@ -48,11 +48,11 @@ final class SearchViewController: UITableViewController {
    }
 
    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return self.model.items.value.count
+      return self.model.items.count
    }
 
    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let item = self.model.items.value[indexPath.row]
+      let item = self.model.items[indexPath.row]
       switch item {
       case .channelItem(let channel):
          let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath) as! ChannelCell
@@ -81,21 +81,28 @@ final class SearchViewController: UITableViewController {
       }
    }
 
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      guard let controller = segue.destination as? SearchItemsViewController,
+         let cell = sender as? ChannelCell,
+         let channel = cell.channel else {
+            return
+      }
+      controller.title = channel.snippet!.title
+      controller.model.mutableProvider.value = AnyItemsProvider { token, limit in
+         let request = Search(.fromChannel(channel.id, [.statistics, .contentDetails]),
+                              limit: limit,
+                              pageToken: token)
+         return Engine.defaultEngine
+            .search(request)
+            .map { page in (page.items, page.nextPageToken) }
+      }
+   }
+
    private func presentError(_ error: NSError) {
       let alert = UIAlertController(title: "Request failed",
                                     message: error.localizedDescription,
                                     preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
       self.present(alert, animated: true, completion: nil)
-   }
-}
-
-extension SearchViewController: UISearchBarDelegate {
-   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-      self.model.keyword.value = searchText
-   }
-
-   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-      searchBar.resignFirstResponder()
    }
 }
