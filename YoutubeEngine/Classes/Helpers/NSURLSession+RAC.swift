@@ -24,10 +24,10 @@ struct DefaultLogger: Logger {
 }
 
 extension NSURLSession {
-   final func signalForJSON(method: Method,
-                            _ url: NSURL,
-                            parameters: [String: String]?,
-                            logger: Logger?) -> SignalProducer<JSON, NSError> {
+   final func jsonSignal(method: Method,
+                         _ url: NSURL,
+                           parameters: [String: String]?,
+                           logger: Logger?) -> SignalProducer<JSON, NSError> {
       return SignalProducer {
          observer, disposable in
          guard let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else {

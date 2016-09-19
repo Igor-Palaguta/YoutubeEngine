@@ -2,7 +2,7 @@ use_frameworks!
 
 target 'YoutubeEngine_Example' do
   pod 'YoutubeEngine', :path => '../'
-  pod 'Kingfisher'
+  pod 'Kingfisher', '2.6.0'
   pod 'Reusable'
 
   target 'YoutubeEngine_Tests' do

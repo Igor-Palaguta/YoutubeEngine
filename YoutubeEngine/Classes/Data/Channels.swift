@@ -78,12 +78,4 @@ extension Channel: PartibleObject, SearchableObject {
    var searchItemType: Type {
       return .Channel
    }
-
-   func toSearchItem() -> SearchItem {
-      return .ChannelItem(self)
-   }
-
-   static func fromSearchItem(item: SearchItem) -> Channel? {
-      return item.channel
-   }
 }

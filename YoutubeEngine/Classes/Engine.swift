@@ -38,21 +38,19 @@ public final class Engine {
 
             let videosParts =
                self.loadParts(request.videoParts.filter { $0 != request.part },
-                  items: page.items,
-                  type: Video.self)
+                              objects: page.items.flatMap { $0.video })
 
             let channelParts =
                self.loadParts(request.channelParts.filter { $0 != request.part },
-                  items: page.items,
-                  type: Channel.self)
+                              objects: page.items.flatMap { $0.channel })
 
             return combineLatest(videosParts, channelParts)
                .map { videosById, channelsById -> Page<SearchItem> in
                   let mergedItems: [SearchItem] = page.items.map { item in
                      if let itemVideo = item.video, let video = videosById[itemVideo.id] {
-                        return itemVideo.mergeParts(video).toSearchItem()
+                        return .VideoItem(itemVideo.mergeParts(video))
                      } else if let itemChannel = item.channel, let channel = channelsById[itemChannel.id] {
-                        return itemChannel.mergeParts(channel).toSearchItem()
+                        return .ChannelItem(itemChannel.mergeParts(channel))
                      }
                      return item
                   }
@@ -68,13 +66,10 @@ public final class Engine {
    private func loadParts<T: protocol<JSONRepresentable,
       PartibleObject,
       SearchableObject>>(parts: [Part],
-                         items: [SearchItem],
-                         type: T.Type) -> SignalProducer<[String: T], NoError> {
+                         objects: [T]) -> SignalProducer<[String: T], NoError> {
       if parts.isEmpty {
          return SignalProducer(value: [:])
       }
-
-      let objects = items.flatMap { T.fromSearchItem($0) }
 
       if objects.isEmpty {
          return SignalProducer(value: [:])
@@ -107,10 +102,10 @@ public final class Engine {
       }
 
       let logger: Logger? = self.logEnabled ? DefaultLogger() : nil
-      return self.session.signalForJSON(request.method,
-                                        url,
-                                        parameters: parameters,
-                                        logger: logger)
+      return self.session.jsonSignal(request.method,
+                                     url,
+                                     parameters: parameters,
+                                     logger: logger)
    }
 
    private func page<R: PageRequest where R.Item: JSONRepresentable>(request: R) -> SignalProducer<Page<R.Item>, NSError> {

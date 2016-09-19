@@ -150,7 +150,7 @@ class EngineSpec: QuickSpec {
             var justChannelsType = true
 
             self.stubCommand("search", fileName: "search_VEVO") { request in
-               let components = NSURLComponents(string: request.URL!.absoluteString)
+               let components = NSURLComponents(URL: request.URL!, resolvingAgainstBaseURL: false)
                if let queryItems = components?.queryItems,
                   let typeIndex = queryItems.indexOf({ $0.name == "type" }) {
                      justChannelsType = queryItems[typeIndex].value == Type.Channel.parameterValue

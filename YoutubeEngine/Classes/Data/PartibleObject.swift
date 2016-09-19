@@ -8,6 +8,4 @@ protocol PartibleObject {
 protocol SearchableObject {
    var id: String { get }
    var searchItemType: Type { get }
-   func toSearchItem() -> SearchItem
-   static func fromSearchItem(item: SearchItem) -> Self?
 }
