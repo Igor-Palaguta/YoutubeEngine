@@ -11,7 +11,7 @@ Library with ReactiveCocoa api for Youtube. Allows easy access required parts of
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ```
-let engine = Engine(key: YOUR_API_KEY)
+let engine = Engine(.Key: YOUR_API_KEY)
 let request = Search(.Term("VEVO", [.Video: [.Statistics, .ContentDetails], .Channel: [.Statistics]]))
 engine.search(request)
    .startWithNext {
