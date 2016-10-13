@@ -13,7 +13,7 @@ final class VideoCell: UITableViewCell {
 
    var video: Video! {
       didSet {
-         self.thumbnailView.kf_setImage(with: ImageResource(downloadURL: video.snippet!.defaultImage.url),
+         self.thumbnailView.kf.setImage(with: ImageResource(downloadURL: video.snippet!.defaultImage.url),
                                         options: [.transition(.fade(0.3))])
          self.titleLabel.text = video.snippet?.title
          self.channelLabel.text = video.snippet?.channelTitle

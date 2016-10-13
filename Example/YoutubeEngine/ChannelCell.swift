@@ -10,7 +10,7 @@ final class ChannelCell: UITableViewCell {
 
    var channel: Channel! {
       didSet {
-         self.thumbnailView.kf_setImage(with: ImageResource(downloadURL: channel.snippet!.defaultImage.url),
+         self.thumbnailView.kf.setImage(with: ImageResource(downloadURL: channel.snippet!.defaultImage.url),
                                         options: [.transition(.fade(0.3))])
          self.titleLabel.text = channel.snippet?.title
 
