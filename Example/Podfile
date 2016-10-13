@@ -9,7 +9,7 @@ target 'YoutubeEngine_Example' do
   target 'YoutubeEngine_Tests' do
     inherit! :search_paths
 
-    pod 'Quick', :git => 'https://github.com/Quick/Quick.git', :branch => 'swift-3.0'
+    pod 'Quick', '~> 0.10'
     pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git'
     pod 'OHHTTPStubs/NSURLSession', :git => 'https://github.com/AliSoftware/OHHTTPStubs.git', :branch => 'swift-3.0'
     pod 'OHHTTPStubs/Swift', :git => 'https://github.com/AliSoftware/OHHTTPStubs.git', :branch => 'swift-3.0'
