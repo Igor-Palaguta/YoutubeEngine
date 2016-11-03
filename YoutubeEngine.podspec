@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'YoutubeEngine'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Swift ReactiveCocoa lib for Youtube api.'
 
   s.description      = <<-DESC
