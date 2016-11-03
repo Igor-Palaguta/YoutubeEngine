@@ -2,8 +2,8 @@ use_frameworks!
 
 target 'YoutubeEngine_Example' do
   pod 'YoutubeEngine', :path => '../'
-  pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher.git'
-  pod 'SwiftyJSON', :git => 'https://github.com/acegreen/SwiftyJSON.git', :branch => 'swift3'
+  pod 'Kingfisher', '~> 3.0'
+  pod 'SwiftyJSON', '~> 3.0'
   pod 'ReactiveSwift', :git => 'https://github.com/ReactiveCocoa/ReactiveSwift.git'
 
   target 'YoutubeEngine_Tests' do
@@ -11,7 +11,7 @@ target 'YoutubeEngine_Example' do
 
     pod 'Quick', '~> 0.10'
     pod 'Nimble', '~> 5.0'
-    pod 'OHHTTPStubs/NSURLSession', :git => 'https://github.com/AliSoftware/OHHTTPStubs.git', :branch => 'swift-3.0'
-    pod 'OHHTTPStubs/Swift', :git => 'https://github.com/AliSoftware/OHHTTPStubs.git', :branch => 'swift-3.0'
+    pod 'OHHTTPStubs/NSURLSession'
+    pod 'OHHTTPStubs/Swift'
   end
 end
