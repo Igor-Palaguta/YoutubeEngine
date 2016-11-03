@@ -17,6 +17,6 @@ Swift library for searching Youtube channels and videos
 
   s.source_files = 'YoutubeEngine/Classes/**/*'
 
-  s.dependency 'ReactiveCocoa', '~> 4.2'
-  s.dependency 'SwiftyJSON'
+  s.dependency 'ReactiveCocoa', '~> 4.2.0'
+  s.dependency 'SwiftyJSON', '~> 2.3.0'
 end

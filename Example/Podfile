@@ -8,7 +8,7 @@ target 'YoutubeEngine_Example' do
   target 'YoutubeEngine_Tests' do
     inherit! :search_paths
 
-    pod 'Quick', '~> 0.8'
+    pod 'Quick', '~> 0.8.0'
     pod 'Nimble', '~> 3.0'
     pod 'Mockingjay'
   end

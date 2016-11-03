@@ -1,14 +1,14 @@
 PODS:
   - Kingfisher (2.6.0)
-  - Mockingjay (1.2.2):
-    - Mockingjay/Core (= 1.2.2)
-    - Mockingjay/XCTest (= 1.2.2)
-  - Mockingjay/Core (1.2.2):
+  - Mockingjay (1.3.1):
+    - Mockingjay/Core (= 1.3.1)
+    - Mockingjay/XCTest (= 1.3.1)
+  - Mockingjay/Core (1.3.1):
     - URITemplate (~> 1.3)
-  - Mockingjay/XCTest (1.2.2):
+  - Mockingjay/XCTest (1.3.1):
     - Mockingjay/Core
   - Nimble (3.2.0)
-  - Quick (0.9.3)
+  - Quick (0.8.0)
   - ReactiveCocoa (4.2.2):
     - Result (~> 2.0)
   - Result (2.1.3)
@@ -17,17 +17,17 @@ PODS:
     - Reusable/View (= 2.5.0)
   - Reusable/Storyboard (2.5.0)
   - Reusable/View (2.5.0)
-  - SwiftyJSON (2.3.2)
-  - URITemplate (1.3.1)
-  - YoutubeEngine (0.1.0):
-    - ReactiveCocoa (~> 4.2)
-    - SwiftyJSON
+  - SwiftyJSON (2.3.3)
+  - URITemplate (1.4.0)
+  - YoutubeEngine (0.1.1):
+    - ReactiveCocoa (~> 4.2.0)
+    - SwiftyJSON (~> 2.3.0)
 
 DEPENDENCIES:
   - Kingfisher (= 2.6.0)
   - Mockingjay
   - Nimble (~> 3.0)
-  - Quick (~> 0.8)
+  - Quick (~> 0.8.0)
   - Reusable
   - YoutubeEngine (from `../`)
 
@@ -37,16 +37,16 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Kingfisher: d84c5fd176ea86cc7b8aac65fd55feda6f70f130
-  Mockingjay: 5de65f14108473afc6727e05df9a3ecc9cef8562
+  Mockingjay: e6ffe6106591d2555025842b1b655decc124f0ca
   Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
-  Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
+  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
   ReactiveCocoa: 72263e7ac0770c274617ccd345e01049d0ca38ae
   Result: 18e1a7597fbcca5923c565b40a25a98afafdee02
   Reusable: 1775ede04719c488bb04e809d923cbb7214168b8
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
-  YoutubeEngine: 9fe7738fb6ce53b6dbf365c2cea807a243eb967c
+  SwiftyJSON: 0fd0a115a3c0c09b277d2ab801df154902b942c3
+  URITemplate: e2a2a0f9d398834fde67214b491c2c925c9baa06
+  YoutubeEngine: d4ffcd64f53a54dc046f65b0b81187becbff320d
 
-PODFILE CHECKSUM: 2b00da7e67cc8845b49342748bebefb5585b83c3
+PODFILE CHECKSUM: 97ab6d9b1f96466355a02911334b42e0ac0186a5
 
 COCOAPODS: 1.1.1
