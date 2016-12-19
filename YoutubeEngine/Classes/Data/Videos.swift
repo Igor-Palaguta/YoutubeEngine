@@ -22,7 +22,7 @@ public struct Videos {
 
 public struct Video: Equatable {
    public let id: String
-   public let snippet: Snippet?
+   public let snippet: VideoSnippet?
    public let statistics: VideoStatistics?
    public let contentDetails: VideoContentDetails?
 }
@@ -32,6 +32,26 @@ public func == (lhs: Video, rhs: Video) -> Bool {
       lhs.snippet == rhs.snippet &&
       lhs.statistics == rhs.statistics &&
       lhs.contentDetails == rhs.contentDetails
+}
+
+public struct VideoSnippet: Equatable {
+   public let title: String
+   public let publishDate: NSDate
+   public let channelId: String
+   public let channelTitle: String?
+   public let defaultImage: Image
+   public let mediumImage: Image
+   public let highImage: Image
+}
+
+public func == (lhs: VideoSnippet, rhs: VideoSnippet) -> Bool {
+   return lhs.title == rhs.title &&
+      lhs.publishDate == rhs.publishDate &&
+      lhs.defaultImage == rhs.defaultImage &&
+      lhs.mediumImage == rhs.mediumImage &&
+      lhs.highImage == rhs.highImage &&
+      lhs.channelId == rhs.channelId &&
+      lhs.channelTitle == rhs.channelTitle
 }
 
 public struct VideoStatistics: Equatable {

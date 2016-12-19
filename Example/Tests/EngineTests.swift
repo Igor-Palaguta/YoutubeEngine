@@ -49,10 +49,8 @@ class EngineSpec: QuickSpec {
          let vevoChannel =
             Channel(id: "UC2pmfLm7iq6Ov1UwYrWYkZA",
                     snippet:
-               Snippet(title: "Vevo",
+               ChannelSnippet(title: "Vevo",
                   publishDate: ISO8601Formatter.dateFromString("2006-04-14T17:07:29.000Z")!,
-                  channelId: "UC2pmfLm7iq6Ov1UwYrWYkZA",
-                  channelTitle: "Vevo",
                   defaultImage: Image(url: NSURL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s88-c-k-no-rj-c0xffffff/photo.jpg")!, size: nil),
                   mediumImage: Image(url: NSURL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s240-c-k-no-rj-c0xffffff/photo.jpg")!, size: nil),
                   highImage: Image(url: NSURL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s240-c-k-no-rj-c0xffffff/photo.jpg")!, size: nil)
@@ -64,7 +62,7 @@ class EngineSpec: QuickSpec {
          let video1 =
             Video(id: "FASkBnLAHEw",
                   snippet:
-               Snippet(title: "Vevo - HOT THIS WEEK: Aug 5, 2016",
+               VideoSnippet(title: "Vevo - HOT THIS WEEK: Aug 5, 2016",
                   publishDate: ISO8601Formatter.dateFromString("2016-08-05T19:30:01.000Z")!,
                   channelId: "UC2pmfLm7iq6Ov1UwYrWYkZA",
                   channelTitle: "Vevo",
@@ -80,7 +78,7 @@ class EngineSpec: QuickSpec {
          let video2 =
             Video(id: "Ho1oF_P3X00",
                   snippet:
-               Snippet(title: "Top 100 Most Viewed Songs Of All Time (VEVO) (Updated August 2016)",
+               VideoSnippet(title: "Top 100 Most Viewed Songs Of All Time (VEVO) (Updated August 2016)",
                   publishDate: ISO8601Formatter.dateFromString("2016-08-03T16:52:56.000Z")!,
                   channelId: "UCVDKPOPmcsZuEjLVqFgQDcg",
                   channelTitle: "TopMusicMafia",
@@ -235,6 +233,21 @@ class EngineSpec: QuickSpec {
                   localEngine
                      .channels(Channels(.Mine))
                      .startWithNext { _ in
+                        done()
+                  }
+               }()
+            }
+         }
+
+         it("parses channels") {
+            self.stubCommand("channels", fileName: "channels_search")
+            waitUntil(timeout: 1) { done in
+               {
+                  let localEngine = Engine(.Key("TEST"))
+                  localEngine
+                     .channels(Channels(.ByIds(["UC2pmfLm7iq6Ov1UwYrWYkZA"])))
+                     .startWithNext { channels in
+                        expect(channels.items) == [vevoChannel]
                         done()
                   }
                }()

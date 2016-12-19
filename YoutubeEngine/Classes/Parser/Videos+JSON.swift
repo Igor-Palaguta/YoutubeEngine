@@ -8,14 +8,39 @@ extension Video: JSONRepresentable {
       }
 
       self.id = id
-      self.snippet = Snippet(json: json[Part.Snippet.parameterValue])
+      self.snippet = VideoSnippet(json: json[Part.Snippet.parameterValue])
       self.contentDetails = VideoContentDetails(json: json[Part.ContentDetails.parameterValue])
       self.statistics = VideoStatistics(json: json[Part.Statistics.parameterValue])
    }
 }
 
+extension VideoSnippet: JSONRepresentable {
+   init?(json: JSON) {
+      guard let publishDate = json["publishedAt"].date,
+         let title = json["title"].string,
+         let channelId = json["channelId"].string,
+         let channelTitle = json["channelTitle"].string,
+         let defaultImage = Image(json: json["thumbnails"]["default"]),
+         let mediumImage = Image(json: json["thumbnails"]["medium"]),
+         let highImage = Image(json: json["thumbnails"]["high"]) else {
+            return nil
+      }
+      self.title = title
+      self.publishDate = publishDate
+      self.channelId = channelId
+      self.channelTitle = channelTitle
+      self.defaultImage = defaultImage
+      self.mediumImage = mediumImage
+      self.highImage = highImage
+   }
+}
+
 extension VideoStatistics: JSONRepresentable {
    init?(json: JSON) {
+      guard json.isExists() else {
+         return nil
+      }
+
       self.views = json["viewCount"].string.flatMap { Int($0) }
       self.likes = json["likeCount"].string.flatMap { Int($0) }
       self.dislikes = json["dislikeCount"].string.flatMap { Int($0) }
@@ -28,11 +53,5 @@ extension VideoContentDetails: JSONRepresentable {
          return nil
       }
       self.duration = duration
-   }
-}
-
-private extension JSON {
-   var duration: NSDateComponents? {
-      return self.string.flatMap { NSDateComponents(ISO8601String: $0) }
    }
 }
