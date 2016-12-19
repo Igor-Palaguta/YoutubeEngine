@@ -80,16 +80,16 @@ public enum SearchItem: Equatable {
       }
       return nil
    }
-}
 
-public func == (lhs: SearchItem, rhs: SearchItem) -> Bool {
-   switch (lhs, rhs) {
-   case (.channelItem(let lhsChannel), .channelItem(let rhsChannel)):
-      return lhsChannel == rhsChannel
-   case (.videoItem(let lhsVideo), .videoItem(let rhsVideo)):
-      return lhsVideo == rhsVideo
-   default:
-      return false
+   public static func == (lhs: SearchItem, rhs: SearchItem) -> Bool {
+      switch (lhs, rhs) {
+      case (.channelItem(let lhsChannel), .channelItem(let rhsChannel)):
+         return lhsChannel == rhsChannel
+      case (.videoItem(let lhsVideo), .videoItem(let rhsVideo)):
+         return lhsVideo == rhsVideo
+      default:
+         return false
+      }
    }
 }
 

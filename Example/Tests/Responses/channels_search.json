@@ -1,0 +1,40 @@
+{
+   "kind": "youtube#channelListResponse",
+   "etag": "\"yaAQEaHITilaGdzoEjt_tJdICqI/HDHmRXZGl-B3RJXO0R9f3C4_EcA\"",
+   "pageInfo": {
+      "totalResults": 1,
+      "resultsPerPage": 1
+   },
+   "items": [
+             {
+             "kind": "youtube#channel",
+             "etag": "\"yaAQEaHITilaGdzoEjt_tJdICqI/7P52U5CwsqpIlv6DFFzoxPFS5Rk\"",
+             "id": "UC2pmfLm7iq6Ov1UwYrWYkZA",
+             "snippet": {
+             "publishedAt": "2006-04-14T17:07:29.000Z",
+             "title": "Vevo",
+             "description": "",
+             "thumbnails": {
+             "default": {
+             "url": "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s88-c-k-no-rj-c0xffffff/photo.jpg"
+             },
+             "medium": {
+             "url": "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s240-c-k-no-rj-c0xffffff/photo.jpg"
+             },
+             "high": {
+             "url": "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s240-c-k-no-rj-c0xffffff/photo.jpg"
+             }
+             },
+             "channelTitle": "Vevo",
+             "liveBroadcastContent": "none"
+             },
+             "statistics": {
+             "viewCount": "333505516",
+             "commentCount": "51574",
+             "subscriberCount": "12397460",
+             "hiddenSubscriberCount": false,
+             "videoCount": "975"
+             }
+             }
+             ]
+}
