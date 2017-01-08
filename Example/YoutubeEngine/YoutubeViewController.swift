@@ -37,7 +37,7 @@ final class YoutubeViewController: UIViewController {
       }
       contentController.model.mutableProvider <~ self.model.keyword.signal
          .debounce(0.5, on: QueueScheduler.main)
-         .map { keyword in
+         .map { keyword -> AnyItemsProvider<SearchItem>? in
             if keyword.isEmpty {
                return nil
             }
