@@ -23,13 +23,13 @@ engine.search(request)
 
 ## Requirements
 
-Supports swift2.2, swift2.3 and swift3. Use 'swift-3' branch for swift3
+Supports swift2.2, swift2.3 and swift3. Use 'swift-2.3' branch for swift2
 
 ## Installation
 
 Cocoapods
 ```ruby
-pod "YoutubeEngine"
+pod 'YoutubeEngine', :git => 'https://github.com/Igor-Palaguta/YoutubeEngine.git', :branch => 'swift-2.3'
 ```
 
 Carthage
