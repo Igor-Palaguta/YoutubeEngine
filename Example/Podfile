@@ -2,14 +2,16 @@ use_frameworks!
 
 target 'YoutubeEngine_Example' do
   pod 'YoutubeEngine', :path => '../'
-  pod 'Kingfisher', '2.6.0'
-  pod 'Reusable'
+  pod 'Kingfisher', '~> 3.0'
+  pod 'SwiftyJSON', '~> 3.0'
+  pod 'ReactiveSwift', '~> 1.0'
 
   target 'YoutubeEngine_Tests' do
     inherit! :search_paths
 
-    pod 'Quick', '~> 0.8.0'
-    pod 'Nimble', '~> 3.0'
-    pod 'Mockingjay'
+    pod 'Quick', '~> 0.10'
+    pod 'Nimble', '~> 5.0'
+    pod 'OHHTTPStubs/NSURLSession'
+    pod 'OHHTTPStubs/Swift'
   end
 end

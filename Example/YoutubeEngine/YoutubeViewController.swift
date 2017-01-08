@@ -1,9 +1,9 @@
 import UIKit
 import YoutubeEngine
-import ReactiveCocoa
+import ReactiveSwift
 
 private let _defaultEngine: Engine = {
-   let engine = Engine(.Key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
+   let engine = Engine(.key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
    engine.logEnabled = true
    return engine
 }()
@@ -22,7 +22,7 @@ final class YoutubeViewController: UIViewController {
 
    @IBOutlet private weak var searchBar: UISearchBar!
 
-   private let model = YoutubeViewModel()
+   fileprivate let model = YoutubeViewModel()
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -31,18 +31,18 @@ final class YoutubeViewController: UIViewController {
       self.automaticallyAdjustsScrollViewInsets = false
    }
 
-   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-      guard let contentController = segue.destinationViewController as? SearchItemsViewController else {
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      guard let contentController = segue.destination as? SearchItemsViewController else {
          return
       }
       contentController.model.mutableProvider <~ self.model.keyword.signal
-         .debounce(0.5, onScheduler: QueueScheduler.mainQueueScheduler)
-         .map { keyword in
+         .debounce(0.5, on: QueueScheduler.main)
+         .map { keyword -> AnyItemsProvider<SearchItem>? in
             if keyword.isEmpty {
                return nil
             }
             return AnyItemsProvider { token, limit in
-               let request = Search(.Term(keyword, [.Video: [.Statistics, .ContentDetails], .Channel: [.Statistics]]),
+               let request = Search(.term(keyword, [.video: [.statistics, .contentDetails], .channel: [.statistics]]),
                                     limit: limit,
                                     pageToken: token)
                return Engine.defaultEngine
@@ -54,11 +54,11 @@ final class YoutubeViewController: UIViewController {
 }
 
 extension YoutubeViewController: UISearchBarDelegate {
-   func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
       self.model.keyword.value = searchText
    }
 
-   func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
       searchBar.resignFirstResponder()
    }
 }

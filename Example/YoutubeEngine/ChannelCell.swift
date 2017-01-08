@@ -1,9 +1,8 @@
 import Foundation
 import YoutubeEngine
 import Kingfisher
-import Reusable
 
-final class ChannelCell: UITableViewCell, NibReusable {
+final class ChannelCell: UITableViewCell {
    @IBOutlet private weak var thumbnailView: UIImageView!
    @IBOutlet private weak var titleLabel: UILabel!
    @IBOutlet private weak var videosLabel: UILabel!
@@ -11,19 +10,19 @@ final class ChannelCell: UITableViewCell, NibReusable {
 
    var channel: Channel! {
       didSet {
-         self.thumbnailView.kf_setImageWithURL(channel.snippet?.defaultImage.url,
-                                               optionsInfo: [.Transition(.Fade(0.3))])
+         self.thumbnailView.kf.setImage(with: ImageResource(downloadURL: channel.snippet!.defaultImage.url),
+                                        options: [.transition(.fade(0.3))])
          self.titleLabel.text = channel.snippet?.title
 
          self.videosLabel.text = channel.statistics?
             .videos
             .map {
-               NSNumberFormatter.localizedStringFromNumber($0, numberStyle: .DecimalStyle) + " videos"
+               NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " videos"
             }
 
          self.subscribersLabel.text = channel.statistics?.subscribers
             .map {
-               NSNumberFormatter.localizedStringFromNumber($0, numberStyle: .DecimalStyle) + " subscribers"
+               NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " subscribers"
             }
       }
    }

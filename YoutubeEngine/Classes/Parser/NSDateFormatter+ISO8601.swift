@@ -1,18 +1,17 @@
 import Foundation
 
-private extension NSDateFormatter {
-   class func serverDateFormatter(format: String) -> Self {
+private extension DateFormatter {
+   class func serverDateFormatter(_ format: String) -> Self {
       let formatter = self.init()
-      let usLocale = NSLocale(localeIdentifier: "en_US_POSIX")
+      let usLocale = Locale(identifier: "en_US_POSIX")
       formatter.locale = usLocale
 
-      let utcTimezone = NSTimeZone(abbreviation: "UTC")!
+      let utcTimezone = TimeZone(abbreviation: "UTC")!
 
-      formatter.calendar = {
-         $0.timeZone = utcTimezone
-         $0.locale = usLocale
-         return $0
-      }(NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!)
+      var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+      calendar.timeZone = utcTimezone
+      calendar.locale = usLocale
+      formatter.calendar = calendar
 
       formatter.timeZone = utcTimezone
 
@@ -22,4 +21,4 @@ private extension NSDateFormatter {
    }
 }
 
-let ISO8601Formatter = NSDateFormatter.serverDateFormatter("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+let ISO8601Formatter = DateFormatter.serverDateFormatter("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")

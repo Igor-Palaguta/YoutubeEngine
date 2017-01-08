@@ -1,24 +1,24 @@
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 import YoutubeEngine
 
 protocol ItemsProviders {
    associatedtype Item
-   var items: AnyProperty<[Item]> { get }
+   var items: Property<[Item]> { get }
    var isLoadingPage: Bool { get }
    var pageLoader: SignalProducer<Void, NSError>? { get }
 }
 
 final class AnyItemsProvider<Item>: ItemsProviders {
-   let items: AnyProperty<[Item]>
+   let items: Property<[Item]>
    private(set) var isLoadingPage = false
 
-   typealias PageLoader = (pageToken: String?, limit: Int) -> SignalProducer<([Item], String?), NSError>
+   typealias PageLoader = (_ pageToken: String?, _ limit: Int) -> SignalProducer<([Item], String?), NSError>
    private let _pageLoader: PageLoader
    private var nextPageToken: String?
    private let mutableItems = MutableProperty<[Item]?>(nil)
 
-   init(pageLoader: PageLoader) {
+   init(pageLoader: @escaping PageLoader) {
       self._pageLoader = pageLoader
       self.items = self.mutableItems.map { $0 ?? [] }
    }
@@ -33,8 +33,8 @@ final class AnyItemsProvider<Item>: ItemsProviders {
          return nil
       }
 
-      return self._pageLoader(pageToken: self.nextPageToken, limit: 20)
-         .on(next: {
+      return self._pageLoader(self.nextPageToken, 20)
+         .on(value: {
             items, token in
             self.nextPageToken = token
             self.mutableItems.value = self.items.value + items

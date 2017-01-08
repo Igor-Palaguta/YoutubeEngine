@@ -1,9 +1,8 @@
 import UIKit
 import YoutubeEngine
 import Kingfisher
-import Reusable
 
-final class VideoCell: UITableViewCell, NibReusable {
+final class VideoCell: UITableViewCell {
 
    @IBOutlet private weak var thumbnailView: UIImageView!
    @IBOutlet private weak var durationBackgroundView: UIView!
@@ -14,17 +13,17 @@ final class VideoCell: UITableViewCell, NibReusable {
 
    var video: Video! {
       didSet {
-         self.thumbnailView.kf_setImageWithURL(video.snippet?.defaultImage.url,
-                                               optionsInfo: [.Transition(.Fade(0.3))])
+         self.thumbnailView.kf.setImage(with: ImageResource(downloadURL: video.snippet!.defaultImage.url),
+                                        options: [.transition(.fade(0.3))])
          self.titleLabel.text = video.snippet?.title
          self.channelLabel.text = video.snippet?.channelTitle
 
          self.durationLabel.text = video.contentDetails?.duration.youtubeDurationString
-         self.durationBackgroundView.hidden = video.contentDetails?.duration == nil
+         self.durationBackgroundView.isHidden = video.contentDetails?.duration == nil
 
          let views = video.statistics?.views
             .map {
-               NSNumberFormatter.localizedStringFromNumber($0, numberStyle: .DecimalStyle) + " views"
+               NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " views"
          }
 
          let timestamp = video.snippet?.publishDate.timestampString
@@ -40,37 +39,37 @@ final class VideoCell: UITableViewCell, NibReusable {
    }
 }
 
-private extension NSDateComponents {
+private extension DateComponents {
    var youtubeDurationString: String? {
-      let durationFormatter = NSDateComponentsFormatter()
-      durationFormatter.unitsStyle = .Positional
-      durationFormatter.zeroFormattingBehavior = .Pad
-      durationFormatter.allowedUnits = [.Minute, .Second]
-      return durationFormatter.stringFromDateComponents(self)
+      let durationFormatter = DateComponentsFormatter()
+      durationFormatter.unitsStyle = .positional
+      durationFormatter.zeroFormattingBehavior = .pad
+      durationFormatter.allowedUnits = [.minute, .second]
+      return durationFormatter.string(from: self)
    }
 }
 
 private extension String {
-   func dropCharactersStarting(end: String) -> String {
-      guard let range = self.rangeOfString(end) else {
+   func dropCharactersStarting(_ end: String) -> String {
+      guard let range = self.range(of: end) else {
          return self
       }
-      return self.substringToIndex(range.startIndex)
+      return self.substring(to: range.lowerBound)
    }
 }
 
-private extension NSDate {
-   func timestampStingToDate(date: NSDate) -> String? {
-      if date.timeIntervalSinceDate(self) < 60 {
+private extension Date {
+   func timestampStingToDate(_ date: Date) -> String? {
+      if date.timeIntervalSince(self) < 60 {
          return NSLocalizedString("just now", comment: "")
       }
 
-      let formatter = NSDateComponentsFormatter()
-      formatter.unitsStyle = .Short
+      let formatter = DateComponentsFormatter()
+      formatter.unitsStyle = .short
       formatter.maximumUnitCount = 1
-      formatter.allowedUnits = [.Year, .Month, .Day, .Hour, .Minute]
+      formatter.allowedUnits = [.year, .month, .day, .hour, .minute]
 
-      guard let timeString = formatter.stringFromDate(self, toDate: date) else {
+      guard let timeString = formatter.string(from: self, to: date) else {
          return nil
       }
 
@@ -79,6 +78,6 @@ private extension NSDate {
    }
 
    var timestampString: String? {
-      return self.timestampStingToDate(NSDate())
+      return self.timestampStingToDate(Date())
    }
 }

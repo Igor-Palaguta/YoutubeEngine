@@ -27,7 +27,7 @@ struct AnyPageRequest<ItemType>: PageRequest {
    let pageToken: String?
    let limit: Int?
 
-   init<R: PageRequest where R.Item == Item>(_ request: R) {
+   init<R: PageRequest>(_ request: R) where R.Item == Item {
       self.method = request.method
       self.command = request.command
       self.parameters = request.parameters

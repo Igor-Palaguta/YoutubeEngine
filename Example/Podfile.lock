@@ -1,34 +1,28 @@
 PODS:
-  - Kingfisher (2.6.0)
-  - Mockingjay (1.3.1):
-    - Mockingjay/Core (= 1.3.1)
-    - Mockingjay/XCTest (= 1.3.1)
-  - Mockingjay/Core (1.3.1):
-    - URITemplate (~> 1.3)
-  - Mockingjay/XCTest (1.3.1):
-    - Mockingjay/Core
-  - Nimble (3.2.0)
-  - Quick (0.8.0)
-  - ReactiveCocoa (4.2.2):
-    - Result (~> 2.0)
-  - Result (2.1.3)
-  - Reusable (2.5.0):
-    - Reusable/Storyboard (= 2.5.0)
-    - Reusable/View (= 2.5.0)
-  - Reusable/Storyboard (2.5.0)
-  - Reusable/View (2.5.0)
-  - SwiftyJSON (2.3.3)
-  - URITemplate (1.4.0)
+  - Kingfisher (3.1.4)
+  - Nimble (5.1.1)
+  - OHHTTPStubs/Core (5.2.2)
+  - OHHTTPStubs/NSURLSession (5.2.2):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/Swift (5.2.2):
+    - OHHTTPStubs/Core
+  - Quick (0.10.0)
+  - ReactiveSwift (1.0.0):
+    - Result (~> 3.1)
+  - Result (3.1.0)
+  - SwiftyJSON (3.1.1)
   - YoutubeEngine (0.1.2):
-    - ReactiveCocoa (~> 4.2.0)
-    - SwiftyJSON (~> 2.3.0)
+    - ReactiveSwift
+    - SwiftyJSON (~> 3.0)
 
 DEPENDENCIES:
-  - Kingfisher (= 2.6.0)
-  - Mockingjay
-  - Nimble (~> 3.0)
-  - Quick (~> 0.8.0)
-  - Reusable
+  - Kingfisher (~> 3.0)
+  - Nimble (~> 5.0)
+  - OHHTTPStubs/NSURLSession
+  - OHHTTPStubs/Swift
+  - Quick (~> 0.10)
+  - ReactiveSwift (~> 1.0)
+  - SwiftyJSON (~> 3.0)
   - YoutubeEngine (from `../`)
 
 EXTERNAL SOURCES:
@@ -36,17 +30,15 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Kingfisher: d84c5fd176ea86cc7b8aac65fd55feda6f70f130
-  Mockingjay: e6ffe6106591d2555025842b1b655decc124f0ca
-  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
-  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
-  ReactiveCocoa: 72263e7ac0770c274617ccd345e01049d0ca38ae
-  Result: 18e1a7597fbcca5923c565b40a25a98afafdee02
-  Reusable: 1775ede04719c488bb04e809d923cbb7214168b8
-  SwiftyJSON: 0fd0a115a3c0c09b277d2ab801df154902b942c3
-  URITemplate: e2a2a0f9d398834fde67214b491c2c925c9baa06
-  YoutubeEngine: 05aee3b90e62135bf2df3ef0b64c67f0ba50a5f1
+  Kingfisher: 6c67e3e57f2d81a9cfdfa25052cd86f33ceac9bb
+  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
+  OHHTTPStubs: 34d9d0994e64fcf8552dbfade5ce82ada913ee31
+  Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
+  ReactiveSwift: f391724ee318a2cfd3e37dfb041cd49ecf4e7869
+  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
+  YoutubeEngine: b8dd65867287136a39a083943254432232e22b7f
 
-PODFILE CHECKSUM: 97ab6d9b1f96466355a02911334b42e0ac0186a5
+PODFILE CHECKSUM: 0cdc458f9274a6df19e270be1efc8fddc4b63467
 
 COCOAPODS: 1.1.1

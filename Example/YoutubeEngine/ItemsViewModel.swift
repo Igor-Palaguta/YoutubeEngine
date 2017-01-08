@@ -1,9 +1,9 @@
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 
 protocol ItemsViewModel {
    associatedtype Item
-   var provider: AnyProperty<AnyItemsProvider<Item>?> { get }
+   var provider: Property<AnyItemsProvider<Item>?> { get }
 }
 
 extension ItemsViewModel {
@@ -13,11 +13,11 @@ extension ItemsViewModel {
 }
 
 final class MutableItemsViewModel<Item>: ItemsViewModel {
-   let provider: AnyProperty<AnyItemsProvider<Item>?>
+   let provider: Property<AnyItemsProvider<Item>?>
    let mutableProvider: MutableProperty<AnyItemsProvider<Item>?>
 
    init() {
       self.mutableProvider = MutableProperty(nil)
-      self.provider = AnyProperty(self.mutableProvider)
+      self.provider = Property(self.mutableProvider)
    }
 }

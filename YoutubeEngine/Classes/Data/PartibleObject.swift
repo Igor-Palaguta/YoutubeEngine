@@ -1,8 +1,8 @@
 import Foundation
 
 protocol PartibleObject {
-   func mergeParts(other: Self) -> Self
-   static func requestForParts(parts: [Part], objects: [Self]) -> AnyPageRequest<Self>
+   func merge(with other: Self) -> Self
+   static func request(for parts: [Part], objects: [Self]) -> AnyPageRequest<Self>
 }
 
 protocol SearchableObject {

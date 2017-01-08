@@ -1,22 +1,22 @@
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 import SwiftyJSON
 import enum Result.NoError
 
 public final class Engine {
    public enum Authorization {
-      case Key(String)
-      case AccessToken(String)
+      case key(String)
+      case accessToken(String)
    }
 
    public var logEnabled = false
 
-   private let session: NSURLSession
+   private let session: URLSession
    private let authorization: Authorization
-   private let baseURL = NSURL(string: "https://www.googleapis.com/youtube/v3")!
+   private let baseURL = URL(string: "https://www.googleapis.com/youtube/v3")!
 
    public init(_ authorization: Authorization) {
-      self.session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+      self.session = URLSession(configuration: URLSessionConfiguration.default)
       self.authorization = authorization
    }
 
@@ -24,33 +24,33 @@ public final class Engine {
       self.session.invalidateAndCancel()
    }
 
-   public func videos(request: Videos) -> SignalProducer<Page<Video>, NSError> {
-      return self.page(request)
+   public func videos(_ request: Videos) -> SignalProducer<Page<Video>, NSError> {
+      return self.page(for: request)
    }
 
-   public func channels(request: Channels) -> SignalProducer<Page<Channel>, NSError> {
-      return self.page(request)
+   public func channels(_ request: Channels) -> SignalProducer<Page<Channel>, NSError> {
+      return self.page(for: request)
    }
 
-   public func search(request: Search) -> SignalProducer<Page<SearchItem>, NSError> {
-      return self.page(request)
-         .flatMap(.Latest) { page -> SignalProducer<Page<SearchItem>, NSError> in
+   public func search(_ request: Search) -> SignalProducer<Page<SearchItem>, NSError> {
+      return self.page(for: request)
+         .flatMap(.latest) { page -> SignalProducer<Page<SearchItem>, NSError> in
 
             let videosParts =
-               self.loadParts(request.videoParts.filter { $0 != request.part },
-                              objects: page.items.flatMap { $0.video })
+               self.load(parts: request.videoParts.filter { $0 != request.part },
+                         for: page.items.flatMap { $0.video })
 
             let channelParts =
-               self.loadParts(request.channelParts.filter { $0 != request.part },
-                              objects: page.items.flatMap { $0.channel })
+               self.load(parts: request.channelParts.filter { $0 != request.part },
+                         for: page.items.flatMap { $0.channel })
 
-            return combineLatest(videosParts, channelParts)
+            return SignalProducer.combineLatest(videosParts, channelParts)
                .map { videosById, channelsById -> Page<SearchItem> in
                   let mergedItems: [SearchItem] = page.items.map { item in
                      if let itemVideo = item.video, let video = videosById[itemVideo.id] {
-                        return .VideoItem(itemVideo.mergeParts(video))
+                        return .videoItem(itemVideo.merge(with: video))
                      } else if let itemChannel = item.channel, let channel = channelsById[itemChannel.id] {
-                        return .ChannelItem(itemChannel.mergeParts(channel))
+                        return .channelItem(itemChannel.merge(with: channel))
                      }
                      return item
                   }
@@ -63,10 +63,9 @@ public final class Engine {
          }
    }
 
-   private func loadParts<T: protocol<JSONRepresentable,
-      PartibleObject,
-      SearchableObject>>(parts: [Part],
-                         objects: [T]) -> SignalProducer<[String: T], NoError> {
+   private func load<T: JSONRepresentable & PartibleObject & SearchableObject>(
+      parts: [Part],
+      for objects: [T]) -> SignalProducer<[String: T], NoError> {
       if parts.isEmpty {
          return SignalProducer(value: [:])
       }
@@ -75,7 +74,7 @@ public final class Engine {
          return SignalProducer(value: [:])
       }
 
-      return self.page(T.requestForParts(parts, objects: objects))
+      return self.page(for: T.request(for: parts, objects: objects))
          .map { page in
             var objectsById: [String: T] = [:]
             page.items.forEach {
@@ -86,18 +85,14 @@ public final class Engine {
          .flatMapError { _ in SignalProducer(value: [:]) }
    }
 
-   private func jsonForRequest(request: YoutubeRequest) -> SignalProducer<JSON, NSError> {
-      #if swift(>=2.3)
-         let url = self.baseURL.URLByAppendingPathComponent(request.command)!
-      #else
-         let url = self.baseURL.URLByAppendingPathComponent(request.command)
-      #endif
+   private func json(for request: YoutubeRequest) -> SignalProducer<JSON, NSError> {
+      let url = self.baseURL.appendingPathComponent(request.command)
 
       var parameters: [String: String] = request.parameters
       switch self.authorization {
-      case .AccessToken(let token):
+      case .accessToken(let token):
          parameters["access_token"] = token
-      case .Key(let key):
+      case .key(let key):
          parameters["key"] = key
       }
 
@@ -108,8 +103,8 @@ public final class Engine {
                                      logger: logger)
    }
 
-   private func page<R: PageRequest where R.Item: JSONRepresentable>(request: R) -> SignalProducer<Page<R.Item>, NSError> {
-      return self.jsonForRequest(request)
+   private func page<R: PageRequest>(for request: R) -> SignalProducer<Page<R.Item>, NSError> where R.Item: JSONRepresentable {
+      return self.json(for: request)
          .map {
             json in
             let items = json["items"]

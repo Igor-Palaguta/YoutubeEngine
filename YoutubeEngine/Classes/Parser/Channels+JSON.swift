@@ -8,8 +8,8 @@ extension Channel: JSONRepresentable {
       }
 
       self.id = id
-      self.snippet = ChannelSnippet(json: json[Part.Snippet.parameterValue])
-      self.statistics = ChannelStatistics(json: json[Part.Statistics.parameterValue])
+      self.snippet = ChannelSnippet(json: json[Part.snippet.parameterValue])
+      self.statistics = ChannelStatistics(json: json[Part.statistics.parameterValue])
    }
 }
 
@@ -32,7 +32,7 @@ extension ChannelSnippet: JSONRepresentable {
 
 extension ChannelStatistics: JSONRepresentable {
    init?(json: JSON) {
-      guard json.isExists() else {
+      guard json.exists() else {
          return nil
       }
 

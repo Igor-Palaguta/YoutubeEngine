@@ -8,9 +8,9 @@ extension Video: JSONRepresentable {
       }
 
       self.id = id
-      self.snippet = VideoSnippet(json: json[Part.Snippet.parameterValue])
-      self.contentDetails = VideoContentDetails(json: json[Part.ContentDetails.parameterValue])
-      self.statistics = VideoStatistics(json: json[Part.Statistics.parameterValue])
+      self.snippet = VideoSnippet(json: json[Part.snippet.parameterValue])
+      self.contentDetails = VideoContentDetails(json: json[Part.contentDetails.parameterValue])
+      self.statistics = VideoStatistics(json: json[Part.statistics.parameterValue])
    }
 }
 
@@ -37,7 +37,7 @@ extension VideoSnippet: JSONRepresentable {
 
 extension VideoStatistics: JSONRepresentable {
    init?(json: JSON) {
-      guard json.isExists() else {
+      guard json.exists() else {
          return nil
       }
 

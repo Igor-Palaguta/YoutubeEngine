@@ -11,19 +11,22 @@ Library with ReactiveCocoa api for Youtube. Allows easy access required parts of
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ```
-let engine = Engine(.Key: YOUR_API_KEY)
-let request = Search(.Term("VEVO", [.Video: [.Statistics, .ContentDetails], .Channel: [.Statistics]]))
+let engine = Engine(.key(YOUR_API_KEY))
+let request = Search(.term("VEVO", [.video: [.statistics, .contentDetails], .channel: [.statistics]]))
 engine.search(request)
-   .startWithNext {
-      page in
-      let formattedItems = page.items.enumerate().map { "[\($0)] = \($1)" }
-      print("VEVO:\n\(formattedItems.joinWithSeparator("\n"))")
-   }
+   .startWithResult {
+      result in
+      guard case .success(let page) = result else {
+         return
+      }
+      let formattedItems = page.items.enumerated().map { "[\($0)] = \($1)" }
+      print("VEVO:\n\(formattedItems.joined(separator: "\n"))")
+}
 ```
 
 ## Requirements
 
-Supports swift2.2, swift2.3 and swift3. Use 'swift-3' branch for swift3
+Supports swift2 and swift3. Use 'swift-2.3' branch for swift2
 
 ## Installation
 

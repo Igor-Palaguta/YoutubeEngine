@@ -1,94 +1,94 @@
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 import SwiftyJSON
 
 protocol Logger {
-   func logRequest(request: NSURLRequest)
-   func logResponse(response: NSHTTPURLResponse, body: NSData?)
-   func logError(error: NSError)
+   func log(request: URLRequest)
+   func log(response: HTTPURLResponse, body: Data?)
+   func log(error: NSError)
 }
 
 struct DefaultLogger: Logger {
-   func logRequest(request: NSURLRequest) {
-      NSLog("%@ %@", request.HTTPMethod!, request.URL!)
+   func log(request: URLRequest) {
+      NSLog("%@ %@", [request.httpMethod!, request.url!])
    }
 
-   func logResponse(response: NSHTTPURLResponse, body: NSData?) {
-      let body = body.flatMap { NSString(data: $0, encoding: NSUTF8StringEncoding) } ?? ""
-      NSLog("%d %@\n%@", response.statusCode, response.URL!, body)
+   func log(response: HTTPURLResponse, body: Data?) {
+      let body = body.flatMap { NSString(data: $0, encoding: String.Encoding.utf8.rawValue) } ?? ""
+      NSLog("%d %@\n%@", [response.statusCode, response.url!, body])
    }
 
-   func logError(error: NSError) {
+   func log(error: NSError) {
       NSLog("%@", error.localizedDescription)
    }
 }
 
-extension NSURLSession {
-   final func jsonSignal(method: Method,
-                         _ url: NSURL,
-                           parameters: [String: String]?,
-                           logger: Logger?) -> SignalProducer<JSON, NSError> {
+extension URLSession {
+   final func jsonSignal(_ method: Method,
+                         _ url: URL,
+                         parameters: [String: String]?,
+                         logger: Logger?) -> SignalProducer<JSON, NSError> {
       return SignalProducer {
          observer, disposable in
-         guard let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else {
-            observer.sendFailed(Error.error(code: .InvalidURL))
+         guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            observer.send(error: YoutubeError.error(code: .invalidURL))
             return
          }
 
          if let parameters = parameters {
             components.queryItems = parameters.keys.map {
-               return NSURLQueryItem(name: $0, value: parameters[$0])
+               return URLQueryItem(name: $0, value: parameters[$0])
             }
          }
 
-         guard let url = components.URL else {
-            observer.sendFailed(Error.error(code: .InvalidURL))
+         guard let url = components.url else {
+            observer.send(error: YoutubeError.error(code: .invalidURL))
             return
          }
 
-         let request = NSMutableURLRequest(URL: url)
-         request.HTTPMethod = method.rawValue
+         var request = URLRequest(url: url)
+         request.httpMethod = method.rawValue
 
-         logger?.logRequest(request)
-         let task = self.dataTaskWithRequest(request) {
+         logger?.log(request: request)
+         let task = self.dataTask(with: request) {
             data, response, error in
 
             if let error = error {
-               if error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
+               if let error = error as? NSError, error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
                   observer.sendInterrupted()
                } else {
-                  observer.sendFailed(error)
+                  observer.send(error: error as NSError)
                }
                return
             }
 
-            logger?.logResponse(response as! NSHTTPURLResponse, body: data)
+            logger?.log(response: response as! HTTPURLResponse, body: data)
 
             guard let data = data,
-               let JSONObject = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) else {
-                  observer.sendFailed(Error.error(code: .InvalidJSON))
+               let JSONObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
+                  observer.send(error: YoutubeError.error(code: .invalidJSON))
                   return
             }
 
             let json = JSON(JSONObject)
-            if let error = Error.error(json) {
-               observer.sendFailed(error)
+            if let error = YoutubeError.error(json: json) {
+               observer.send(error: error)
                return
             }
 
-            observer.sendNext(json)
+            observer.send(value: json)
             observer.sendCompleted()
          }
 
          task.resume()
 
-         disposable.addDisposable {
+         disposable.add {
             task.cancel()
          }
          }
          .on(failed: { error in
-            logger?.logError(error)
+            logger?.log(error: error)
          })
-         .observeOn(UIScheduler())
+         .observe(on: UIScheduler())
    }
 }

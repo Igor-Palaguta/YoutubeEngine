@@ -1,18 +1,18 @@
 import Foundation
 import SwiftyJSON
 
-extension Error {
+extension YoutubeError {
    static func error(json: JSON) -> NSError? {
       let error = json["error"]
-      guard error.isExists() else {
+      guard error.exists() else {
          return nil
       }
 
       guard let code = error["code"].int,
          let message = error["message"].string else {
-            return Error.error(code: .RequestFailed)
+            return YoutubeError.error(code: .requestFailed)
       }
 
-      return Error.youtubeError(code: code, message: message)
+      return YoutubeError.youtubeError(code: code, message: message)
    }
 }

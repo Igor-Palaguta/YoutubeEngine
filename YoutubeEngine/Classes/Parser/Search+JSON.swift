@@ -11,11 +11,11 @@ extension SearchItem: JSONRepresentable {
       if kind == "youtube#channel",
          let channelId = jsonId["channelId"].string,
          let snippet = ChannelSnippet(json: json["snippet"]) {
-         self = .ChannelItem(Channel(id: channelId, snippet: snippet, statistics: nil))
+         self = .channelItem(Channel(id: channelId, snippet: snippet, statistics: nil))
       } else if kind == "youtube#video",
          let videoId = jsonId["videoId"].string,
          let snippet = VideoSnippet(json: json["snippet"]) {
-         self = .VideoItem(Video(id: videoId, snippet: snippet, statistics: nil, contentDetails: nil))
+         self = .videoItem(Video(id: videoId, snippet: snippet, statistics: nil, contentDetails: nil))
       } else {
          return nil
       }
