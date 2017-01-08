@@ -54,10 +54,11 @@ extension URLSession {
             data, response, error in
 
             if let error = error {
-               if let error = error as? NSError, error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
+               let error = error as NSError
+               if error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
                   observer.sendInterrupted()
                } else {
-                  observer.send(error: error as NSError)
+                  observer.send(error: error)
                }
                return
             }
