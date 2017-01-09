@@ -4,51 +4,7 @@ import OHHTTPStubs
 import ReactiveSwift
 @testable import YoutubeEngine
 
-func lastComponentIs(_ component: String) -> OHHTTPStubsTestBlock {
-   return { request in
-      guard let components = NSURLComponents(url: request.url!, resolvingAgainstBaseURL: false),
-         let path = components.path else {
-            return false
-      }
-      let actualCommand = (path as NSString).lastPathComponent
-      return component == actualCommand
-   }
-}
-
-typealias RequestHook = (URLRequest) -> Void
-
-extension XCTestCase {
-   func removeAllStubs() {
-      OHHTTPStubs.removeAllStubs()
-   }
-
-   func jsonFile(_ fileName: String) -> OHHTTPStubsResponse {
-      let path = Bundle(for: type(of: self)).path(forResource: fileName, ofType: "json")!
-      let response = fixture(filePath: path, headers: nil)
-      response.requestTime(0, responseTime: 0)
-      return response
-   }
-
-   func addStub(command: String, response: @escaping OHHTTPStubsResponseBlock) {
-      let condition: OHHTTPStubsTestBlock = lastComponentIs(command)
-      _ = stub(condition: condition, response: response)
-   }
-
-   func addStub(command: String, fileName: String, hook: RequestHook? = nil) {
-      return self.addStub(command: command) { request in
-         hook?(request)
-         return self.jsonFile(fileName)
-      }
-   }
-
-   func addStubs(commandFiles: [String: String]) {
-      for (command, fileName) in commandFiles {
-         self.addStub(command: command, fileName: fileName)
-      }
-   }
-}
-
-class EngineSpec: QuickSpec {
+final class EngineSpec: QuickSpec {
    override func spec() {
       describe("Engine") {
          let vevoChannel =
@@ -277,6 +233,50 @@ class EngineSpec: QuickSpec {
                }()
             }
          }
+      }
+   }
+}
+
+func lastComponentIs(_ component: String) -> OHHTTPStubsTestBlock {
+   return { request in
+      guard let components = NSURLComponents(url: request.url!, resolvingAgainstBaseURL: false),
+         let path = components.path else {
+            return false
+      }
+      let actualCommand = (path as NSString).lastPathComponent
+      return component == actualCommand
+   }
+}
+
+typealias RequestHook = (URLRequest) -> Void
+
+extension XCTestCase {
+   func removeAllStubs() {
+      OHHTTPStubs.removeAllStubs()
+   }
+
+   func jsonFile(_ fileName: String) -> OHHTTPStubsResponse {
+      let path = Bundle(for: type(of: self)).path(forResource: fileName, ofType: "json")!
+      let response = fixture(filePath: path, headers: nil)
+      response.requestTime(0, responseTime: 0)
+      return response
+   }
+
+   func addStub(command: String, response: @escaping OHHTTPStubsResponseBlock) {
+      let condition: OHHTTPStubsTestBlock = lastComponentIs(command)
+      _ = stub(condition: condition, response: response)
+   }
+
+   func addStub(command: String, fileName: String, hook: RequestHook? = nil) {
+      return self.addStub(command: command) { request in
+         hook?(request)
+         return self.jsonFile(fileName)
+      }
+   }
+
+   func addStubs(commandFiles: [String: String]) {
+      for (command, fileName) in commandFiles {
+         self.addStub(command: command, fileName: fileName)
       }
    }
 }
