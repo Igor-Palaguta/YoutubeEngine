@@ -11,7 +11,6 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* ISO8601DurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */; };
 		6AD72904AE22167FE0C08F72 /* Pods_YoutubeEngine_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F4BD16F020572BB41C1439 /* Pods_YoutubeEngine_Example.framework */; };
 		781422EC1D87EA8600EDC04F /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781422EB1D87EA8600EDC04F /* VideoCell.swift */; };
 		7860487E1D87F36400677773 /* SearchItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7860487D1D87F36400677773 /* SearchItemsViewController.swift */; };
@@ -19,12 +18,13 @@
 		78715C3C1D901E7000830ECC /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78715C3B1D901E7000830ECC /* ItemsViewModel.swift */; };
 		78715C3E1D90409500830ECC /* YoutubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78715C3D1D90409500830ECC /* YoutubeViewController.swift */; };
 		789000711D8800EA00F794B2 /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789000701D8800EA00F794B2 /* ChannelCell.swift */; };
-		78A0BEF71D560D53001E0B4E /* search_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEF61D560D53001E0B4E /* search_VEVO.json */; };
-		78A0BEF91D561862001E0B4E /* channels_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEF81D561862001E0B4E /* channels_VEVO.json */; };
-		78A0BEFD1D561932001E0B4E /* videos_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78A0BEFC1D561932001E0B4E /* videos_VEVO.json */; };
-		78B5B9201D8CA1A2008DFDA0 /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A0BEF21D560AA3001E0B4E /* EngineTests.swift */; };
-		78CA48AC1D56787B00A5B1C9 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 78CA48AA1D56756700A5B1C9 /* error.json */; };
-		78F3D7E01E07567100701B6A /* channels_search.json in Resources */ = {isa = PBXBuildFile; fileRef = 78F3D7DF1E07567100701B6A /* channels_search.json */; };
+		78C35B3D1E23C08B009AC4D3 /* EngineSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C35B2E1E23C04B009AC4D3 /* EngineSpec.swift */; };
+		78C35B3E1E23C08B009AC4D3 /* ISO8601DurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C35B2F1E23C04B009AC4D3 /* ISO8601DurationTests.swift */; };
+		78C35B3F1E23C08F009AC4D3 /* channels_search.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B311E23C04B009AC4D3 /* channels_search.json */; };
+		78C35B401E23C08F009AC4D3 /* channels_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B321E23C04B009AC4D3 /* channels_VEVO.json */; };
+		78C35B411E23C08F009AC4D3 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B331E23C04B009AC4D3 /* error.json */; };
+		78C35B421E23C08F009AC4D3 /* search_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B341E23C04B009AC4D3 /* search_VEVO.json */; };
+		78C35B431E23C08F009AC4D3 /* videos_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B351E23C04B009AC4D3 /* videos_VEVO.json */; };
 		95160C30CCBD99ABC54B13E3 /* Pods_YoutubeEngine_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE5F90365E539B389A381FD /* Pods_YoutubeEngine_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +50,6 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* YoutubeEngine_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YoutubeEngine_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DurationTests.swift; sourceTree = "<group>"; };
 		73F4BD16F020572BB41C1439 /* Pods_YoutubeEngine_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YoutubeEngine_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76C9D9FADA805D499DA15B12 /* Pods-YoutubeEngine_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoutubeEngine_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-YoutubeEngine_Example/Pods-YoutubeEngine_Example.release.xcconfig"; sourceTree = "<group>"; };
 		781422EB1D87EA8600EDC04F /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
@@ -59,13 +58,14 @@
 		78715C3B1D901E7000830ECC /* ItemsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsViewModel.swift; sourceTree = "<group>"; };
 		78715C3D1D90409500830ECC /* YoutubeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeViewController.swift; sourceTree = "<group>"; };
 		789000701D8800EA00F794B2 /* ChannelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
-		78A0BEF21D560AA3001E0B4E /* EngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
-		78A0BEF61D560D53001E0B4E /* search_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_VEVO.json; sourceTree = "<group>"; };
-		78A0BEF81D561862001E0B4E /* channels_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels_VEVO.json; sourceTree = "<group>"; };
-		78A0BEFC1D561932001E0B4E /* videos_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = videos_VEVO.json; sourceTree = "<group>"; };
-		78CA48AA1D56756700A5B1C9 /* error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error.json; sourceTree = "<group>"; };
+		78C35B2E1E23C04B009AC4D3 /* EngineSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineSpec.swift; sourceTree = "<group>"; };
+		78C35B2F1E23C04B009AC4D3 /* ISO8601DurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISO8601DurationTests.swift; sourceTree = "<group>"; };
+		78C35B311E23C04B009AC4D3 /* channels_search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels_search.json; sourceTree = "<group>"; };
+		78C35B321E23C04B009AC4D3 /* channels_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels_VEVO.json; sourceTree = "<group>"; };
+		78C35B331E23C04B009AC4D3 /* error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error.json; sourceTree = "<group>"; };
+		78C35B341E23C04B009AC4D3 /* search_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_VEVO.json; sourceTree = "<group>"; };
+		78C35B351E23C04B009AC4D3 /* videos_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = videos_VEVO.json; sourceTree = "<group>"; };
 		78E6F68D1D548C46006C531D /* YoutubeEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YoutubeEngine.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/YoutubeEngine-bfqcavlgyvroawgpejupfjlwtcso/Build/Products/Debug-iphonesimulator/YoutubeEngine/YoutubeEngine.framework"; sourceTree = "<group>"; };
-		78F3D7DF1E07567100701B6A /* channels_search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels_search.json; sourceTree = "<group>"; };
 		93B2B1D10540D62174BDC807 /* YoutubeEngine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YoutubeEngine.podspec; path = ../YoutubeEngine.podspec; sourceTree = "<group>"; };
 		989EA293CFCE94962D55842F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A1866B2001C08069F16D5E15 /* Pods-YoutubeEngine_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoutubeEngine_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YoutubeEngine_Tests/Pods-YoutubeEngine_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -143,9 +143,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				78A0BEF51D560D36001E0B4E /* Responses */,
-				607FACEB1AFB9204008FA782 /* ISO8601DurationTests.swift */,
-				78A0BEF21D560AA3001E0B4E /* EngineTests.swift */,
+				78C35B2D1E23C04B009AC4D3 /* YoutubeEngineTests */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -169,14 +167,25 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		78A0BEF51D560D36001E0B4E /* Responses */ = {
+		78C35B2D1E23C04B009AC4D3 /* YoutubeEngineTests */ = {
 			isa = PBXGroup;
 			children = (
-				78A0BEF61D560D53001E0B4E /* search_VEVO.json */,
-				78A0BEF81D561862001E0B4E /* channels_VEVO.json */,
-				78A0BEFC1D561932001E0B4E /* videos_VEVO.json */,
-				78CA48AA1D56756700A5B1C9 /* error.json */,
-				78F3D7DF1E07567100701B6A /* channels_search.json */,
+				78C35B2E1E23C04B009AC4D3 /* EngineSpec.swift */,
+				78C35B2F1E23C04B009AC4D3 /* ISO8601DurationTests.swift */,
+				78C35B301E23C04B009AC4D3 /* Responses */,
+			);
+			name = YoutubeEngineTests;
+			path = ../../Tests/YoutubeEngineTests;
+			sourceTree = "<group>";
+		};
+		78C35B301E23C04B009AC4D3 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				78C35B311E23C04B009AC4D3 /* channels_search.json */,
+				78C35B321E23C04B009AC4D3 /* channels_VEVO.json */,
+				78C35B331E23C04B009AC4D3 /* error.json */,
+				78C35B341E23C04B009AC4D3 /* search_VEVO.json */,
+				78C35B351E23C04B009AC4D3 /* videos_VEVO.json */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -301,11 +310,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78CA48AC1D56787B00A5B1C9 /* error.json in Resources */,
-				78A0BEFD1D561932001E0B4E /* videos_VEVO.json in Resources */,
-				78F3D7E01E07567100701B6A /* channels_search.json in Resources */,
-				78A0BEF71D560D53001E0B4E /* search_VEVO.json in Resources */,
-				78A0BEF91D561862001E0B4E /* channels_VEVO.json in Resources */,
+				78C35B411E23C08F009AC4D3 /* error.json in Resources */,
+				78C35B431E23C08F009AC4D3 /* videos_VEVO.json in Resources */,
+				78C35B421E23C08F009AC4D3 /* search_VEVO.json in Resources */,
+				78C35B3F1E23C08F009AC4D3 /* channels_search.json in Resources */,
+				78C35B401E23C08F009AC4D3 /* channels_VEVO.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,8 +432,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* ISO8601DurationTests.swift in Sources */,
-				78B5B9201D8CA1A2008DFDA0 /* EngineTests.swift in Sources */,
+				78C35B3E1E23C08B009AC4D3 /* ISO8601DurationTests.swift in Sources */,
+				78C35B3D1E23C08B009AC4D3 /* EngineSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,6 +4,8 @@ import XCTest
 
 final class NSDateComponentsISO8601Spec: XCTestCase {
    func testAllComponents() {
+      expect(ISO8601("P10Y10M3W3DT20H31M21S")) == components(year: 10, month: 10, weekOfYear: 3, day: 3, hour: 20, minute: 31, second: 21)
+
       expect(ISO8601("P1Y2M3DT4H5M6S")) == components(year: 1, month: 2, day: 3, hour: 4, minute: 5, second: 6)
    }
 
@@ -28,11 +30,12 @@ final class NSDateComponentsISO8601Spec: XCTestCase {
    }
 }
 
-func components(year: Int? = nil, month: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> DateComponents {
+func components(year: Int? = nil, month: Int? = nil, weekOfYear: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> DateComponents {
    var components = DateComponents()
    _ = year.map { components.year = $0 }
    _ = month.map { components.month = $0 }
    _ = day.map { components.day = $0 }
+   _ = weekOfYear.map { components.weekOfYear = $0 }
    _ = hour.map { components.hour = $0 }
    _ = minute.map { components.minute = $0 }
    _ = second.map { components.second = $0 }

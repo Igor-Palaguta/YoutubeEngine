@@ -12,7 +12,7 @@ func dateComponents(ISO8601String string: String) -> DateComponents? {
    return components
 }
 
-private let dateUnitMapping: [Character: Calendar.Component] = ["Y": .year, "M": .month, "D": .day]
+private let dateUnitMapping: [Character: Calendar.Component] = ["Y": .year, "M": .month, "W": .weekOfYear, "D": .day]
 private let timeUnitMapping: [Character: Calendar.Component] = ["H": .hour, "M": .minute, "S": .second]
 
 private extension String {
