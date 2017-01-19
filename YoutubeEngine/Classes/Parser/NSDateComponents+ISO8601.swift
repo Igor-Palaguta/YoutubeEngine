@@ -14,7 +14,7 @@ extension NSDateComponents {
    }
 }
 
-private let dateUnitMapping: [Character: NSCalendarUnit] = ["Y": .Year, "M": .Month, "D": .Day]
+private let dateUnitMapping: [Character: NSCalendarUnit] = ["Y": .Year, "M": .Month, "W": .WeekOfYear, "D": .Day]
 private let timeUnitMapping: [Character: NSCalendarUnit] = ["H": .Hour, "M": .Minute, "S": .Second]
 
 private extension String {

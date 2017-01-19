@@ -2,10 +2,11 @@ import Quick
 import Nimble
 @testable import YoutubeEngine
 
-func components(year year: Int? = nil, month: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> NSDateComponents {
+func components(year year: Int? = nil, month: Int? = nil, weekOfYear: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> NSDateComponents {
    let components = NSDateComponents()
    let _ = year.map { components.year = $0 }
    let _ = month.map { components.month = $0 }
+   let _ = weekOfYear.map { components.weekOfYear = $0 }
    let _ = day.map { components.day = $0 }
    let _ = hour.map { components.hour = $0 }
    let _ = minute.map { components.minute = $0 }
@@ -22,6 +23,7 @@ class NSDateComponentsISO8601Spec: QuickSpec {
       describe("ISO8601") {
          context("all components") {
             it("parse") {
+               expect(ISO8601("P10Y10M3W3DT20H31M21S")) == components(year: 10, month: 10, weekOfYear: 3, day: 3, hour: 20, minute: 31, second: 21)
                expect(ISO8601("P1Y2M3DT4H5M6S")) == components(year: 1, month: 2, day: 3, hour: 4, minute: 5, second: 6)
             }
          }
