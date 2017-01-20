@@ -3,7 +3,7 @@ import SwiftyJSON
 
 extension Image: JSONRepresentable {
    init?(json: JSON) {
-      guard let url = json["url"].URL else {
+      guard let url = json["url"].url else {
          return nil
       }
       self.url = url

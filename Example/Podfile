@@ -3,7 +3,7 @@ use_frameworks!
 target 'YoutubeEngine_Example' do
   pod 'YoutubeEngine', :path => '../'
   pod 'Kingfisher', '~> 3.0'
-  pod 'SwiftyJSON', '~> 3.0'
+  pod 'SwiftyJSON', '~> 3.1.4'
   pod 'ReactiveSwift', '~> 1.0'
 
   target 'YoutubeEngine_Tests' do
