@@ -48,7 +48,8 @@ extension URLSession {
 
          var request = URLRequest(url: url)
          request.httpMethod = method.rawValue
-
+         request.setValue(Bundle.main.bundleIdentifier, forHTTPHeaderField: "X-Ios-Bundle-Identifier")
+        
          logger?.log(request: request)
          let task = self.dataTask(with: request) {
             data, response, error in
