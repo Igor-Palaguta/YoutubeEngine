@@ -15,9 +15,15 @@ public final class Engine {
    private let authorization: Authorization
    private let baseURL = URL(string: "https://www.googleapis.com/youtube/v3")!
 
-   public init(_ authorization: Authorization) {
-      self.session = URLSession(configuration: URLSessionConfiguration.default)
+   public init(_ authorization: Authorization, _ session: URLSession) {
+      self.session = session
       self.authorization = authorization
+   }
+
+   public convenience init(_ authorization: Authorization) {
+      let configuration = URLSessionConfiguration.default
+      configuration.httpAdditionalHeaders = ["X-Ios-Bundle-Identifier": Bundle.main.bundleIdentifier]
+      self.init(authorization, URLSession(configuration: configuration))
    }
 
    public func cancelAllRequests() {
