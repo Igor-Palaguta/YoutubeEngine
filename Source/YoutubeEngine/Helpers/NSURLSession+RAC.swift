@@ -10,12 +10,14 @@ protocol Logger {
 
 struct DefaultLogger: Logger {
    func log(request: URLRequest) {
-      NSLog("%@ %@", [request.httpMethod!, request.url!])
+      let logMessage = "\(request.httpMethod!) \(request.url!)"
+      NSLog("%@", logMessage)
    }
 
    func log(response: HTTPURLResponse, body: Data?) {
-      let body = body.flatMap { NSString(data: $0, encoding: String.Encoding.utf8.rawValue) } ?? ""
-      NSLog("%d %@\n%@", [response.statusCode, response.url!, body])
+      let bodyString = body.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+      let logMessage = "\(response.statusCode) \(response.url!)\n\(bodyString)"
+      NSLog("%@", logMessage)
    }
 
    func log(error: NSError) {
@@ -63,6 +65,8 @@ extension URLSession {
                return
             }
 
+            print(response)
+            print(response as? HTTPURLResponse)
             logger?.log(response: response as! HTTPURLResponse, body: data)
 
             guard let data = data,

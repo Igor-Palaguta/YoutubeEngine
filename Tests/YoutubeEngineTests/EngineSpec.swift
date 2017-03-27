@@ -274,9 +274,9 @@ extension XCTestCase {
       }
    }
 
-   func addStubs(commandFiles: [String: String]) {
+   func addStubs(commandFiles: [String: String], hook: RequestHook? = nil) {
       for (command, fileName) in commandFiles {
-         self.addStub(command: command, fileName: fileName)
+         self.addStub(command: command, fileName: fileName, hook: hook)
       }
    }
 }
