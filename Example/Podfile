@@ -9,8 +9,8 @@ target 'YoutubeEngine_Example' do
   target 'YoutubeEngine_Tests' do
     inherit! :search_paths
 
-    pod 'Quick', '~> 0.10'
-    pod 'Nimble', '~> 5.0'
+    pod 'Quick', '~> 1.0'
+    pod 'Nimble', '~> 6.0'
     pod 'OHHTTPStubs/NSURLSession'
     pod 'OHHTTPStubs/Swift'
   end

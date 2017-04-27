@@ -22,7 +22,9 @@ public final class Engine {
 
    public convenience init(_ authorization: Authorization) {
       let configuration = URLSessionConfiguration.default
-      configuration.httpAdditionalHeaders = ["X-Ios-Bundle-Identifier": Bundle.main.bundleIdentifier]
+      if let bundleIdentifier = Bundle.main.bundleIdentifier {
+         configuration.httpAdditionalHeaders = ["X-Ios-Bundle-Identifier": bundleIdentifier]
+      }
       self.init(authorization, URLSession(configuration: configuration))
    }
 

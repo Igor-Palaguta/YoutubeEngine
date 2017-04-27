@@ -65,8 +65,6 @@ extension URLSession {
                return
             }
 
-            print(response)
-            print(response as? HTTPURLResponse)
             logger?.log(response: response as! HTTPURLResponse, body: data)
 
             guard let data = data,
