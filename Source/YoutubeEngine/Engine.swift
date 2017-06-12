@@ -67,7 +67,7 @@ public final class Engine {
                      nextPageToken: page.nextPageToken,
                      previousPageToken: page.previousPageToken)
                }
-               .promoteErrors(NSError.self)
+               .promoteError(NSError.self)
          }
    }
 

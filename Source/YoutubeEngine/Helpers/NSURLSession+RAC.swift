@@ -85,7 +85,7 @@ extension URLSession {
 
          task.resume()
 
-         disposable.add {
+         disposable.observeEnded {
             task.cancel()
          }
          }
