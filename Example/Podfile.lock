@@ -20,7 +20,7 @@ PODS:
   - Result (3.2.3)
   - SwiftyJSON (3.1.4)
   - YoutubeEngine (0.2.3):
-    - ReactiveSwift
+    - ReactiveSwift (= 2.0.0-alpha.2)
     - SwiftyJSON (~> 3.1.4)
 
 DEPENDENCIES:
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   ReactiveSwift: 9780f78a3c4be79b30e770f8288a33884f10c04f
   Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  YoutubeEngine: a3d9d377fdb09f781b95e7fd6c129d4431a9cb2f
+  YoutubeEngine: eb03978cef0649fb4c9b5e2d286cc78597bd8382
 
 PODFILE CHECKSUM: 4de3b7697b0a03e5972daa101af8ac60f9235df8
 
