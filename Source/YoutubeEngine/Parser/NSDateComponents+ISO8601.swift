@@ -21,14 +21,25 @@ private extension String {
          return nil
       }
 
-      let duration = String(self.characters.dropFirst())
+#if swift(>=4)
+      let duration = String(self.dropFirst())
 
       guard let separatorRange = duration.range(of: "T") else {
          return duration.unitValuesWithMapping(dateUnitMapping)
       }
 
+      let date = String(duration[..<separatorRange.lowerBound])
+      let time = String(duration[separatorRange.upperBound...])
+#else
+      let duration = String(self.characters.dropFirst())
+
+      guard let separatorRange = duration.range(of: "T") else {
+      return duration.unitValuesWithMapping(dateUnitMapping)
+      }
+
       let date = duration.substring(to: separatorRange.lowerBound)
       let time = duration.substring(from: separatorRange.upperBound)
+#endif
       guard let dateUnits = date.unitValuesWithMapping(dateUnitMapping),
          let timeUnits = time.unitValuesWithMapping(timeUnitMapping) else {
             return nil

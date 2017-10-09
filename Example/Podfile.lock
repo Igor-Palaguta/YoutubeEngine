@@ -1,6 +1,6 @@
 PODS:
-  - Kingfisher (3.6.2)
-  - Nimble (6.1.0)
+  - Kingfisher (4.1.0)
+  - Nimble (7.0.2)
   - OHHTTPStubs/Core (6.0.0)
   - OHHTTPStubs/Default (6.0.0):
     - OHHTTPStubs/Core
@@ -14,46 +14,39 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (6.0.0)
   - OHHTTPStubs/Swift (6.0.0):
     - OHHTTPStubs/Default
-  - Quick (1.1.0)
-  - ReactiveSwift (2.0.0-alpha.2):
+  - Quick (1.2.0)
+  - ReactiveSwift (2.0.1):
     - Result (~> 3.2)
-  - Result (3.2.3)
+  - Result (3.2.4)
   - SwiftyJSON (3.1.4)
   - YoutubeEngine (0.2.3):
-    - ReactiveSwift (= 2.0.0-alpha.2)
+    - ReactiveSwift (~> 2.0)
     - SwiftyJSON (~> 3.1.4)
 
 DEPENDENCIES:
-  - Kingfisher (~> 3.0)
-  - Nimble (~> 6.0)
+  - Kingfisher (~> 4.0)
+  - Nimble (~> 7.0)
   - OHHTTPStubs/NSURLSession
   - OHHTTPStubs/Swift
   - Quick (~> 1.0)
-  - ReactiveSwift (from `https://github.com/ReactiveCocoa/ReactiveSwift.git`)
-  - SwiftyJSON (~> 3.1.4)
+  - ReactiveSwift
+  - SwiftyJSON
   - YoutubeEngine (from `../`)
 
 EXTERNAL SOURCES:
-  ReactiveSwift:
-    :git: https://github.com/ReactiveCocoa/ReactiveSwift.git
   YoutubeEngine:
     :path: ../
 
-CHECKOUT OPTIONS:
-  ReactiveSwift:
-    :commit: dadbb19fcb27ba4eec819a7e094e2c12b03140e8
-    :git: https://github.com/ReactiveCocoa/ReactiveSwift.git
-
 SPEC CHECKSUMS:
-  Kingfisher: 2c94e72c6830622c71d06adf4ea024c37d316830
-  Nimble: c53e6903fee94041b90ded74f135820437d8bf59
+  Kingfisher: f14df8cbe576bf55f211fa589e9869bceb4ea87d
+  Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
   OHHTTPStubs: 752f9b11fd810a15162d50f11c06ff94f8e012eb
-  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
-  ReactiveSwift: 9780f78a3c4be79b30e770f8288a33884f10c04f
-  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  ReactiveSwift: 60a29ff35988a964fd2bb759755cb6594de523fc
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  YoutubeEngine: eb03978cef0649fb4c9b5e2d286cc78597bd8382
+  YoutubeEngine: 12aea7e56ccddf0c9bd020387b03d5bfacff793c
 
-PODFILE CHECKSUM: 4de3b7697b0a03e5972daa101af8ac60f9235df8
+PODFILE CHECKSUM: 263a07f52671b555c49408d4ba0939a999f52456
 
 COCOAPODS: 1.2.1

@@ -2,15 +2,15 @@ use_frameworks!
 
 target 'YoutubeEngine_Example' do
   pod 'YoutubeEngine', :path => '../'
-  pod 'Kingfisher', '~> 3.0'
-  pod 'SwiftyJSON', '~> 3.1.4'
-  pod 'ReactiveSwift', :git => 'https://github.com/ReactiveCocoa/ReactiveSwift.git'
+  pod 'Kingfisher', '~> 4.0'
+  pod 'SwiftyJSON'
+  pod 'ReactiveSwift'
 
-  target 'YoutubeEngine_Tests' do
+target 'YoutubeEngine_Tests' do
     inherit! :search_paths
 
     pod 'Quick', '~> 1.0'
-    pod 'Nimble', '~> 6.0'
+    pod 'Nimble', '~> 7.0'
     pod 'OHHTTPStubs/NSURLSession'
     pod 'OHHTTPStubs/Swift'
   end
