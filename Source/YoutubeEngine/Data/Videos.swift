@@ -85,7 +85,7 @@ extension Videos: PageRequest {
       var parameters: [String: String] = ["part": self.parts.joinParameters()]
 
       switch self.filter {
-      case .popular(_):
+      case .popular:
          parameters["chart"] = "mostPopular"
       case .byIds(let ids):
          parameters["id"] = ids.joinParameters()
