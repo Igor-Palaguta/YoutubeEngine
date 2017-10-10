@@ -26,7 +26,7 @@ engine.search(request)
 
 ## Requirements
 
-Supports swift2 and swift3. Use 'swift-2.3' branch for swift2
+Supports swift2, swift3 and swift4. Use 'swift-2.3' branch for swift2
 
 ## Installation
 
