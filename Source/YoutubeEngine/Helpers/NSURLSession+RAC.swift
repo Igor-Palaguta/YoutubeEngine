@@ -30,8 +30,7 @@ extension URLSession {
                           _ url: URL,
                           parameters: [String: String]?,
                           logger: Logger?) -> SignalProducer<JSON, NSError> {
-        return SignalProducer {
-            observer, disposable in
+        return SignalProducer { observer, disposable in
             guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false) else {
                 observer.send(error: YoutubeError.error(code: .invalidURL))
                 return
@@ -74,7 +73,7 @@ extension URLSession {
                 }
 
                 let json = JSON(JSONObject)
-                if let error = YoutubeError.error(json: json) {
+                if let error = YoutubeError.makeError(from: json) {
                     observer.send(error: error)
                     return
                 }

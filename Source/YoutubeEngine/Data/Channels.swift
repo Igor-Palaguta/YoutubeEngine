@@ -24,12 +24,6 @@ public struct Channel: Equatable {
     public let id: String
     public let snippet: ChannelSnippet?
     public let statistics: ChannelStatistics?
-
-    public static func == (lhs: Channel, rhs: Channel) -> Bool {
-        return lhs.id == rhs.id &&
-            lhs.snippet == rhs.snippet &&
-            lhs.statistics == rhs.statistics
-    }
 }
 
 public struct ChannelSnippet: Equatable {
@@ -38,24 +32,11 @@ public struct ChannelSnippet: Equatable {
     public let defaultImage: Image
     public let mediumImage: Image
     public let highImage: Image
-
-    public static func == (lhs: ChannelSnippet, rhs: ChannelSnippet) -> Bool {
-        return lhs.title == rhs.title &&
-            lhs.publishDate == rhs.publishDate &&
-            lhs.defaultImage == rhs.defaultImage &&
-            lhs.mediumImage == rhs.mediumImage &&
-            lhs.highImage == rhs.highImage
-    }
 }
 
 public struct ChannelStatistics: Equatable {
     public let subscribers: Int?
     public let videos: Int?
-
-    public static func == (lhs: ChannelStatistics, rhs: ChannelStatistics) -> Bool {
-        return lhs.subscribers == rhs.subscribers &&
-            lhs.videos == rhs.videos
-    }
 }
 
 extension Channels: PageRequest {

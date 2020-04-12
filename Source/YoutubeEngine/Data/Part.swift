@@ -22,8 +22,4 @@ public enum Part: Parameter {
 public struct Image: Equatable {
     public let url: URL
     public let size: CGSize?
-
-    public static func == (lhs: Image, rhs: Image) -> Bool {
-        return lhs.url == rhs.url && lhs.size == rhs.size
-    }
 }

@@ -2,7 +2,7 @@ import Foundation
 import SwiftyJSON
 
 extension YoutubeError {
-    static func error(json: JSON) -> NSError? {
+    static func makeError(from json: JSON) -> NSError? {
         let error = json["error"]
         guard error.exists() else {
             return nil

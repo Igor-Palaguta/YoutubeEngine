@@ -24,15 +24,7 @@ public struct Video: Equatable {
     public let id: String
     public let snippet: VideoSnippet?
     public let statistics: VideoStatistics?
-    public let contentDetails: VideoContentDetails?
-
-    public static func == (lhs: Video, rhs: Video) -> Bool {
-        return lhs.id == rhs.id &&
-            lhs.snippet == rhs.snippet &&
-            lhs.statistics == rhs.statistics &&
-            lhs.contentDetails == rhs.contentDetails
-    }
-}
+    public let contentDetails: VideoContentDetails?}
 
 public struct VideoSnippet: Equatable {
     public let title: String
@@ -42,36 +34,16 @@ public struct VideoSnippet: Equatable {
     public let defaultImage: Image
     public let mediumImage: Image
     public let highImage: Image
-
-    public static func == (lhs: VideoSnippet, rhs: VideoSnippet) -> Bool {
-        return lhs.title == rhs.title &&
-            lhs.publishDate == rhs.publishDate &&
-            lhs.channelId == rhs.channelId &&
-            lhs.channelTitle == rhs.channelTitle &&
-            lhs.defaultImage == rhs.defaultImage &&
-            lhs.mediumImage == rhs.mediumImage &&
-            lhs.highImage == rhs.highImage
-    }
 }
 
 public struct VideoStatistics: Equatable {
     public let views: Int?
     public let likes: Int?
     public let dislikes: Int?
-
-    public static func == (lhs: VideoStatistics, rhs: VideoStatistics) -> Bool {
-        return lhs.views == rhs.views &&
-            lhs.likes == rhs.likes &&
-            lhs.dislikes == rhs.dislikes
-    }
 }
 
 public struct VideoContentDetails: Equatable {
     public let duration: DateComponents
-
-    public static func == (lhs: VideoContentDetails, rhs: VideoContentDetails) -> Bool {
-        return lhs.duration == rhs.duration
-    }
 }
 
 extension Videos: PageRequest {
