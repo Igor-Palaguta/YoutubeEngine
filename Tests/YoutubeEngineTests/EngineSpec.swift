@@ -249,7 +249,7 @@ func lastComponentIs(_ component: String) -> HTTPStubsTestBlock {
 
 typealias RequestHook = (URLRequest) -> Void
 
-extension XCTestCase {
+extension QuickSpec {
     func removeAllStubs() {
         HTTPStubs.removeAllStubs()
     }
