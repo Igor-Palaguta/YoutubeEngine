@@ -117,7 +117,7 @@ final class EngineSpec: QuickSpec {
                 self.addStub(command: "search", fileName: "search_VEVO") { request in
                     let components = NSURLComponents(string: request.url!.absoluteString)
                     if let queryItems = components?.queryItems,
-                        let typeIndex = queryItems.index(where: { $0.name == "type" }) {
+                        let typeIndex = queryItems.firstIndex(where: { $0.name == "type" }) {
                         justChannelsType = queryItems[typeIndex].value == Type.channel.parameterValue
                     }
                 }
@@ -236,7 +236,7 @@ final class EngineSpec: QuickSpec {
     }
 }
 
-func lastComponentIs(_ component: String) -> OHHTTPStubsTestBlock {
+func lastComponentIs(_ component: String) -> HTTPStubsTestBlock {
     return { request in
         guard let components = NSURLComponents(url: request.url!, resolvingAgainstBaseURL: false),
             let path = components.path else {
@@ -251,18 +251,18 @@ typealias RequestHook = (URLRequest) -> Void
 
 extension XCTestCase {
     func removeAllStubs() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
     }
 
-    func jsonFile(_ fileName: String) -> OHHTTPStubsResponse {
+    func jsonFile(_ fileName: String) -> HTTPStubsResponse {
         let path = Bundle(for: type(of: self)).path(forResource: fileName, ofType: "json")!
         let response = fixture(filePath: path, headers: nil)
         response.requestTime(0, responseTime: 0)
         return response
     }
 
-    func addStub(command: String, response: @escaping OHHTTPStubsResponseBlock) {
-        let condition: OHHTTPStubsTestBlock = lastComponentIs(command)
+    func addStub(command: String, response: @escaping HTTPStubsResponseBlock) {
+        let condition: HTTPStubsTestBlock = lastComponentIs(command)
         _ = stub(condition: condition, response: response)
     }
 

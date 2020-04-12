@@ -13,7 +13,7 @@ target 'YoutubeEngine_Tests' do
 
     pod 'Quick', '~> 2.0'
     pod 'Nimble', '~> 8.0'
-    pod 'OHHTTPStubs/NSURLSession'
-    pod 'OHHTTPStubs/Swift'
+    pod 'OHHTTPStubs/NSURLSession', '~> 9.0'
+    pod 'OHHTTPStubs/Swift', '~> 9.0'
   end
 end
