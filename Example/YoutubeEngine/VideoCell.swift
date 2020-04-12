@@ -54,7 +54,7 @@ private extension String {
         guard let range = range(of: end) else {
             return self
         }
-        return substring(to: range.lowerBound)
+        return String(self[..<range.lowerBound])
     }
 }
 

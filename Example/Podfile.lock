@@ -1,5 +1,7 @@
 PODS:
-  - Kingfisher (4.1.0)
+  - Kingfisher (5.13.4):
+    - Kingfisher/Core (= 5.13.4)
+  - Kingfisher/Core (5.13.4)
   - Nimble (8.0.7)
   - OHHTTPStubs/Core (6.0.0)
   - OHHTTPStubs/Default (6.0.0):
@@ -22,13 +24,13 @@ PODS:
     - SwiftyJSON (~> 5.0)
 
 DEPENDENCIES:
-  - Kingfisher (~> 4.0)
+  - Kingfisher (~> 5.0)
   - Nimble (~> 8.0)
   - OHHTTPStubs/NSURLSession
   - OHHTTPStubs/Swift
   - Quick (~> 1.0)
   - ReactiveSwift
-  - SwiftyJSON (~> 5.0)
+  - SwiftyJSON
   - YoutubeEngine (from `../`)
 
 SPEC REPOS:
@@ -45,7 +47,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Kingfisher: f14df8cbe576bf55f211fa589e9869bceb4ea87d
+  Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
   Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
   OHHTTPStubs: 752f9b11fd810a15162d50f11c06ff94f8e012eb
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
@@ -53,6 +55,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   YoutubeEngine: 6a51bb0e07cbae30849afb0517a667e02df6ec8d
 
-PODFILE CHECKSUM: fda88348fb6148eee68575b0714140c0ee2bc300
+PODFILE CHECKSUM: b700f0a6f0ef54d8cf3d23bb63044d468cdf793d
 
 COCOAPODS: 1.9.1

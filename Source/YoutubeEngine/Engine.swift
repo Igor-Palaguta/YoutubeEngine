@@ -45,11 +45,11 @@ public final class Engine {
 
                 let videosParts =
                     self.load(parts: request.videoParts.filter { $0 != request.part },
-                              for: page.items.flatMap { $0.video })
+                              for: page.items.compactMap { $0.video })
 
                 let channelParts =
                     self.load(parts: request.channelParts.filter { $0 != request.part },
-                              for: page.items.flatMap { $0.channel })
+                              for: page.items.compactMap { $0.channel })
 
                 return SignalProducer.combineLatest(videosParts, channelParts)
                     .map { videosById, channelsById -> Page<SearchItem> in

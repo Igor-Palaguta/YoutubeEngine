@@ -4,7 +4,7 @@ import YoutubeEngine
 
 extension Engine {
     static let defaultEngine: Engine = {
-        let engine = Engine(.key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
+        let engine = Engine(.key("AIzaSyBjLH-61v1oTcb_wQUcGAYIHmWSCj19Ss4"))
         engine.logEnabled = true
         return engine
     }()
