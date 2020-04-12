@@ -1,32 +1,32 @@
+import Kingfisher
 import UIKit
 import YoutubeEngine
-import Kingfisher
 
 final class VideoCell: UITableViewCell {
 
-   @IBOutlet private weak var thumbnailView: UIImageView!
-   @IBOutlet private weak var durationBackgroundView: UIView!
-   @IBOutlet private weak var durationLabel: UILabel!
-   @IBOutlet private weak var titleLabel: UILabel!
-   @IBOutlet private weak var channelLabel: UILabel!
-   @IBOutlet private weak var detailsLabel: UILabel!
+   @IBOutlet private var thumbnailView: UIImageView!
+   @IBOutlet private var durationBackgroundView: UIView!
+   @IBOutlet private var durationLabel: UILabel!
+   @IBOutlet private var titleLabel: UILabel!
+   @IBOutlet private var channelLabel: UILabel!
+   @IBOutlet private var detailsLabel: UILabel!
 
    var video: Video! {
       didSet {
-         self.thumbnailView.kf.setImage(with: ImageResource(downloadURL: video.snippet!.defaultImage.url),
+         self.thumbnailView.kf.setImage(with: ImageResource(downloadURL: self.video.snippet!.defaultImage.url),
                                         options: [.transition(.fade(0.3))])
-         self.titleLabel.text = video.snippet?.title
-         self.channelLabel.text = video.snippet?.channelTitle
+         self.titleLabel.text = self.video.snippet?.title
+         self.channelLabel.text = self.video.snippet?.channelTitle
 
-         self.durationLabel.text = video.contentDetails?.duration.youtubeDurationString
-         self.durationBackgroundView.isHidden = video.contentDetails?.duration == nil
+         self.durationLabel.text = self.video.contentDetails?.duration.youtubeDurationString
+         self.durationBackgroundView.isHidden = self.video.contentDetails?.duration == nil
 
-         let views = video.statistics?.views
+         let views = self.video.statistics?.views
             .map {
                NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " views"
-         }
+            }
 
-         let timestamp = video.snippet?.publishDate.timestampString
+         let timestamp = self.video.snippet?.publishDate.timestampString
 
          if let views = views, let timestamp = timestamp {
             self.detailsLabel.text = "\(views) • \(timestamp)"
@@ -51,7 +51,7 @@ private extension DateComponents {
 
 private extension String {
    func dropCharactersStarting(_ end: String) -> String {
-      guard let range = self.range(of: end) else {
+      guard let range = range(of: end) else {
          return self
       }
       return self.substring(to: range.lowerBound)

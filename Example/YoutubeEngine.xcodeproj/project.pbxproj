@@ -58,7 +58,7 @@
 		78C35B341E23C04B009AC4D3 /* search_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_VEVO.json; sourceTree = "<group>"; };
 		78C35B351E23C04B009AC4D3 /* videos_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = videos_VEVO.json; sourceTree = "<group>"; };
 		78E6F68D1D548C46006C531D /* YoutubeEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YoutubeEngine.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/YoutubeEngine-bfqcavlgyvroawgpejupfjlwtcso/Build/Products/Debug-iphonesimulator/YoutubeEngine/YoutubeEngine.framework"; sourceTree = "<group>"; };
-		93B2B1D10540D62174BDC807 /* YoutubeEngine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YoutubeEngine.podspec; path = ../YoutubeEngine.podspec; sourceTree = "<group>"; };
+		93B2B1D10540D62174BDC807 /* YoutubeEngine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YoutubeEngine.podspec; path = ../YoutubeEngine.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		989EA293CFCE94962D55842F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,7 +92,9 @@
 				B110C2FB8259E843CC53411D /* Pods */,
 				D31503BD1A92E7E7B19C187C /* Frameworks */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
@@ -213,7 +215,6 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				5DBA15E74CFB4C3B63CC7376 /* [CP] Embed Pods Frameworks */,
-				C68523CE62F55B8DD64E4439 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -233,7 +234,6 @@
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
 				7A25AB5D7F8BC5992B071E84 /* [CP] Embed Pods Frameworks */,
-				A0615D730AEDFC9914502D80 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -269,6 +269,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -315,13 +316,22 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YoutubeEngine_Example/Pods-YoutubeEngine_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/YoutubeEngine/YoutubeEngine.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubeEngine.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YoutubeEngine_Example/Pods-YoutubeEngine_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YoutubeEngine_Example/Pods-YoutubeEngine_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6C59919D9B8385E153AF5ACD /* [CP] Check Pods Manifest.lock */ = {
@@ -330,13 +340,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YoutubeEngine_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7A25AB5D7F8BC5992B071E84 /* [CP] Embed Pods Frameworks */ = {
@@ -345,43 +358,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YoutubeEngine_Tests/Pods-YoutubeEngine_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YoutubeEngine_Tests/Pods-YoutubeEngine_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A0615D730AEDFC9914502D80 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YoutubeEngine_Tests/Pods-YoutubeEngine_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C68523CE62F55B8DD64E4439 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YoutubeEngine_Example/Pods-YoutubeEngine_Example-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YoutubeEngine_Tests/Pods-YoutubeEngine_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DF6E13CE0B22490B5338AD77 /* [CP] Check Pods Manifest.lock */ = {
@@ -390,13 +380,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YoutubeEngine_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -492,6 +485,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -532,6 +526,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -547,7 +542,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -562,7 +556,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -583,7 +576,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoutubeEngine_Example.app/YoutubeEngine_Example";
 			};
 			name = Debug;
@@ -601,7 +593,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoutubeEngine_Example.app/YoutubeEngine_Example";
 			};
 			name = Release;

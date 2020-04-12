@@ -1,7 +1,6 @@
 import UIKit
 import YoutubeEngine
 import ReactiveSwift
-import enum Result.NoError
 
 final class SearchItemsViewController: UITableViewController {
 
@@ -18,7 +17,7 @@ final class SearchItemsViewController: UITableViewController {
          .provider
          .producer
          .flatMap(.latest) {
-            provider -> SignalProducer<Void, NoError> in
+            provider -> SignalProducer<Void, Never> in
             if let pageLoader = provider?.pageLoader {
                return pageLoader
                   .on(failed: {
@@ -34,7 +33,7 @@ final class SearchItemsViewController: UITableViewController {
       self.model
          .provider
          .producer.flatMap(.latest) {
-            provider -> SignalProducer<[SearchItem], NoError> in
+            provider -> SignalProducer<[SearchItem], Never> in
             guard let provider = provider else {
                return SignalProducer(value: [])
             }

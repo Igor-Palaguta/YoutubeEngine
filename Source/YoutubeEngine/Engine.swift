@@ -1,7 +1,6 @@
 import Foundation
 import ReactiveSwift
 import SwiftyJSON
-import enum Result.NoError
 
 public final class Engine {
    public enum Authorization {
@@ -73,7 +72,7 @@ public final class Engine {
 
    private func load<T: JSONRepresentable & PartibleObject & SearchableObject>(
       parts: [Part],
-      for objects: [T]) -> SignalProducer<[String: T], NoError> {
+      for objects: [T]) -> SignalProducer<[String: T], Never> {
       if parts.isEmpty {
          return SignalProducer(value: [:])
       }
@@ -117,7 +116,7 @@ public final class Engine {
             json in
             let items = json["items"]
                .arrayValue
-               .flatMap { R.Item(json: $0) }
+               .compactMap { R.Item(json: $0) }
 
             return Page(items: items,
                totalCount: json["pageInfo"]["totalResults"].intValue,

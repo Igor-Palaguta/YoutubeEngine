@@ -10,7 +10,7 @@ target 'YoutubeEngine_Tests' do
     inherit! :search_paths
 
     pod 'Quick', '~> 1.0'
-    pod 'Nimble', '~> 7.0'
+    pod 'Nimble', '~> 8.0'
     pod 'OHHTTPStubs/NSURLSession'
     pod 'OHHTTPStubs/Swift'
   end

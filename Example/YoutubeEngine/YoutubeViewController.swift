@@ -2,16 +2,12 @@ import UIKit
 import YoutubeEngine
 import ReactiveSwift
 
-private let _defaultEngine: Engine = {
-   let engine = Engine(.key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
-   engine.logEnabled = true
-   return engine
-}()
-
 extension Engine {
-   static var defaultEngine: Engine {
-      return _defaultEngine
-   }
+   static let defaultEngine: Engine = {
+      let engine = Engine(.key("AIzaSyCgwWIve2NhQOb5IHMdXxDaRHOnDrLdrLg"))
+      engine.logEnabled = true
+      return engine
+   }()
 }
 
 final class YoutubeViewModel {
