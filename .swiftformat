@@ -1,0 +1,12 @@
+# file options
+--exclude Example/Pods,.build,.git,.swiftpm
+
+# format options
+--indent 4
+--ifdef no-indent
+--header strip
+--self init-only
+--stripunusedargs closure-only
+
+# diable options
+--disable trailingCommas,redundantReturn,blankLinesAtStartOfScope,blankLinesAtEndOfScope,numberFormatting,andOperator,hoistPatternLet

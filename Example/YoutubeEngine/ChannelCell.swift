@@ -1,34 +1,35 @@
 import Foundation
-import YoutubeEngine
 import Kingfisher
+import YoutubeEngine
 
 final class ChannelCell: UITableViewCell {
-   @IBOutlet private weak var thumbnailView: UIImageView!
-   @IBOutlet private weak var titleLabel: UILabel!
-   @IBOutlet private weak var videosLabel: UILabel!
-   @IBOutlet private weak var subscribersLabel: UILabel!
+    @IBOutlet private var thumbnailView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var videosLabel: UILabel!
+    @IBOutlet private var subscribersLabel: UILabel!
 
-   var channel: Channel! {
-      didSet {
-         self.thumbnailView.kf.setImage(with: ImageResource(downloadURL: channel.snippet!.defaultImage.url),
-                                        options: [.transition(.fade(0.3))])
-         self.titleLabel.text = channel.snippet?.title
+    var channel: Channel! {
+        didSet {
+            thumbnailView.kf.setImage(with: ImageResource(downloadURL: channel.snippet!.defaultImage.url),
+                                      options: [.transition(.fade(0.3))])
 
-         self.videosLabel.text = channel.statistics?
-            .videos
-            .map {
-               NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " videos"
-            }
+            titleLabel.text = channel.snippet?.title
 
-         self.subscribersLabel.text = channel.statistics?.subscribers
-            .map {
-               NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " subscribers"
-            }
-      }
-   }
+            videosLabel.text = channel.statistics?
+                .videos
+                .map {
+                    NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " videos"
+                }
 
-   override func layoutSubviews() {
-      super.layoutSubviews()
-      self.thumbnailView.layer.cornerRadius = min(self.thumbnailView.bounds.midX, self.thumbnailView.bounds.midY)
-   }
+            subscribersLabel.text = channel.statistics?.subscribers
+                .map {
+                    NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " subscribers"
+                }
+        }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        thumbnailView.layer.cornerRadius = min(thumbnailView.bounds.midX, thumbnailView.bounds.midY)
+    }
 }
