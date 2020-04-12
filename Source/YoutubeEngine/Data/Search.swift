@@ -90,9 +90,10 @@ extension Search: PageRequest {
     var command: String { return "search" }
 
     var parameters: [String: String] {
-
-        var parameters: [String: String] = ["part": part.parameterValue,
-                                            "type": types.joinParameters()]
+        var parameters: [String: String] = [
+            "part": part.parameterValue,
+            "type": types.joinParameters()
+        ]
 
         parameters["maxResults"] = limit.map(String.init)
         parameters["pageToken"] = pageToken

@@ -1,25 +1,11 @@
 import Foundation
 
-public enum Part: Parameter {
+public enum Part: String, Parameter, CaseIterable {
     case snippet
     case contentDetails
     case statistics
 
-    static let all: [Part] = [.snippet, .contentDetails, .statistics]
-
     var parameterValue: String {
-        switch self {
-        case .snippet:
-            return "snippet"
-        case .contentDetails:
-            return "contentDetails"
-        case .statistics:
-            return "statistics"
-        }
+        return rawValue
     }
-}
-
-public struct Image: Equatable {
-    public let url: URL
-    public let size: CGSize?
 }

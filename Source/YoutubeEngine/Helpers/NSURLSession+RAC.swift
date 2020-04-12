@@ -3,25 +3,25 @@ import ReactiveSwift
 import SwiftyJSON
 
 protocol Logger {
-    func log(request: URLRequest)
-    func log(response: HTTPURLResponse, body: Data?)
-    func log(error: NSError)
+    func log(_ request: URLRequest)
+    func log(_ response: HTTPURLResponse, body: Data?)
+    func log(_ error: NSError)
 }
 
 struct DefaultLogger: Logger {
-    func log(request: URLRequest) {
+    func log(_ request: URLRequest) {
         let logMessage = "\(request.httpMethod!) \(request.url!)"
-        NSLog("%@", logMessage)
+        print(logMessage)
     }
 
-    func log(response: HTTPURLResponse, body: Data?) {
+    func log(_ response: HTTPURLResponse, body: Data?) {
         let bodyString = body.flatMap { String(data: $0, encoding: .utf8) } ?? ""
         let logMessage = "\(response.statusCode) \(response.url!)\n\(bodyString)"
-        NSLog("%@", logMessage)
+        print(logMessage)
     }
 
-    func log(error: NSError) {
-        NSLog("%@", error.localizedDescription)
+    func log(_ error: NSError) {
+        print(error.localizedDescription)
     }
 }
 
@@ -50,7 +50,7 @@ extension URLSession {
             var request = URLRequest(url: url)
             request.httpMethod = method.rawValue
 
-            logger?.log(request: request)
+            logger?.log(request)
             let task = self.dataTask(with: request) {
                 data, response, error in
 
@@ -64,7 +64,7 @@ extension URLSession {
                     return
                 }
 
-                logger?.log(response: response as! HTTPURLResponse, body: data)
+                logger?.log(response as! HTTPURLResponse, body: data)
 
                 guard let data = data,
                     let JSONObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
@@ -89,7 +89,7 @@ extension URLSession {
             }
         }
         .on(failed: { error in
-            logger?.log(error: error)
+            logger?.log(error)
          })
         .observe(on: UIScheduler())
     }
