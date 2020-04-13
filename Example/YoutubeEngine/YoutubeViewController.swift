@@ -3,6 +3,7 @@ import UIKit
 import YoutubeEngine
 
 extension Engine {
+    #warning("Generate yout own api key https://developers.google.com/youtube/v3/getting-started")
     static let defaultEngine = Engine(
         authorization: .key("AIzaSyBjLH-61v1oTcb_wQUcGAYIHmWSCj19Ss4"),
         isLogEnabled: true

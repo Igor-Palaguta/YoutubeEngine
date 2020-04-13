@@ -11,11 +11,10 @@ Library with ReactiveCocoa api for Youtube. Allows easy access required parts of
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ```swift
-let engine = Engine(.key(YOUR_API_KEY))
-let request = Search(.term("VEVO", [.video: [.statistics, .contentDetails], .channel: [.statistics]]))
+let engine = Engine(authorization: .key(YOUR_API_KEY))
+let request = SearchRequest(.term("VEVO", [.video: [.statistics, .contentDetails], .channel: [.statistics]]))
 engine.search(request)
-   .startWithResult {
-      result in
+   .startWithResult { result in
       guard case .success(let page) = result else {
          return
       }
@@ -42,7 +41,7 @@ github "Igor-Palaguta/YoutubeEngine"
 
 SPM
 ```swift
-.package(url: "https://github.com/Igor-Palaguta/YoutubeEngine", from: "0.4.0")
+.package(url: "https://github.com/Igor-Palaguta/YoutubeEngine", from: "0.5.0")
 ```
 
 ## Author
