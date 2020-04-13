@@ -1,54 +1,57 @@
 import Foundation
 
-func dateComponents(ISO8601String string: String) -> DateComponents? {
-    guard let unitValues = string.durationUnitValues else {
-        return nil
-    }
+extension DateComponents {
+    init(ISO8601String: String) throws {
+        guard let unitValues = ISO8601String.durationUnitValues else {
+            throw ISO8601DateComponentsFormatError()
+        }
 
-    var components = DateComponents()
-    for (unit, value) in unitValues {
-        components.setValue(value, for: unit)
+        self.init()
+        for (unit, value) in unitValues {
+            setValue(value, for: unit)
+        }
     }
-    return components
 }
 
-private let dateUnitMapping: [Character: Calendar.Component] = ["Y": .year, "M": .month, "W": .weekOfYear, "D": .day]
-private let timeUnitMapping: [Character: Calendar.Component] = ["H": .hour, "M": .minute, "S": .second]
+struct ISO8601DateComponentsFormatError: Error {}
 
 private extension String {
+    private static let dateUnitMapping: [Character: Calendar.Component] = [
+        "Y": .year,
+        "M": .month,
+        "W": .weekOfYear,
+        "D": .day
+    ]
+
+    private static let timeUnitMapping: [Character: Calendar.Component] = [
+        "H": .hour,
+        "M": .minute,
+        "S": .second
+    ]
+
     var durationUnitValues: [(Calendar.Component, Int)]? {
         guard hasPrefix("P") else {
             return nil
         }
 
-        #if swift(>=4)
         let duration = String(dropFirst())
 
         guard let separatorRange = duration.range(of: "T") else {
-            return duration.unitValuesWithMapping(dateUnitMapping)
+            return duration.unitValues(withMapping: String.dateUnitMapping)
         }
 
         let date = String(duration[..<separatorRange.lowerBound])
         let time = String(duration[separatorRange.upperBound...])
-        #else
-        let duration = String(characters.dropFirst())
 
-        guard let separatorRange = duration.range(of: "T") else {
-            return duration.unitValuesWithMapping(dateUnitMapping)
-        }
-
-        let date = duration.substring(to: separatorRange.lowerBound)
-        let time = duration.substring(from: separatorRange.upperBound)
-        #endif
-        guard let dateUnits = date.unitValuesWithMapping(dateUnitMapping),
-            let timeUnits = time.unitValuesWithMapping(timeUnitMapping) else {
+        guard let dateUnits = date.unitValues(withMapping: String.dateUnitMapping),
+            let timeUnits = time.unitValues(withMapping: String.timeUnitMapping) else {
             return nil
         }
 
         return dateUnits + timeUnits
     }
 
-    func unitValuesWithMapping(_ mapping: [Character: Calendar.Component]) -> [(Calendar.Component, Int)]? {
+    func unitValues(withMapping mapping: [Character: Calendar.Component]) -> [(Calendar.Component, Int)]? {
         if isEmpty {
             return []
         }
@@ -67,6 +70,7 @@ private extension String {
             if !scanner.scanCharacters(from: identifiersSet, into: &identifier) || identifier?.length != 1 {
                 return nil
             }
+            // swiftlint:disable:next force_unwrapping
             let unit = mapping[Character(identifier! as String)]!
             components.append((unit, value))
         }

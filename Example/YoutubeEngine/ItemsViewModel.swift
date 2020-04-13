@@ -3,6 +3,7 @@ import ReactiveSwift
 
 protocol ItemsViewModel {
     associatedtype Item
+
     var provider: Property<AnyItemsProvider<Item>?> { get }
 }
 

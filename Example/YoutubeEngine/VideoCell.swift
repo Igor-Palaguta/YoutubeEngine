@@ -13,6 +13,7 @@ final class VideoCell: UITableViewCell {
 
     var video: Video! {
         didSet {
+            // swiftlint:disable:next force_unwrapping
             thumbnailView.kf.setImage(with: ImageResource(downloadURL: video.snippet!.defaultImage.url),
                                       options: [.transition(.fade(0.3))])
             titleLabel.text = video.snippet?.title
@@ -21,7 +22,7 @@ final class VideoCell: UITableViewCell {
             durationLabel.text = video.contentDetails?.duration.youtubeDurationString
             durationBackgroundView.isHidden = video.contentDetails?.duration == nil
 
-            let views = video.statistics?.views
+            let views = video.statistics?.viewCount
                 .map {
                     NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " views"
                 }

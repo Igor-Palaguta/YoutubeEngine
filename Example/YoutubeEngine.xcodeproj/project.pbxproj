@@ -26,6 +26,7 @@
 		78C35B411E23C08F009AC4D3 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B331E23C04B009AC4D3 /* error.json */; };
 		78C35B421E23C08F009AC4D3 /* search_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B341E23C04B009AC4D3 /* search_VEVO.json */; };
 		78C35B431E23C08F009AC4D3 /* videos_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B351E23C04B009AC4D3 /* videos_VEVO.json */; };
+		8246B76B2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8246B76A2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		78C35B341E23C04B009AC4D3 /* search_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_VEVO.json; sourceTree = "<group>"; };
 		78C35B351E23C04B009AC4D3 /* videos_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = videos_VEVO.json; sourceTree = "<group>"; };
 		78E6F68D1D548C46006C531D /* YoutubeEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YoutubeEngine.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/YoutubeEngine-bfqcavlgyvroawgpejupfjlwtcso/Build/Products/Debug-iphonesimulator/YoutubeEngine/YoutubeEngine.framework"; sourceTree = "<group>"; };
+		8246B76A2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateComponents+EasyConstruction.swift"; sourceTree = "<group>"; };
 		93B2B1D10540D62174BDC807 /* YoutubeEngine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YoutubeEngine.podspec; path = ../YoutubeEngine.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		989EA293CFCE94962D55842F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +164,7 @@
 		78C35B2D1E23C04B009AC4D3 /* YoutubeEngineTests */ = {
 			isa = PBXGroup;
 			children = (
+				8246B76A2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift */,
 				78C35B2E1E23C04B009AC4D3 /* EngineSpec.swift */,
 				78C35B2F1E23C04B009AC4D3 /* ISO8601DurationTests.swift */,
 				78C35B301E23C04B009AC4D3 /* Responses */,
@@ -211,6 +214,7 @@
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "YoutubeEngine_Example" */;
 			buildPhases = (
 				DF6E13CE0B22490B5338AD77 /* [CP] Check Pods Manifest.lock */,
+				8246B7692444F2F900AEAEC6 /* SwiftLint */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -251,7 +255,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -266,10 +270,9 @@
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "YoutubeEngine" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -319,14 +322,12 @@
 				"${PODS_ROOT}/Target Support Files/Pods-YoutubeEngine_Example/Pods-YoutubeEngine_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/YoutubeEngine/YoutubeEngine.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubeEngine.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,18 +362,34 @@
 				"${PODS_ROOT}/Target Support Files/Pods-YoutubeEngine_Tests/Pods-YoutubeEngine_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YoutubeEngine_Tests/Pods-YoutubeEngine_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8246B7692444F2F900AEAEC6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ..\n${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 		DF6E13CE0B22490B5338AD77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -413,6 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8246B76B2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift in Sources */,
 				78C35B3E1E23C08B009AC4D3 /* ISO8601DurationTests.swift in Sources */,
 				78C35B3D1E23C08B009AC4D3 /* EngineSpec.swift in Sources */,
 			);
@@ -448,14 +466,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -497,14 +523,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

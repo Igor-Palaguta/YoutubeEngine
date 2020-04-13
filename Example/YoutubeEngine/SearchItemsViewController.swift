@@ -16,14 +16,12 @@ final class SearchItemsViewController: UITableViewController {
         model
             .provider
             .producer
-            .flatMap(.latest) {
-                provider -> SignalProducer<Void, Never> in
+            .flatMap(.latest) { provider -> SignalProducer<Void, Never> in
                 if let pageLoader = provider?.pageLoader {
                     return pageLoader
-                        .on(failed: {
-                            [weak self] error in
+                        .on(failed: { [weak self] error in
                             self?.presentError(error)
-                  })
+                        })
                         .flatMapError { _ in .empty }
                 }
                 return .empty
@@ -32,16 +30,14 @@ final class SearchItemsViewController: UITableViewController {
 
         model
             .provider
-            .producer.flatMap(.latest) {
-                provider -> SignalProducer<[SearchItem], Never> in
+            .producer.flatMap(.latest) { provider -> SignalProducer<[SearchItem], Never> in
                 guard let provider = provider else {
                     return SignalProducer(value: [])
                 }
 
                 return provider.items.producer
             }
-            .startWithValues {
-                [weak self] _ in
+            .startWithValues { [weak self] _ in
                 self?.tableView.reloadData()
             }
     }
@@ -54,10 +50,12 @@ final class SearchItemsViewController: UITableViewController {
         let item = model.items[indexPath.row]
         switch item {
         case .channelItem(let channel):
+            // swiftlint:disable:next force_cast
             let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath) as! ChannelCell
             cell.channel = channel
             return cell
         case .videoItem(let video):
+            // swiftlint:disable:next force_cast
             let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as! VideoCell
             cell.video = video
             return cell
@@ -74,8 +72,7 @@ final class SearchItemsViewController: UITableViewController {
             return
         }
 
-        provider.pageLoader?.startWithFailed {
-            [weak self] error in
+        provider.pageLoader?.startWithFailed { [weak self] error in
             self?.presentError(error)
         }
     }
@@ -86,11 +83,12 @@ final class SearchItemsViewController: UITableViewController {
             let channel = cell.channel else {
             return
         }
+        // swiftlint:disable:next force_unwrapping
         controller.title = channel.snippet!.title
         controller.model.mutableProvider.value = AnyItemsProvider { token, limit in
-            let request = Search(.fromChannel(channel.id, [.statistics, .contentDetails]),
-                                 limit: limit,
-                                 pageToken: token)
+            let request = SearchRequest(.fromChannel(channel.id, [.statistics, .contentDetails]),
+                                        limit: limit,
+                                        pageToken: token)
             return Engine.defaultEngine
                 .search(request)
                 .map { page in (page.items, page.nextPageToken) }

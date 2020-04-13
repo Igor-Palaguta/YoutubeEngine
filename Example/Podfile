@@ -5,13 +5,12 @@ platform :ios, '10.0'
 target 'YoutubeEngine_Example' do
   pod 'YoutubeEngine', :path => '../'
   pod 'Kingfisher', '~> 5.0'
-  pod 'SwiftyJSON'
   pod 'ReactiveSwift'
+  pod 'SwiftLint'
 
 target 'YoutubeEngine_Tests' do
     inherit! :search_paths
 
-    pod 'Quick', '~> 2.0'
     pod 'Nimble', '~> 8.0'
     pod 'OHHTTPStubs/NSURLSession', '~> 9.0'
     pod 'OHHTTPStubs/Swift', '~> 9.0'

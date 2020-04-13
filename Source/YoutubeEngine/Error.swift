@@ -1,24 +1,40 @@
 import Foundation
 
-public struct YoutubeError: Error {
+enum YoutubeEngineError: Int, Error {
+    case requestFailed
+    case invalidURL
+    case invalidJSON
+}
 
-    public static let Domain = "com.spangleapp.YoutubeEngine"
+struct YoutubeAPIError: Error {
+    let code: Int
+    let message: String
+}
 
-    public enum Code: Int {
-        case requestFailed = 10000
-        case invalidURL = 10001
-        case invalidJSON = 10002
+extension YoutubeAPIError: CustomNSError {
+    var errorCode: Int {
+        return code
     }
 
-    static func error(code: Code) -> NSError {
-        return NSError(domain: Domain,
-                       code: code.rawValue,
-                       userInfo: nil)
+    var errorUserInfo: [String: Any] {
+        return [NSLocalizedDescriptionKey: message]
+    }
+}
+
+extension YoutubeAPIError: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case error
     }
 
-    static func youtubeError(code: Int, message: String) -> NSError {
-        return NSError(domain: Domain,
-                       code: code,
-                       userInfo: [NSLocalizedDescriptionKey: message])
+    private enum ErrorCodingKeys: String, CodingKey {
+        case code
+        case message
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let errorContainer = try container.nestedContainer(keyedBy: ErrorCodingKeys.self, forKey: .error)
+        self.code = try errorContainer.decode(Int.self, forKey: .code)
+        self.message = try errorContainer.decode(String.self, forKey: .message)
     }
 }

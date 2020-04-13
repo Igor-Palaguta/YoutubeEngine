@@ -4,16 +4,18 @@ import YoutubeEngine
 
 protocol ItemsProviders {
     associatedtype Item
+
     var items: Property<[Item]> { get }
     var isLoadingPage: Bool { get }
     var pageLoader: SignalProducer<Void, NSError>? { get }
 }
 
 final class AnyItemsProvider<Item>: ItemsProviders {
+    typealias PageLoader = (_ pageToken: String?, _ limit: Int) -> SignalProducer<([Item], String?), NSError>
+
     let items: Property<[Item]>
     private(set) var isLoadingPage = false
 
-    typealias PageLoader = (_ pageToken: String?, _ limit: Int) -> SignalProducer<([Item], String?), NSError>
     private let _pageLoader: PageLoader
     private var nextPageToken: String?
     private let mutableItems = MutableProperty<[Item]?>(nil)

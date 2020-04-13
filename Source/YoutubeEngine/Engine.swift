@@ -1,6 +1,5 @@
 import Foundation
 import ReactiveSwift
-import SwiftyJSON
 
 public final class Engine {
     public enum Authorization {
@@ -8,41 +7,43 @@ public final class Engine {
         case accessToken(String)
     }
 
-    public var logEnabled = false
-
     private let session: URLSession
     private let authorization: Authorization
+    // swiftlint:disable:next force_unwrapping
     private let baseURL = URL(string: "https://www.googleapis.com/youtube/v3")!
+    private let logger: Logging?
 
-    public init(_ authorization: Authorization, _ session: URLSession) {
+    init(authorization: Authorization, session: URLSession, logger: Logging?) {
         self.session = session
         self.authorization = authorization
+        self.logger = logger
     }
 
-    public convenience init(_ authorization: Authorization) {
+    public convenience init(authorization: Authorization, isLogEnabled: Bool = false) {
         let configuration = URLSessionConfiguration.default
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
             configuration.httpAdditionalHeaders = ["X-Ios-Bundle-Identifier": bundleIdentifier]
         }
-        self.init(authorization, URLSession(configuration: configuration))
+        self.init(authorization: authorization,
+                  session: URLSession(configuration: configuration),
+                  logger: isLogEnabled ? ConsoleLogger() : nil)
     }
 
     public func cancelAllRequests() {
         session.invalidateAndCancel()
     }
 
-    public func videos(_ request: Videos) -> SignalProducer<Page<Video>, NSError> {
+    public func videos(_ request: VideoRequest) -> SignalProducer<Page<Video>, NSError> {
         return page(for: request)
     }
 
-    public func channels(_ request: Channels) -> SignalProducer<Page<Channel>, NSError> {
+    public func channels(_ request: ChannelRequest) -> SignalProducer<Page<Channel>, NSError> {
         return page(for: request)
     }
 
-    public func search(_ request: Search) -> SignalProducer<Page<SearchItem>, NSError> {
+    public func search(_ request: SearchRequest) -> SignalProducer<Page<SearchItem>, NSError> {
         return page(for: request)
             .flatMap(.latest) { page -> SignalProducer<Page<SearchItem>, NSError> in
-
                 let videosParts =
                     self.load(parts: request.videoParts.filter { $0 != request.part },
                               for: page.items.compactMap { $0.video })
@@ -55,9 +56,9 @@ public final class Engine {
                     .map { videosById, channelsById -> Page<SearchItem> in
                         let mergedItems: [SearchItem] = page.items.map { item in
                             if let itemVideo = item.video, let video = videosById[itemVideo.id] {
-                                return .videoItem(itemVideo.merge(with: video))
+                                return .videoItem(itemVideo.merged(with: video))
                             } else if let itemChannel = item.channel, let channel = channelsById[itemChannel.id] {
-                                return .channelItem(itemChannel.merge(with: channel))
+                                return .channelItem(itemChannel.merged(with: channel))
                             }
                             return item
                         }
@@ -70,7 +71,7 @@ public final class Engine {
             }
     }
 
-    private func load<T: JSONRepresentable & PartibleObject & SearchableObject>(
+    private func load<T: Decodable & PartibleObject & SearchableObject>(
         parts: [Part],
         for objects: [T]
     ) -> SignalProducer<[String: T], Never> {
@@ -93,7 +94,7 @@ public final class Engine {
             .flatMapError { _ in SignalProducer(value: [:]) }
     }
 
-    private func json(for request: YoutubeRequest) -> SignalProducer<JSON, NSError> {
+    private func object<T: Decodable>(of type: T.Type, request: YoutubeRequest) -> SignalProducer<T, NSError> {
         let url = baseURL.appendingPathComponent(request.command)
 
         var parameters: [String: String] = request.parameters
@@ -104,25 +105,13 @@ public final class Engine {
             parameters["key"] = key
         }
 
-        let logger: Logger? = logEnabled ? DefaultLogger() : nil
-        return session.jsonSignal(request.method,
-                                  url,
-                                  parameters: parameters,
-                                  logger: logger)
+        return session.objectSignal(method: request.method,
+                                    url: url,
+                                    parameters: parameters,
+                                    logger: logger)
     }
 
-    private func page<R: PageRequest>(for request: R) -> SignalProducer<Page<R.Item>, NSError> where R.Item: JSONRepresentable {
-        return json(for: request)
-            .map {
-                json in
-                let items = json["items"]
-                    .arrayValue
-                    .compactMap { R.Item(json: $0) }
-
-                return Page(items: items,
-                            totalCount: json["pageInfo"]["totalResults"].intValue,
-                            nextPageToken: json["nextPageToken"].string,
-                            previousPageToken: json["prevPageToken"].string)
-            }
+    private func page<R: PageRequest>(for request: R) -> SignalProducer<Page<R.Item>, NSError> where R.Item: Decodable {
+        return object(of: Page<R.Item>.self, request: request)
     }
 }

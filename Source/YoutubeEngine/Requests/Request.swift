@@ -1,6 +1,6 @@
 import Foundation
 
-enum Method: String {
+enum HTTPMethod: String {
     case GET
     case POST
     case PUT
@@ -8,20 +8,22 @@ enum Method: String {
 }
 
 protocol YoutubeRequest {
-    var method: Method { get }
+    var method: HTTPMethod { get }
     var command: String { get }
     var parameters: [String: String] { get }
 }
 
 protocol PageRequest: YoutubeRequest {
     associatedtype Item
+
     var pageToken: String? { get }
     var limit: Int? { get }
 }
 
 struct AnyPageRequest<ItemType>: PageRequest {
     typealias Item = ItemType
-    let method: Method
+
+    let method: HTTPMethod
     let command: String
     let parameters: [String: String]
     let pageToken: String?

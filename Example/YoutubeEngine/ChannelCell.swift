@@ -10,18 +10,19 @@ final class ChannelCell: UITableViewCell {
 
     var channel: Channel! {
         didSet {
+            // swiftlint:disable:next force_unwrapping
             thumbnailView.kf.setImage(with: ImageResource(downloadURL: channel.snippet!.defaultImage.url),
                                       options: [.transition(.fade(0.3))])
 
             titleLabel.text = channel.snippet?.title
 
             videosLabel.text = channel.statistics?
-                .videos
+                .videoCount
                 .map {
                     NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " videos"
                 }
 
-            subscribersLabel.text = channel.statistics?.subscribers
+            subscribersLabel.text = channel.statistics?.subscriberCount
                 .map {
                     NumberFormatter.localizedString(from: NSNumber(value: $0), number: .decimal) + " subscribers"
                 }

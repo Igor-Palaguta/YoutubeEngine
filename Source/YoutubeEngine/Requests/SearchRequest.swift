@@ -1,22 +1,13 @@
 import Foundation
 
-public enum Type: Parameter {
+public enum ContentType: String, RequestParameterRepresenting {
     case video
     case channel
-
-    var parameterValue: String {
-        switch self {
-        case .video:
-            return "video"
-        case .channel:
-            return "channel"
-        }
-    }
 }
 
-public struct Search {
+public struct SearchRequest {
     public enum Filter {
-        case term(String, [Type: [Part]])
+        case term(String, [ContentType: [Part]])
         case fromChannel(String, [Part])
         case relatedTo(String, [Part])
     }
@@ -31,7 +22,7 @@ public struct Search {
         self.pageToken = pageToken
     }
 
-    var types: [Type] {
+    var contentTypes: [ContentType] {
         if case .term(_, let parts) = filter {
             return Array(parts.keys)
         }
@@ -63,36 +54,17 @@ public struct Search {
     }
 }
 
-public enum SearchItem: Equatable {
-    case channelItem(Channel)
-    case videoItem(Video)
-
-    public var video: Video? {
-        if case .videoItem(let video) = self {
-            return video
-        }
-        return nil
-    }
-
-    public var channel: Channel? {
-        if case .channelItem(let channel) = self {
-            return channel
-        }
-        return nil
-    }
-}
-
-extension Search: PageRequest {
+extension SearchRequest: PageRequest {
 
     typealias Item = SearchItem
 
-    var method: Method { return .GET }
+    var method: HTTPMethod { return .GET }
     var command: String { return "search" }
 
     var parameters: [String: String] {
         var parameters: [String: String] = [
-            "part": part.parameterValue,
-            "type": types.joinParameters()
+            "part": part.requestParameterValue,
+            "type": contentTypes.requestParameterValue
         ]
 
         parameters["maxResults"] = limit.map(String.init)
