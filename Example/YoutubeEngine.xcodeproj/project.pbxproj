@@ -19,7 +19,7 @@
 		78715C3C1D901E7000830ECC /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78715C3B1D901E7000830ECC /* ItemsViewModel.swift */; };
 		78715C3E1D90409500830ECC /* YoutubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78715C3D1D90409500830ECC /* YoutubeViewController.swift */; };
 		789000711D8800EA00F794B2 /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789000701D8800EA00F794B2 /* ChannelCell.swift */; };
-		78C35B3D1E23C08B009AC4D3 /* EngineSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C35B2E1E23C04B009AC4D3 /* EngineSpec.swift */; };
+		78C35B3D1E23C08B009AC4D3 /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C35B2E1E23C04B009AC4D3 /* EngineTests.swift */; };
 		78C35B3E1E23C08B009AC4D3 /* ISO8601DurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C35B2F1E23C04B009AC4D3 /* ISO8601DurationTests.swift */; };
 		78C35B3F1E23C08F009AC4D3 /* channels_search.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B311E23C04B009AC4D3 /* channels_search.json */; };
 		78C35B401E23C08F009AC4D3 /* channels_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B321E23C04B009AC4D3 /* channels_VEVO.json */; };
@@ -51,7 +51,7 @@
 		78715C3B1D901E7000830ECC /* ItemsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsViewModel.swift; sourceTree = "<group>"; };
 		78715C3D1D90409500830ECC /* YoutubeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeViewController.swift; sourceTree = "<group>"; };
 		789000701D8800EA00F794B2 /* ChannelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
-		78C35B2E1E23C04B009AC4D3 /* EngineSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineSpec.swift; sourceTree = "<group>"; };
+		78C35B2E1E23C04B009AC4D3 /* EngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
 		78C35B2F1E23C04B009AC4D3 /* ISO8601DurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISO8601DurationTests.swift; sourceTree = "<group>"; };
 		78C35B311E23C04B009AC4D3 /* channels_search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels_search.json; sourceTree = "<group>"; };
 		78C35B321E23C04B009AC4D3 /* channels_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels_VEVO.json; sourceTree = "<group>"; };
@@ -165,7 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				8246B76A2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift */,
-				78C35B2E1E23C04B009AC4D3 /* EngineSpec.swift */,
+				78C35B2E1E23C04B009AC4D3 /* EngineTests.swift */,
 				78C35B2F1E23C04B009AC4D3 /* ISO8601DurationTests.swift */,
 				78C35B301E23C04B009AC4D3 /* Responses */,
 			);
@@ -432,7 +432,7 @@
 			files = (
 				8246B76B2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift in Sources */,
 				78C35B3E1E23C08B009AC4D3 /* ISO8601DurationTests.swift in Sources */,
-				78C35B3D1E23C08B009AC4D3 /* EngineSpec.swift in Sources */,
+				78C35B3D1E23C08B009AC4D3 /* EngineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

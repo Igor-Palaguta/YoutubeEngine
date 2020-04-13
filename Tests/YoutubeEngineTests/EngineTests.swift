@@ -4,7 +4,7 @@ import ReactiveSwift
 import XCTest
 @testable import YoutubeEngine
 
-final class EngineSpec: XCTestCase {
+final class EngineTests: XCTestCase {
     private typealias RequestHook = (URLRequest) -> Void
 
     private let vevoChannel =
