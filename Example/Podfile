@@ -6,6 +6,7 @@ target 'YoutubeEngine_Example' do
   pod 'YoutubeEngine', :path => '../'
   pod 'Kingfisher', '~> 5.0'
   pod 'ReactiveSwift'
+  pod 'SwiftLint'
 
 target 'YoutubeEngine_Tests' do
     inherit! :search_paths

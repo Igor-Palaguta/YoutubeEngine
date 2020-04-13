@@ -66,9 +66,9 @@ final class EngineSpec: XCTestCase {
     }
 
     func testAllPartsSearch() {
-        self.addStubs(commandFiles: ["search": "search_VEVO",
-                                     "videos": "videos_VEVO",
-                                     "channels": "channels_VEVO"])
+        addStubs(commandFiles: ["search": "search_VEVO",
+                                "videos": "videos_VEVO",
+                                "channels": "channels_VEVO"])
         waitUntil(timeout: 1) { done in
             let request = SearchRequest(.term("VEVO", [.video: [.statistics, .contentDetails], .channel: [.statistics]]), limit: 3)
             self.engine.search(request)
@@ -92,9 +92,9 @@ final class EngineSpec: XCTestCase {
     }
 
     func testSearchSnippetByDefault() {
-        self.addStubs(commandFiles: ["search": "search_VEVO",
-                                     "videos": "videos_VEVO",
-                                     "channels": "channels_VEVO"])
+        addStubs(commandFiles: ["search": "search_VEVO",
+                                "videos": "videos_VEVO",
+                                "channels": "channels_VEVO"])
 
         waitUntil(timeout: 1) { done in
             let request = SearchRequest(.term("VEVO", [.video: [], .channel: []]), limit: 3)
@@ -103,11 +103,15 @@ final class EngineSpec: XCTestCase {
                     guard case .success(let page) = result else {
                         return
                     }
-                    let vevoChannel = Channel(id: self.vevoChannel.id, snippet: self.vevoChannel.snippet, statistics: nil)
-                    let video1 = Video(id: self.video1.id, snippet: self.video1.snippet, statistics: nil, contentDetails: nil)
-                    let video2 = Video(id: self.video2.id, snippet: self.video2.snippet, statistics: nil, contentDetails: nil)
+                    let vevoChannel = Channel(id: self.vevoChannel.id, snippet: self.vevoChannel.snippet)
+                    let video1 = Video(id: self.video1.id, snippet: self.video1.snippet)
+                    let video2 = Video(id: self.video2.id, snippet: self.video2.snippet)
 
-                    expect(page.items) == [.channelItem(vevoChannel), .videoItem(video1), .videoItem(video2)]
+                    expect(page.items) == [
+                        .channelItem(vevoChannel),
+                        .videoItem(video1),
+                        .videoItem(video2)
+                    ]
 
                     done()
                 }
@@ -119,7 +123,7 @@ final class EngineSpec: XCTestCase {
         var channelsCalled = false
         var justChannelsType = true
 
-        self.addStub(command: "search", fileName: "search_VEVO") { request in
+        addStub(command: "search", fileName: "search_VEVO") { request in
             let components = NSURLComponents(string: request.url!.absoluteString)
             if let queryItems = components?.queryItems,
                 let typeIndex = queryItems.firstIndex(where: { $0.name == "type" }) {
@@ -127,8 +131,8 @@ final class EngineSpec: XCTestCase {
             }
         }
 
-        self.addStub(command: "channels", fileName: "channels_VEVO") { _ in channelsCalled = true }
-        self.addStub(command: "videos", fileName: "videos_VEVO") { _ in videoCalled = true }
+        addStub(command: "channels", fileName: "channels_VEVO") { _ in channelsCalled = true }
+        addStub(command: "videos", fileName: "videos_VEVO") { _ in videoCalled = true }
 
         waitUntil(timeout: 1) { done in
             let request = SearchRequest(.term("VEVO", [.channel: [.statistics]]), limit: 3)
@@ -147,9 +151,9 @@ final class EngineSpec: XCTestCase {
     }
 
     func testIgnoresErrorsForFailedPartRequests() {
-        self.addStubs(commandFiles: ["search": "search_VEVO",
-                                     "videos": "error",
-                                     "channels": "channels_VEVO"])
+        addStubs(commandFiles: ["search": "search_VEVO",
+                                "videos": "error",
+                                "channels": "channels_VEVO"])
 
         waitUntil(timeout: 1) { done in
             let request = SearchRequest(.term("VEVO", [.video: [.statistics, .contentDetails], .channel: [.statistics]]), limit: 3)
@@ -159,8 +163,8 @@ final class EngineSpec: XCTestCase {
                         return
                     }
 
-                    let video1 = Video(id: self.video1.id, snippet: self.video1.snippet, statistics: nil, contentDetails: nil)
-                    let video2 = Video(id: self.video2.id, snippet: self.video2.snippet, statistics: nil, contentDetails: nil)
+                    let video1 = Video(id: self.video1.id, snippet: self.video1.snippet)
+                    let video2 = Video(id: self.video2.id, snippet: self.video2.snippet)
 
                     expect(page.items) == [
                         .channelItem(self.vevoChannel),
@@ -174,7 +178,7 @@ final class EngineSpec: XCTestCase {
     }
 
     func testError() {
-        self.addStub(command: "search", fileName: "error")
+        addStub(command: "search", fileName: "error")
         waitUntil { done in
             let request = SearchRequest(.term("VEVO", [.video: [], .channel: []]), limit: 1000)
             self.engine.search(request)

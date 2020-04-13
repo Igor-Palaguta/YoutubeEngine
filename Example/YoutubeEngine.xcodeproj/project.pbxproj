@@ -26,6 +26,7 @@
 		78C35B411E23C08F009AC4D3 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B331E23C04B009AC4D3 /* error.json */; };
 		78C35B421E23C08F009AC4D3 /* search_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B341E23C04B009AC4D3 /* search_VEVO.json */; };
 		78C35B431E23C08F009AC4D3 /* videos_VEVO.json in Resources */ = {isa = PBXBuildFile; fileRef = 78C35B351E23C04B009AC4D3 /* videos_VEVO.json */; };
+		8246B76B2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8246B76A2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		78C35B341E23C04B009AC4D3 /* search_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_VEVO.json; sourceTree = "<group>"; };
 		78C35B351E23C04B009AC4D3 /* videos_VEVO.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = videos_VEVO.json; sourceTree = "<group>"; };
 		78E6F68D1D548C46006C531D /* YoutubeEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YoutubeEngine.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/YoutubeEngine-bfqcavlgyvroawgpejupfjlwtcso/Build/Products/Debug-iphonesimulator/YoutubeEngine/YoutubeEngine.framework"; sourceTree = "<group>"; };
+		8246B76A2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateComponents+EasyConstruction.swift"; sourceTree = "<group>"; };
 		93B2B1D10540D62174BDC807 /* YoutubeEngine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YoutubeEngine.podspec; path = ../YoutubeEngine.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		989EA293CFCE94962D55842F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +164,7 @@
 		78C35B2D1E23C04B009AC4D3 /* YoutubeEngineTests */ = {
 			isa = PBXGroup;
 			children = (
+				8246B76A2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift */,
 				78C35B2E1E23C04B009AC4D3 /* EngineSpec.swift */,
 				78C35B2F1E23C04B009AC4D3 /* ISO8601DurationTests.swift */,
 				78C35B301E23C04B009AC4D3 /* Responses */,
@@ -210,8 +213,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "YoutubeEngine_Example" */;
 			buildPhases = (
-				8246B7692444F2F900AEAEC6 /* SwiftLint */,
 				DF6E13CE0B22490B5338AD77 /* [CP] Check Pods Manifest.lock */,
+				8246B7692444F2F900AEAEC6 /* SwiftLint */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -386,7 +389,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ..\nswiftlint\n";
+			shellScript = "cd ..\n${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 		DF6E13CE0B22490B5338AD77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -427,6 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8246B76B2444F88100AEAEC6 /* DateComponents+EasyConstruction.swift in Sources */,
 				78C35B3E1E23C08B009AC4D3 /* ISO8601DurationTests.swift in Sources */,
 				78C35B3D1E23C08B009AC4D3 /* EngineSpec.swift in Sources */,
 			);
