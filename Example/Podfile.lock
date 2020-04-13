@@ -16,21 +16,16 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (9.0.0)
   - OHHTTPStubs/Swift (9.0.0):
     - OHHTTPStubs/Default
-  - Quick (2.2.0)
   - ReactiveSwift (6.2.1)
-  - SwiftyJSON (5.0.0)
   - YoutubeEngine (0.3.1):
     - ReactiveSwift (~> 6.0)
-    - SwiftyJSON (~> 5.0)
 
 DEPENDENCIES:
   - Kingfisher (~> 5.0)
   - Nimble (~> 8.0)
   - OHHTTPStubs/NSURLSession (~> 9.0)
   - OHHTTPStubs/Swift (~> 9.0)
-  - Quick (~> 2.0)
   - ReactiveSwift
-  - SwiftyJSON
   - YoutubeEngine (from `../`)
 
 SPEC REPOS:
@@ -38,9 +33,7 @@ SPEC REPOS:
     - Kingfisher
     - Nimble
     - OHHTTPStubs
-    - Quick
     - ReactiveSwift
-    - SwiftyJSON
 
 EXTERNAL SOURCES:
   YoutubeEngine:
@@ -50,11 +43,9 @@ SPEC CHECKSUMS:
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
   Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   ReactiveSwift: 07ddf579f4eb3ee3bd656214f0461aaf2c0fd639
-  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
-  YoutubeEngine: 6a51bb0e07cbae30849afb0517a667e02df6ec8d
+  YoutubeEngine: ca833a9877fde021078e5b7cd1c6e5fe4698c833
 
-PODFILE CHECKSUM: d38357ae122ef0d4ee2dd22a09c4eefdeb216381
+PODFILE CHECKSUM: ac3a8c1e127531bec2dfdcdd21fbf8645ed37d17
 
 COCOAPODS: 1.9.1

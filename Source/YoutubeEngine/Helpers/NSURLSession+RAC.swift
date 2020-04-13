@@ -1,21 +1,22 @@
 import Foundation
 import ReactiveSwift
-import SwiftyJSON
 
-protocol Logger {
+protocol Logging {
     func log(_ request: URLRequest)
     func log(_ response: HTTPURLResponse, body: Data?)
     func log(_ error: NSError)
 }
 
-struct DefaultLogger: Logger {
+struct ConsoleLogger: Logging {
     func log(_ request: URLRequest) {
+        // swiftlint:disable:next force_unwrapping
         let logMessage = "\(request.httpMethod!) \(request.url!)"
         print(logMessage)
     }
 
     func log(_ response: HTTPURLResponse, body: Data?) {
         let bodyString = body.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+        // swiftlint:disable:next force_unwrapping
         let logMessage = "\(response.statusCode) \(response.url!)\n\(bodyString)"
         print(logMessage)
     }
@@ -25,25 +26,27 @@ struct DefaultLogger: Logger {
     }
 }
 
+// swiftlint:disable function_body_length
+// swiftlint:disable closure_body_length
 extension URLSession {
-    final func jsonSignal(_ method: Method,
-                          _ url: URL,
-                          parameters: [String: String]?,
-                          logger: Logger?) -> SignalProducer<JSON, NSError> {
+    final func objectSignal<T: Decodable>(method: HTTPMethod,
+                                          url: URL,
+                                          parameters: [String: String]?,
+                                          logger: Logging?) -> SignalProducer<T, NSError> {
         return SignalProducer { observer, disposable in
             guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                observer.send(error: YoutubeError.error(code: .invalidURL))
+                observer.send(error: YoutubeEngineError.invalidURL as NSError)
                 return
             }
 
             if let parameters = parameters {
                 components.queryItems = parameters.keys.map {
-                    return URLQueryItem(name: $0, value: parameters[$0])
+                    URLQueryItem(name: $0, value: parameters[$0])
                 }
             }
 
             guard let url = components.url else {
-                observer.send(error: YoutubeError.error(code: .invalidURL))
+                observer.send(error: YoutubeEngineError.invalidURL as NSError)
                 return
             }
 
@@ -51,9 +54,7 @@ extension URLSession {
             request.httpMethod = method.rawValue
 
             logger?.log(request)
-            let task = self.dataTask(with: request) {
-                data, response, error in
-
+            let task = self.dataTask(with: request) { data, response, error in
                 if let error = error {
                     let error = error as NSError
                     if error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
@@ -64,22 +65,29 @@ extension URLSession {
                     return
                 }
 
+                // swiftlint:disable:next force_cast
                 logger?.log(response as! HTTPURLResponse, body: data)
 
-                guard let data = data,
-                    let JSONObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
-                    observer.send(error: YoutubeError.error(code: .invalidJSON))
+                guard let data = data else {
+                    observer.send(error: YoutubeEngineError.invalidJSON as NSError)
                     return
                 }
 
-                let json = JSON(JSONObject)
-                if let error = YoutubeError.makeError(from: json) {
-                    observer.send(error: error)
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .formatted(.iso8601WithMilliseconds)
+
+                if let youtubeError = try? decoder.decode(YoutubeAPIError.self, from: data) {
+                    observer.send(error: youtubeError as NSError)
                     return
                 }
 
-                observer.send(value: json)
-                observer.sendCompleted()
+                do {
+                    let object = try decoder.decode(T.self, from: data)
+                    observer.send(value: object)
+                    observer.sendCompleted()
+                } catch {
+                    observer.send(error: error as NSError)
+                }
             }
 
             task.resume()

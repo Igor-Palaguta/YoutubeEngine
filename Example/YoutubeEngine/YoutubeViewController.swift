@@ -3,11 +3,10 @@ import UIKit
 import YoutubeEngine
 
 extension Engine {
-    static let defaultEngine: Engine = {
-        let engine = Engine(.key("AIzaSyBjLH-61v1oTcb_wQUcGAYIHmWSCj19Ss4"))
-        engine.logEnabled = true
-        return engine
-    }()
+    static let defaultEngine = Engine(
+        authorization: .key("AIzaSyBjLH-61v1oTcb_wQUcGAYIHmWSCj19Ss4"),
+        isLogEnabled: true
+    )
 }
 
 final class YoutubeViewModel {
@@ -18,7 +17,7 @@ final class YoutubeViewController: UIViewController {
 
     @IBOutlet private var searchBar: UISearchBar!
 
-    fileprivate let model = YoutubeViewModel()
+    private let model = YoutubeViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +37,11 @@ final class YoutubeViewController: UIViewController {
                     return nil
                 }
                 return AnyItemsProvider { token, limit in
-                    let request = Search(.term(keyword, [.video: [.statistics, .contentDetails], .channel: [.statistics]]),
-                                         limit: limit,
-                                         pageToken: token)
+                    let request = SearchRequest(
+                        .term(keyword, [.video: [.statistics, .contentDetails], .channel: [.statistics]]),
+                        limit: limit,
+                        pageToken: token
+                    )
                     return Engine.defaultEngine
                         .search(request)
                         .map { page in (page.items, page.nextPageToken) }

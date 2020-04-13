@@ -1,11 +1,7 @@
 import Foundation
 
-public enum Part: String, Parameter, CaseIterable {
+public enum Part: String, RequestParameterRepresenting, CaseIterable {
     case snippet
     case contentDetails
     case statistics
-
-    var parameterValue: String {
-        return rawValue
-    }
 }

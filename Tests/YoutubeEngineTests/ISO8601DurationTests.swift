@@ -30,7 +30,7 @@ final class NSDateComponentsISO8601Spec: XCTestCase {
     }
 }
 
-func components(year: Int? = nil, month: Int? = nil, weekOfYear: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> DateComponents {
+private func components(year: Int? = nil, month: Int? = nil, weekOfYear: Int? = nil, day: Int? = nil, hour: Int? = nil, minute: Int? = nil, second: Int? = nil) -> DateComponents {
     var components = DateComponents()
     _ = year.map { components.year = $0 }
     _ = month.map { components.month = $0 }
@@ -43,5 +43,5 @@ func components(year: Int? = nil, month: Int? = nil, weekOfYear: Int? = nil, day
 }
 
 private func ISO8601(_ string: String) -> DateComponents? {
-    return dateComponents(ISO8601String: string)
+    return try? DateComponents(ISO8601String: string)
 }
