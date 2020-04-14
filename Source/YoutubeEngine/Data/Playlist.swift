@@ -1,43 +1,28 @@
 import Foundation
 
-public struct Channel: Equatable, Decodable {
+public struct Playlist: Equatable, Decodable {
     public let id: String
-    public var snippet: ChannelSnippet?
-    public var statistics: ChannelStatistics?
+    public var snippet: PlaylistSnippet?
 }
 
-public struct ChannelStatistics: Equatable {
-    public let subscriberCount: Int?
-    public let videoCount: Int?
-}
-
-extension ChannelStatistics: Decodable {
-    private enum CodingKeys: String, CodingKey {
-        case subscriberCount
-        case videoCount
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.subscriberCount = try container.decodeIfPresent(StatisticsNumber.self, forKey: .subscriberCount)?.value
-        self.videoCount = try container.decodeIfPresent(StatisticsNumber.self, forKey: .videoCount)?.value
-    }
-}
-
-public struct ChannelSnippet: Equatable {
+public struct PlaylistSnippet: Equatable {
     public let title: String
     public let description: String
     public let publishDate: Date
+    public let channelID: String
+    public let channelTitle: String
     public let defaultImage: Image
     public let mediumImage: Image
     public let highImage: Image
 }
 
-extension ChannelSnippet: Decodable {
+extension PlaylistSnippet: Decodable {
     private enum CodingKeys: String, CodingKey {
         case title
         case description
         case publishDate = "publishedAt"
+        case channelID = "channelId"
+        case channelTitle
         case thumbnails
     }
 
@@ -52,6 +37,8 @@ extension ChannelSnippet: Decodable {
         self.title = try container.decode(String.self, forKey: .title)
         self.description = try container.decode(String.self, forKey: .description)
         self.publishDate = try container.decode(Date.self, forKey: .publishDate)
+        self.channelID = try container.decode(String.self, forKey: .channelID)
+        self.channelTitle = try container.decode(String.self, forKey: .channelTitle)
 
         let thumbnailsContainer = try container.nestedContainer(keyedBy: ThumbnailCodingKeys.self, forKey: .thumbnails)
 

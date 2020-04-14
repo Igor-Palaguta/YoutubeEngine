@@ -41,24 +41,28 @@ public final class Engine {
         return page(for: request)
     }
 
+    public func playlistItems(_ request: PlaylistItemRequest) -> SignalProducer<Page<PlaylistItem>, NSError> {
+        return page(for: request)
+    }
+
     public func search(_ request: SearchRequest) -> SignalProducer<Page<SearchItem>, NSError> {
         return page(for: request)
             .flatMap(.latest) { page -> SignalProducer<Page<SearchItem>, NSError> in
                 let videosParts =
-                    self.load(parts: request.videoParts.filter { $0 != request.part },
+                    self.load(request.videoParts.filter { $0 != request.part },
                               for: page.items.compactMap { $0.video })
 
                 let channelParts =
-                    self.load(parts: request.channelParts.filter { $0 != request.part },
+                    self.load(request.channelParts.filter { $0 != request.part },
                               for: page.items.compactMap { $0.channel })
 
                 return SignalProducer.combineLatest(videosParts, channelParts)
-                    .map { videosById, channelsById -> Page<SearchItem> in
+                    .map { videoByID, channelByID -> Page<SearchItem> in
                         let mergedItems: [SearchItem] = page.items.map { item in
-                            if let itemVideo = item.video, let video = videosById[itemVideo.id] {
-                                return .videoItem(itemVideo.merged(with: video))
-                            } else if let itemChannel = item.channel, let channel = channelsById[itemChannel.id] {
-                                return .channelItem(itemChannel.merged(with: channel))
+                            if let itemVideo = item.video, let video = videoByID[itemVideo.id] {
+                                return .video(itemVideo.merged(with: video))
+                            } else if let itemChannel = item.channel, let channel = channelByID[itemChannel.id] {
+                                return .channel(itemChannel.merged(with: channel))
                             }
                             return item
                         }
@@ -67,31 +71,21 @@ public final class Engine {
                                     nextPageToken: page.nextPageToken,
                                     previousPageToken: page.previousPageToken)
                     }
-                    .promoteError(NSError.self)
             }
     }
 
     private func load<T: Decodable & PartibleObject & SearchableObject>(
-        parts: [Part],
+        _ parts: [Part],
         for objects: [T]
-    ) -> SignalProducer<[String: T], Never> {
-        if parts.isEmpty {
+    ) -> SignalProducer<[String: T], NSError> {
+        if parts.isEmpty || objects.isEmpty {
             return SignalProducer(value: [:])
         }
 
-        if objects.isEmpty {
-            return SignalProducer(value: [:])
-        }
-
-        return page(for: T.request(for: parts, objects: objects))
+        return page(for: T.request(withRequiredParts: parts, for: objects))
             .map { page in
-                var objectsById: [String: T] = [:]
-                page.items.forEach {
-                    objectsById[$0.id] = $0
-                }
-                return objectsById
+                Dictionary(page.items.map { ($0.id, $0) }) { first, _ in first }
             }
-            .flatMapError { _ in SignalProducer(value: [:]) }
     }
 
     private func object<T: Decodable>(of type: T.Type, request: YoutubeRequest) -> SignalProducer<T, NSError> {

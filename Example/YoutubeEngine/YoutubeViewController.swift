@@ -28,24 +28,27 @@ final class YoutubeViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let contentController = segue.destination as? SearchItemsViewController else {
+        guard let contentController = segue.destination as? ItemsViewController else {
             return
         }
         contentController.model.mutableProvider <~ model.keyword.signal
             .debounce(0.5, on: QueueScheduler.main)
-            .map { keyword -> AnyItemsProvider<SearchItem>? in
+            .map { keyword -> AnyItemsProvider<DisplayItem>? in
                 if keyword.isEmpty {
                     return nil
                 }
                 return AnyItemsProvider { token, limit in
-                    let request = SearchRequest(
-                        .term(keyword, [.video: [.statistics, .contentDetails], .channel: [.statistics]]),
+                    let request: SearchRequest = .search(
+                        withTerm: keyword,
+                        requiredVideoParts: [.statistics, .contentDetails],
+                        requiredChannelParts: [.statistics],
+                        requiredPlaylistParts: [.snippet],
                         limit: limit,
                         pageToken: token
                     )
                     return Engine.defaultEngine
                         .search(request)
-                        .map { page in (page.items, page.nextPageToken) }
+                        .map { page in (page.items.map { $0.displayItem }, page.nextPageToken) }
                 }
             }
     }

@@ -11,6 +11,7 @@ final class EngineTests: XCTestCase {
         Channel(id: "UC2pmfLm7iq6Ov1UwYrWYkZA",
                 snippet:
                 ChannelSnippet(title: "Vevo",
+                               description: "Vevo videos",
                                publishDate: DateFormatter.iso8601WithMilliseconds.date(from: "2006-04-14T17:07:29.000Z")!,
                                defaultImage: Image(url: URL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s88-c-k-no-rj-c0xffffff/photo.jpg")!, size: nil),
                                mediumImage: Image(url: URL(string: "https://yt3.ggpht.com/-hmxOepMtptM/AAAAAAAAAAI/AAAAAAAAAAA/nzePQZGAM2Y/s240-c-k-no-rj-c0xffffff/photo.jpg")!, size: nil),
@@ -24,7 +25,7 @@ final class EngineTests: XCTestCase {
               snippet:
               VideoSnippet(title: "Vevo - HOT THIS WEEK: Aug 5, 2016",
                            publishDate: DateFormatter.iso8601WithMilliseconds.date(from: "2016-08-05T19:30:01.000Z")!,
-                           channelId: "UC2pmfLm7iq6Ov1UwYrWYkZA",
+                           channelID: "UC2pmfLm7iq6Ov1UwYrWYkZA",
                            channelTitle: "Vevo",
                            defaultImage: Image(url: URL(string: "https://i.ytimg.com/vi/FASkBnLAHEw/default.jpg")!, size: CGSize(width: 120, height: 90)),
                            mediumImage: Image(url: URL(string: "https://i.ytimg.com/vi/FASkBnLAHEw/mqdefault.jpg")!, size: CGSize(width: 320, height: 180)),
@@ -40,7 +41,7 @@ final class EngineTests: XCTestCase {
               snippet:
               VideoSnippet(title: "Top 100 Most Viewed Songs Of All Time (VEVO) (Updated August 2016)",
                            publishDate: DateFormatter.iso8601WithMilliseconds.date(from: "2016-08-03T16:52:56.000Z")!,
-                           channelId: "UCVDKPOPmcsZuEjLVqFgQDcg",
+                           channelID: "UCVDKPOPmcsZuEjLVqFgQDcg",
                            channelTitle: "TopMusicMafia",
                            defaultImage: Image(url: URL(string: "https://i.ytimg.com/vi/Ho1oF_P3X00/default.jpg")!, size: CGSize(width: 120, height: 90)),
                            mediumImage: Image(url: URL(string: "https://i.ytimg.com/vi/Ho1oF_P3X00/mqdefault.jpg")!, size: CGSize(width: 320, height: 180)),
@@ -70,7 +71,11 @@ final class EngineTests: XCTestCase {
                                 "videos": "videos_VEVO",
                                 "channels": "channels_VEVO"])
         waitUntil(timeout: 1) { done in
-            let request = SearchRequest(.term("VEVO", [.video: [.statistics, .contentDetails], .channel: [.statistics]]), limit: 3)
+            let request: SearchRequest = .search(withTerm: "VEVO",
+                                                 requiredVideoParts: [.statistics, .contentDetails],
+                                                 requiredChannelParts: [.statistics],
+                                                 limit: 3)
+
             self.engine.search(request)
                 .startWithResult { result in
                     guard case .success(let page) = result else {
@@ -81,9 +86,9 @@ final class EngineTests: XCTestCase {
                     expect(page.totalCount) == 1000000
 
                     expect(page.items) == [
-                        .channelItem(self.vevoChannel),
-                        .videoItem(self.video1),
-                        .videoItem(self.video2)
+                        .channel(self.vevoChannel),
+                        .video(self.video1),
+                        .video(self.video2)
                     ]
 
                     done()
@@ -97,7 +102,10 @@ final class EngineTests: XCTestCase {
                                 "channels": "channels_VEVO"])
 
         waitUntil(timeout: 1) { done in
-            let request = SearchRequest(.term("VEVO", [.video: [], .channel: []]), limit: 3)
+            let request: SearchRequest = .search(withTerm: "VEVO",
+                                                 requiredVideoParts: [],
+                                                 requiredChannelParts: [],
+                                                 limit: 3)
             self.engine.search(request)
                 .startWithResult { result in
                     guard case .success(let page) = result else {
@@ -108,9 +116,9 @@ final class EngineTests: XCTestCase {
                     let video2 = Video(id: self.video2.id, snippet: self.video2.snippet)
 
                     expect(page.items) == [
-                        .channelItem(vevoChannel),
-                        .videoItem(video1),
-                        .videoItem(video2)
+                        .channel(vevoChannel),
+                        .video(video1),
+                        .video(video2)
                     ]
 
                     done()
@@ -135,7 +143,10 @@ final class EngineTests: XCTestCase {
         addStub(command: "videos", fileName: "videos_VEVO") { _ in videoCalled = true }
 
         waitUntil(timeout: 1) { done in
-            let request = SearchRequest(.term("VEVO", [.channel: [.statistics]]), limit: 3)
+            let request: SearchRequest = .search(withTerm: "VEVO",
+                                                 requiredChannelParts: [.statistics],
+                                                 limit: 3)
+
             self.engine.search(request)
                 .startWithResult { result in
                     guard case .success = result else {
@@ -150,28 +161,21 @@ final class EngineTests: XCTestCase {
         }
     }
 
-    func testIgnoresErrorsForFailedPartRequests() {
+    func testFailureWithPartRequestFails() {
         addStubs(commandFiles: ["search": "search_VEVO",
                                 "videos": "error",
                                 "channels": "channels_VEVO"])
 
         waitUntil(timeout: 1) { done in
-            let request = SearchRequest(.term("VEVO", [.video: [.statistics, .contentDetails], .channel: [.statistics]]), limit: 3)
+            let request: SearchRequest = .search(withTerm: "VEVO",
+                                                 requiredVideoParts: [.statistics, .contentDetails],
+                                                 requiredChannelParts: [.statistics],
+                                                 limit: 3)
+
             self.engine.search(request)
-                .startWithResult { result in
-                    guard case .success(let page) = result else {
-                        return
-                    }
-
-                    let video1 = Video(id: self.video1.id, snippet: self.video1.snippet)
-                    let video2 = Video(id: self.video2.id, snippet: self.video2.snippet)
-
-                    expect(page.items) == [
-                        .channelItem(self.vevoChannel),
-                        .videoItem(video1),
-                        .videoItem(video2)
-                    ]
-
+                .startWithFailed { error in
+                    expect(error.code) == 400
+                    expect(error.localizedDescription) == "Invalid value '1000'. Values must be within the range: [0, 50]"
                     done()
                 }
         }
@@ -180,7 +184,11 @@ final class EngineTests: XCTestCase {
     func testError() {
         addStub(command: "search", fileName: "error")
         waitUntil { done in
-            let request = SearchRequest(.term("VEVO", [.video: [], .channel: []]), limit: 1000)
+            let request: SearchRequest = .search(withTerm: "VEVO",
+                                                 requiredVideoParts: [],
+                                                 requiredChannelParts: [],
+                                                 limit: 1000)
+
             self.engine.search(request)
                 .startWithFailed { error in
                     expect(error.code) == 400
@@ -192,7 +200,11 @@ final class EngineTests: XCTestCase {
 
     func testCancel() {
         addStub(command: "search", fileName: "search_VEVO")
-        let request = SearchRequest(.term("VEVO", [.video: [], .channel: []]), limit: 1000)
+        let request: SearchRequest = .search(withTerm: "VEVO",
+                                             requiredVideoParts: [],
+                                             requiredChannelParts: [],
+                                             limit: 1000)
+
         waitUntil { done in
             self.engine.search(request)
                 .on(failed: { _ in
@@ -210,7 +222,7 @@ final class EngineTests: XCTestCase {
         waitUntil { done in
             let localEngine = Engine(authorization: .key("TEST"))
             localEngine
-                .channels(ChannelRequest(.mine))
+                .channels(.myChannels())
                 .startWithResult { result in
                     if case .success = result {
                         done()
@@ -224,7 +236,7 @@ final class EngineTests: XCTestCase {
         waitUntil(timeout: 1) { done in
             let localEngine = Engine(authorization: .key("TEST"))
             localEngine
-                .channels(ChannelRequest(.byIds(["UC2pmfLm7iq6Ov1UwYrWYkZA"])))
+                .channels(ChannelRequest(.byIDs(["UC2pmfLm7iq6Ov1UwYrWYkZA"])))
                 .startWithResult { result in
                     if case .success(let channels) = result {
                         expect(channels.items) == [self.vevoChannel]

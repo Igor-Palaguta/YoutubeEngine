@@ -1,8 +1,9 @@
 import Foundation
 
 extension Video: PartibleObject, SearchableObject {
-    static func request(for parts: [Part], objects: [Video]) -> AnyPageRequest<Video> {
-        return AnyPageRequest(VideoRequest(.byIds(objects.map { $0.id }), parts: parts))
+    static func request(withRequiredParts requiredParts: [Part],
+                        for objects: [Video]) -> AnyPageRequest<Video> {
+        return AnyPageRequest(VideoRequest(.byIDs(objects.map { $0.id }), requiredParts: requiredParts))
     }
 
     var searchItemType: ContentType {

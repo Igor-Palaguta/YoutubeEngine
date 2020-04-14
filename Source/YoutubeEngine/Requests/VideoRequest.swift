@@ -3,19 +3,40 @@ import Foundation
 public struct VideoRequest {
     public enum Filter {
         case popular
-        case byIds([String])
+        case byIDs([String])
     }
 
     public let filter: Filter
-    public let parts: [Part]
+    public let requiredParts: [Part]
     public let limit: Int?
     public let pageToken: String?
 
-    public init(_ filter: Filter, parts: [Part] = [.snippet], limit: Int? = nil, pageToken: String? = nil) {
+    public init(_ filter: Filter, requiredParts: [Part] = [.snippet], limit: Int? = nil, pageToken: String? = nil) {
         self.filter = filter
-        self.parts = parts.isEmpty ? [.snippet] : parts
+        self.requiredParts = requiredParts.isEmpty ? [.snippet] : requiredParts
         self.limit = limit
         self.pageToken = pageToken
+    }
+}
+
+extension VideoRequest {
+    public static func popularVideos(withRequiredParts requiredParts: [Part] = [.snippet],
+                                     limit: Int? = nil,
+                                     pageToken: String? = nil) -> VideoRequest {
+        return VideoRequest(.popular,
+                            requiredParts: requiredParts,
+                            limit: limit,
+                            pageToken: pageToken)
+    }
+
+    public static func videos(withIDs videoIDs: [String],
+                              requiredParts: [Part] = [.snippet],
+                              limit: Int? = nil,
+                              pageToken: String? = nil) -> VideoRequest {
+        return VideoRequest(.byIDs(videoIDs),
+                            requiredParts: requiredParts,
+                            limit: limit,
+                            pageToken: pageToken)
     }
 }
 
@@ -26,12 +47,12 @@ extension VideoRequest: PageRequest {
     var command: String { return "videos" }
 
     var parameters: [String: String] {
-        var parameters: [String: String] = ["part": parts.requestParameterValue]
+        var parameters: [String: String] = ["part": requiredParts.requestParameterValue]
 
         switch filter {
         case .popular:
             parameters["chart"] = "mostPopular"
-        case .byIds(let ids):
+        case .byIDs(let ids):
             parameters["id"] = ids.requestParameterValue
         }
 
