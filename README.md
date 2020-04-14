@@ -15,6 +15,7 @@ let engine = Engine(authorization: .key(YOUR_API_KEY))
 let request: SearchRequest = .search(withTerm: "VEVO",
                                      requiredVideoParts: [.statistics, .contentDetails],
                                      requiredChannelParts: [.statistics],
+                                     requiredPlaylistParts: [.snippet],
                                      limit: 20)
 
 engine.search(request)
