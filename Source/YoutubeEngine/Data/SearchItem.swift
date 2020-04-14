@@ -1,19 +1,27 @@
 import Foundation
 
 public enum SearchItem: Equatable {
-    case channelItem(Channel)
-    case videoItem(Video)
+    case channel(Channel)
+    case video(Video)
+    case playlist(Playlist)
 
     public var video: Video? {
-        if case .videoItem(let video) = self {
+        if case .video(let video) = self {
             return video
         }
         return nil
     }
 
     public var channel: Channel? {
-        if case .channelItem(let channel) = self {
+        if case .channel(let channel) = self {
             return channel
+        }
+        return nil
+    }
+
+    public var playlist: Playlist? {
+        if case .playlist(let playlist) = self {
+            return playlist
         }
         return nil
     }
@@ -27,13 +35,15 @@ extension SearchItem: Decodable {
 
     private enum IDCodingKeys: String, CodingKey {
         case kind
-        case channelId
-        case videoId
+        case channelID = "channelId"
+        case videoID = "videoId"
+        case playlistID = "playlistId"
     }
 
     private enum Kind: String, Decodable {
         case channel = "youtube#channel"
         case video = "youtube#video"
+        case playlist = "youtube#playlist"
     }
 
     public init(from decoder: Decoder) throws {
@@ -42,15 +52,20 @@ extension SearchItem: Decodable {
         let kind = try idContainer.decode(Kind.self, forKey: .kind)
         switch kind {
         case .channel:
-            let id = try idContainer.decode(String.self, forKey: .channelId)
+            let id = try idContainer.decode(String.self, forKey: .channelID)
             let snippet = try container.decodeIfPresent(ChannelSnippet.self, forKey: .snippet)
             let channel = Channel(id: id, snippet: snippet)
-            self = .channelItem(channel)
+            self = .channel(channel)
         case .video:
-            let id = try idContainer.decode(String.self, forKey: .videoId)
+            let id = try idContainer.decode(String.self, forKey: .videoID)
             let snippet = try container.decodeIfPresent(VideoSnippet.self, forKey: .snippet)
-            let channel = Video(id: id, snippet: snippet)
-            self = .videoItem(channel)
+            let video = Video(id: id, snippet: snippet)
+            self = .video(video)
+        case .playlist:
+            let id = try idContainer.decode(String.self, forKey: .playlistID)
+            let snippet = try container.decodeIfPresent(PlaylistSnippet.self, forKey: .snippet)
+            let playlist = Playlist(id: id, snippet: snippet)
+            self = .playlist(playlist)
         }
     }
 }

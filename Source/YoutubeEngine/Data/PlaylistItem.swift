@@ -1,44 +1,35 @@
 import Foundation
 
-public struct Channel: Equatable, Decodable {
+public struct PlaylistItem: Equatable, Decodable {
     public let id: String
-    public var snippet: ChannelSnippet?
-    public var statistics: ChannelStatistics?
+    public var snippet: PlaylistItemSnippet?
 }
 
-public struct ChannelStatistics: Equatable {
-    public let subscriberCount: Int?
-    public let videoCount: Int?
-}
-
-extension ChannelStatistics: Decodable {
-    private enum CodingKeys: String, CodingKey {
-        case subscriberCount
-        case videoCount
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.subscriberCount = try container.decodeIfPresent(StatisticsNumber.self, forKey: .subscriberCount)?.value
-        self.videoCount = try container.decodeIfPresent(StatisticsNumber.self, forKey: .videoCount)?.value
-    }
-}
-
-public struct ChannelSnippet: Equatable {
+public struct PlaylistItemSnippet: Equatable {
+    public let videoID: String
     public let title: String
     public let description: String
     public let publishDate: Date
+    public let channelID: String
+    public let channelTitle: String
     public let defaultImage: Image
     public let mediumImage: Image
     public let highImage: Image
 }
 
-extension ChannelSnippet: Decodable {
+extension PlaylistItemSnippet: Decodable {
     private enum CodingKeys: String, CodingKey {
+        case resourceID = "resourceId"
         case title
         case description
         case publishDate = "publishedAt"
+        case channelID = "channelId"
+        case channelTitle
         case thumbnails
+    }
+
+    private enum ResourceIDCodingKeys: String, CodingKey {
+        case videoID = "videoId"
     }
 
     private enum ThumbnailCodingKeys: String, CodingKey {
@@ -52,11 +43,16 @@ extension ChannelSnippet: Decodable {
         self.title = try container.decode(String.self, forKey: .title)
         self.description = try container.decode(String.self, forKey: .description)
         self.publishDate = try container.decode(Date.self, forKey: .publishDate)
+        self.channelID = try container.decode(String.self, forKey: .channelID)
+        self.channelTitle = try container.decode(String.self, forKey: .channelTitle)
 
         let thumbnailsContainer = try container.nestedContainer(keyedBy: ThumbnailCodingKeys.self, forKey: .thumbnails)
 
         self.defaultImage = try thumbnailsContainer.decode(Image.self, forKey: .default)
         self.mediumImage = try thumbnailsContainer.decode(Image.self, forKey: .medium)
         self.highImage = try thumbnailsContainer.decode(Image.self, forKey: .high)
+
+        let resourceIDContainer = try container.nestedContainer(keyedBy: ResourceIDCodingKeys.self, forKey: .resourceID)
+        self.videoID = try resourceIDContainer.decode(String.self, forKey: .videoID)
     }
 }

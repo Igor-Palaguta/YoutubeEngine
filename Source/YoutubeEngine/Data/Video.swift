@@ -10,7 +10,7 @@ public struct Video: Equatable, Decodable {
 public struct VideoSnippet: Equatable {
     public let title: String
     public let publishDate: Date
-    public let channelId: String
+    public let channelID: String
     public let channelTitle: String
     public let defaultImage: Image
     public let mediumImage: Image
@@ -21,7 +21,7 @@ extension VideoSnippet: Decodable {
     private enum CodingKeys: String, CodingKey {
         case title
         case publishDate = "publishedAt"
-        case channelId
+        case channelID = "channelId"
         case channelTitle
         case thumbnails
     }
@@ -36,7 +36,7 @@ extension VideoSnippet: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.title = try container.decode(String.self, forKey: .title)
         self.publishDate = try container.decode(Date.self, forKey: .publishDate)
-        self.channelId = try container.decode(String.self, forKey: .channelId)
+        self.channelID = try container.decode(String.self, forKey: .channelID)
         self.channelTitle = try container.decode(String.self, forKey: .channelTitle)
 
         let thumbnailsContainer = try container.nestedContainer(keyedBy: ThumbnailCodingKeys.self, forKey: .thumbnails)

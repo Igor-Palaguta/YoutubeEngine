@@ -2,11 +2,11 @@ import ReactiveSwift
 import UIKit
 import YoutubeEngine
 
-final class SearchItemsViewController: UITableViewController {
+final class ItemsViewController: UITableViewController {
 
     @IBOutlet private var searchBar: UISearchBar!
 
-    let model = MutableItemsViewModel<SearchItem>()
+    let model = MutableItemsViewModel<DisplayItem>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ final class SearchItemsViewController: UITableViewController {
 
         model
             .provider
-            .producer.flatMap(.latest) { provider -> SignalProducer<[SearchItem], Never> in
+            .producer.flatMap(.latest) { provider -> SignalProducer<[DisplayItem], Never> in
                 guard let provider = provider else {
                     return SignalProducer(value: [])
                 }
@@ -49,15 +49,25 @@ final class SearchItemsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = model.items[indexPath.row]
         switch item {
-        case .channelItem(let channel):
+        case .channel(let channel):
             // swiftlint:disable:next force_cast
             let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath) as! ChannelCell
             cell.channel = channel
             return cell
-        case .videoItem(let video):
+        case .video(let video):
             // swiftlint:disable:next force_cast
             let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as! VideoCell
             cell.video = video
+            return cell
+        case .playlist(let playlist):
+            // swiftlint:disable:next force_cast
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistCell
+            cell.playlist = playlist
+            return cell
+        case .playlistItem(let playlistItem):
+            // swiftlint:disable:next force_cast
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistItemCell", for: indexPath) as! PlaylistItemCell
+            cell.playlistItem = playlistItem
             return cell
         }
     }
@@ -78,20 +88,34 @@ final class SearchItemsViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let controller = segue.destination as? SearchItemsViewController,
-            let cell = sender as? ChannelCell,
-            let channel = cell.channel else {
+        guard let destinationController = segue.destination as? ItemsViewController else {
             return
         }
-        // swiftlint:disable:next force_unwrapping
-        controller.title = channel.snippet!.title
-        controller.model.mutableProvider.value = AnyItemsProvider { token, limit in
-            let request = SearchRequest(.fromChannel(channel.id, [.statistics, .contentDetails]),
-                                        limit: limit,
-                                        pageToken: token)
-            return Engine.defaultEngine
-                .search(request)
-                .map { page in (page.items, page.nextPageToken) }
+
+        if let cell = sender as? ChannelCell, let channel = cell.channel {
+            // swiftlint:disable:next force_unwrapping
+            destinationController.title = channel.snippet!.title
+            destinationController.model.mutableProvider.value = AnyItemsProvider { token, limit in
+                let request: SearchRequest = .videosFromChannel(withID: channel.id,
+                                                                requiredParts: [.statistics, .contentDetails],
+                                                                limit: limit,
+                                                                pageToken: token)
+                return Engine.defaultEngine
+                    .search(request)
+                    .map { page in (page.items.map { $0.displayItem }, page.nextPageToken) }
+            }
+        } else if let cell = sender as? PlaylistCell, let playlist = cell.playlist {
+            // swiftlint:disable:next force_unwrapping
+            destinationController.title = playlist.snippet!.title
+            destinationController.model.mutableProvider.value = AnyItemsProvider { token, limit in
+                let request: PlaylistItemRequest = .itemsFromPlaylist(withID: playlist.id,
+                                                                requiredParts: [.snippet],
+                                                                limit: limit,
+                                                                pageToken: token)
+                return Engine.defaultEngine
+                    .playlistItems(request)
+                    .map { page in (page.items.map { .playlistItem($0) }, page.nextPageToken) }
+            }
         }
     }
 

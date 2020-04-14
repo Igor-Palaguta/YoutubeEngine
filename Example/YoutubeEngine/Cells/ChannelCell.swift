@@ -11,10 +11,11 @@ final class ChannelCell: UITableViewCell {
     var channel: Channel! {
         didSet {
             // swiftlint:disable:next force_unwrapping
-            thumbnailView.kf.setImage(with: ImageResource(downloadURL: channel.snippet!.defaultImage.url),
+            let snippet = channel.snippet!
+            thumbnailView.kf.setImage(with: ImageResource(downloadURL: snippet.defaultImage.url),
                                       options: [.transition(.fade(0.3))])
 
-            titleLabel.text = channel.snippet?.title
+            titleLabel.text = snippet.title
 
             videosLabel.text = channel.statistics?
                 .videoCount

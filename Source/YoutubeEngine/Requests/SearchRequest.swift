@@ -3,6 +3,7 @@ import Foundation
 public enum ContentType: String, RequestParameterRepresenting {
     case video
     case channel
+    case playlist
 }
 
 public struct SearchRequest {
@@ -49,8 +50,52 @@ public struct SearchRequest {
         }
     }
 
+    var playlistParts: [Part] {
+        switch filter {
+        case .term(_, let parts):
+            return parts[.playlist] ?? []
+        default:
+            return []
+        }
+    }
+
     var part: Part {
         return .snippet
+    }
+}
+
+extension SearchRequest {
+    public static func search(withTerm term: String,
+                              requiredVideoParts: [Part]? = nil,
+                              requiredChannelParts: [Part]? = nil,
+                              requiredPlaylistParts: [Part]? = nil,
+                              limit: Int? = nil,
+                              pageToken: String? = nil) -> SearchRequest {
+        var partsByType: [ContentType: [Part]] = [:]
+        partsByType[.video] = requiredVideoParts
+        partsByType[.channel] = requiredChannelParts
+        partsByType[.playlist] = requiredPlaylistParts
+        return SearchRequest(.term(term, partsByType),
+                             limit: limit,
+                             pageToken: pageToken)
+    }
+
+    public static func videosFromChannel(withID channelID: String,
+                                         requiredParts: [Part],
+                                         limit: Int? = nil,
+                                         pageToken: String? = nil) -> SearchRequest {
+        return SearchRequest(.fromChannel(channelID, requiredParts),
+                             limit: limit,
+                             pageToken: pageToken)
+    }
+
+    public static func videosRelatedToVideo(withID videoID: String,
+                                            requiredParts: [Part],
+                                            limit: Int? = nil,
+                                            pageToken: String? = nil) -> SearchRequest {
+        return SearchRequest(.relatedTo(videoID, requiredParts),
+                             limit: limit,
+                             pageToken: pageToken)
     }
 }
 
@@ -73,10 +118,10 @@ extension SearchRequest: PageRequest {
         switch filter {
         case .term(let query, _):
             parameters["q"] = query
-        case .fromChannel(let channelId, _):
-            parameters["channelId"] = channelId
-        case .relatedTo(let videoId, _):
-            parameters["videoId"] = videoId
+        case .fromChannel(let channelID, _):
+            parameters["channelId"] = channelID
+        case .relatedTo(let videoID, _):
+            parameters["videoId"] = videoID
         }
 
         return parameters

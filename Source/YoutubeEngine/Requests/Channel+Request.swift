@@ -7,8 +7,9 @@ extension Channel: PartibleObject, SearchableObject {
                        statistics: statistics ?? other.statistics)
     }
 
-    static func request(for parts: [Part], objects: [Channel]) -> AnyPageRequest<Channel> {
-        return AnyPageRequest(ChannelRequest(.byIds(objects.map { $0.id }), parts: parts))
+    static func request(withRequiredParts requiredParts: [Part],
+                        for objects: [Channel]) -> AnyPageRequest<Channel> {
+        return AnyPageRequest(ChannelRequest(.byIDs(objects.map { $0.id }), requiredParts: requiredParts))
     }
 
     var searchItemType: ContentType {

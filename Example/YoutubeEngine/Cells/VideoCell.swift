@@ -14,10 +14,13 @@ final class VideoCell: UITableViewCell {
     var video: Video! {
         didSet {
             // swiftlint:disable:next force_unwrapping
-            thumbnailView.kf.setImage(with: ImageResource(downloadURL: video.snippet!.defaultImage.url),
+            let snippet = video.snippet!
+            
+            thumbnailView.kf.setImage(with: ImageResource(downloadURL: snippet.defaultImage.url),
                                       options: [.transition(.fade(0.3))])
-            titleLabel.text = video.snippet?.title
-            channelLabel.text = video.snippet?.channelTitle
+
+            titleLabel.text = snippet.title
+            channelLabel.text = snippet.channelTitle
 
             durationLabel.text = video.contentDetails?.duration.youtubeDurationString
             durationBackgroundView.isHidden = video.contentDetails?.duration == nil

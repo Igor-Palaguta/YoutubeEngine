@@ -2,20 +2,41 @@ import Foundation
 
 public struct ChannelRequest {
     public enum Filter {
-        case mine
-        case byIds([String])
+        case my
+        case byIDs([String])
     }
 
     public let filter: Filter
-    public let parts: [Part]
+    public let requiredParts: [Part]
     public let limit: Int?
     public let pageToken: String?
 
-    public init(_ filter: Filter, parts: [Part] = [.snippet], limit: Int? = nil, pageToken: String? = nil) {
+    public init(_ filter: Filter, requiredParts: [Part] = [.snippet], limit: Int? = nil, pageToken: String? = nil) {
         self.filter = filter
-        self.parts = parts.isEmpty ? [.snippet] : parts
+        self.requiredParts = requiredParts.isEmpty ? [.snippet] : requiredParts
         self.limit = limit
         self.pageToken = pageToken
+    }
+}
+
+extension ChannelRequest {
+    public static func myChannels(withRequiredParts requiredParts: [Part] = [.snippet],
+                                  limit: Int? = nil,
+                                  pageToken: String? = nil) -> ChannelRequest {
+        return ChannelRequest(.my,
+                              requiredParts: requiredParts,
+                              limit: limit,
+                              pageToken: pageToken)
+    }
+
+    public static func channels(withIDs channelIDs: [String],
+                                requiredParts: [Part] = [.snippet],
+                                limit: Int? = nil,
+                                pageToken: String? = nil) -> ChannelRequest {
+        return ChannelRequest(.byIDs(channelIDs),
+                              requiredParts: requiredParts,
+                              limit: limit,
+                              pageToken: pageToken)
     }
 }
 
@@ -26,12 +47,12 @@ extension ChannelRequest: PageRequest {
     var command: String { return "channels" }
 
     var parameters: [String: String] {
-        var parameters: [String: String] = ["part": parts.requestParameterValue]
+        var parameters: [String: String] = ["part": requiredParts.requestParameterValue]
 
         switch filter {
-        case .mine:
+        case .my:
             parameters["mine"] = "true"
-        case .byIds(let ids):
+        case .byIDs(let ids):
             parameters["id"] = ids.requestParameterValue
         }
 

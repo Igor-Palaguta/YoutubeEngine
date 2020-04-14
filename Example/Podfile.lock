@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
   ReactiveSwift: 07ddf579f4eb3ee3bd656214f0461aaf2c0fd639
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
-  YoutubeEngine: 316c4a0fb252a8da68d87383f41bf701edda1d7d
+  YoutubeEngine: eb2e424f00d65394c5745239360c85ee9ae859b8
 
 PODFILE CHECKSUM: deadada36ec0e8e1ea52cbb6a4e03e681ae34039
 
