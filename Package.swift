@@ -23,7 +23,7 @@ let package = Package(
                         "Nimble"
                         // "OHHTTPStubsSwift"
                     ],
-                    exclude: ["EngineSpec.swift"])
+                    exclude: ["EngineTests.swift"])
     ],
     swiftLanguageVersions: [.v5]
 )
