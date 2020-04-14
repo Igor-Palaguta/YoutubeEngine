@@ -50,8 +50,13 @@ SPM
 
 ## Implemented API
 
-Search video, channel, playlist
-https://developers.google.com/youtube/v3/docs/search/list
+1. [search list](https://developers.google.com/youtube/v3/docs/search/list) by keyword, videos from channel, related videos
+
+1. [channels list](https://developers.google.com/youtube/v3/docs/channels/list) by identifiers or my
+
+1. [videos list](https://developers.google.com/youtube/v3/docs/videos/list) by identifiers or popular
+
+1. [playlistItems list](https://developers.google.com/youtube/v3/docs/playlistItems/list) by identifiers or from playlist
 
 ## Author
 
