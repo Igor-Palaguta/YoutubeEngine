@@ -57,11 +57,11 @@ public final class Engine {
                               for: page.items.compactMap { $0.channel })
 
                 return SignalProducer.combineLatest(videosParts, channelParts)
-                    .map { videosById, channelsById -> Page<SearchItem> in
+                    .map { videoByID, channelByID -> Page<SearchItem> in
                         let mergedItems: [SearchItem] = page.items.map { item in
-                            if let itemVideo = item.video, let video = videosById[itemVideo.id] {
+                            if let itemVideo = item.video, let video = videoByID[itemVideo.id] {
                                 return .video(itemVideo.merged(with: video))
-                            } else if let itemChannel = item.channel, let channel = channelsById[itemChannel.id] {
+                            } else if let itemChannel = item.channel, let channel = channelByID[itemChannel.id] {
                                 return .channel(itemChannel.merged(with: channel))
                             }
                             return item
@@ -84,11 +84,7 @@ public final class Engine {
 
         return page(for: T.request(withRequiredParts: parts, for: objects))
             .map { page in
-                var objectsById: [String: T] = [:]
-                page.items.forEach {
-                    objectsById[$0.id] = $0
-                }
-                return objectsById
+                Dictionary(page.items.map { ($0.id, $0) }) { first, _ in first }
             }
     }
 
