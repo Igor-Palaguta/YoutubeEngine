@@ -11,19 +11,18 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", from: "6.0.0"),
-        .package(url: "https://github.com/Quick/Nimble.git", from: "8.0.0")
-        // stub and fixture functions don't work
-        // .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", from: "9.0.0")
+        .package(url: "https://github.com/Quick/Nimble.git", from: "8.0.0"),
+        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", from: "9.0.0")
     ],
     targets: [
         .target(name: "YoutubeEngine", dependencies: ["ReactiveSwift"], path: "Source"),
         .testTarget(name: "YoutubeEngineTests",
                     dependencies: [
                         "YoutubeEngine",
-                        "Nimble"
-                        // "OHHTTPStubsSwift"
-                    ],
-                    exclude: ["EngineTests.swift"])
+                        "Nimble",
+                        "OHHTTPStubsSwift"
+                    ]
+        ),
     ],
     swiftLanguageVersions: [.v5]
 )

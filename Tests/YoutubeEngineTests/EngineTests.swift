@@ -1,5 +1,8 @@
 import Nimble
 import OHHTTPStubs
+#if SWIFT_PACKAGE
+import OHHTTPStubsSwift
+#endif
 import ReactiveSwift
 import XCTest
 @testable import YoutubeEngine
@@ -251,7 +254,14 @@ final class EngineTests: XCTestCase {
     }
 
     private func jsonFile(_ fileName: String) -> HTTPStubsResponse {
+        #if SWIFT_PACKAGE
+        let relativePath = "Tests/YoutubeEngineTests/Responses/\(fileName).json"
+        let path = (FileManager.default.currentDirectoryPath as NSString)
+            .appendingPathComponent(relativePath)
+        #else
         let path = Bundle(for: type(of: self)).path(forResource: fileName, ofType: "json")!
+        #endif
+
         let response = fixture(filePath: path, headers: nil)
         response.requestTime(0, responseTime: 0)
         return response
