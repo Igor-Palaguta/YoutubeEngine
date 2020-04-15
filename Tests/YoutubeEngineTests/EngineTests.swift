@@ -37,7 +37,7 @@ final class EngineTests: XCTestCase {
               VideoStatistics(viewCount: 94170,
                               likeCount: 1537,
                               dislikeCount: 78),
-              contentDetails: VideoContentDetails(duration: components(minute: 3, second: 25)))
+              contentDetails: VideoContentDetails(duration: .makeComponents(minute: 3, second: 25)))
 
     private let video2 =
         Video(id: "Ho1oF_P3X00",
@@ -53,7 +53,7 @@ final class EngineTests: XCTestCase {
               VideoStatistics(viewCount: 84236,
                               likeCount: 2503,
                               dislikeCount: 70),
-              contentDetails: VideoContentDetails(duration: components(minute: 15, second: 15)))
+              contentDetails: VideoContentDetails(duration: .makeComponents(minute: 15, second: 15)))
 
     private var engine: Engine!
 
