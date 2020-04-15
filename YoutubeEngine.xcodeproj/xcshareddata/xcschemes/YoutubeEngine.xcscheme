@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "YoutubeEngine_Example.app"
-               BlueprintName = "YoutubeEngine_Example"
-               ReferencedContainer = "container:YoutubeEngine.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "YoutubeEngine_Tests.xctest"
-               BlueprintName = "YoutubeEngine_Tests"
+               BlueprintIdentifier = "823530D5244704E500304F9F"
+               BuildableName = "YoutubeEngine.framework"
+               BlueprintName = "YoutubeEngine"
                ReferencedContainer = "container:YoutubeEngine.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -41,15 +27,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "YoutubeEngine_Example.app"
-            BlueprintName = "YoutubeEngine_Example"
-            ReferencedContainer = "container:YoutubeEngine.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -73,16 +50,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "YoutubeEngine_Example.app"
-            BlueprintName = "YoutubeEngine_Example"
-            ReferencedContainer = "container:YoutubeEngine.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -90,16 +57,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "YoutubeEngine_Example.app"
-            BlueprintName = "YoutubeEngine_Example"
+            BlueprintIdentifier = "823530D5244704E500304F9F"
+            BuildableName = "YoutubeEngine.framework"
+            BlueprintName = "YoutubeEngine"
             ReferencedContainer = "container:YoutubeEngine.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

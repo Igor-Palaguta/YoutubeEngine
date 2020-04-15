@@ -1,4 +1,5 @@
 import Foundation
+import CoreGraphics
 
 public struct Image: Equatable {
     public let url: URL
