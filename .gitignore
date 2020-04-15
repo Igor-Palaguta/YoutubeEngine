@@ -27,6 +27,8 @@ Packages
 # Bundler
 .bundle
 
+# Carthage
+Carthage
+
 # Cocoapods
-Pods/
-Example/YoutubeEngine.xcworkspace
+Pods
