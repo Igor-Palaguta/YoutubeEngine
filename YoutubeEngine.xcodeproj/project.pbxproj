@@ -55,6 +55,11 @@
 		8246B7702445A16E00AEAEC6 /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8246B76F2445A16D00AEAEC6 /* PlaylistCell.swift */; };
 		8246B77A2445ADAF00AEAEC6 /* DisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8246B7792445ADAF00AEAEC6 /* DisplayItem.swift */; };
 		8246B77D2445B43500AEAEC6 /* PlaylistItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8246B77C2445B43500AEAEC6 /* PlaylistItemCell.swift */; };
+		82BE057F24470DCD00658D07 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82353144244706E700304F9F /* Kingfisher.framework */; };
+		82BE058024470DCD00658D07 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823530C62447035300304F9F /* ReactiveSwift.framework */; };
+		82BE058124470DF900658D07 /* YoutubeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823530D6244704E500304F9F /* YoutubeEngine.framework */; };
+		82BE058224470DF900658D07 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82353130244705F700304F9F /* Nimble.framework */; };
+		82BE058324470DF900658D07 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8235315B244707C000304F9F /* OHHTTPStubs.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,13 +189,6 @@
 			remoteGlobalIDString = 1F1A74281940169200FFFC47;
 			remoteInfo = "Nimble-iOS";
 		};
-		8235313B2447060600304F9F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 823530B72447035300304F9F /* ReactiveSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D047260B19E49F82006002AA;
-			remoteInfo = "ReactiveSwift-iOS";
-		};
 		82353143244706E700304F9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8235313D244706E700304F9F /* Kingfisher.xcodeproj */;
@@ -275,14 +273,7 @@
 			remoteGlobalIDString = EA100AB71BE15BE400129352;
 			remoteInfo = "OHHTTPStubs tvOS Fmk Tests";
 		};
-		82353166244707CF00304F9F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 82353121244705F700304F9F /* Nimble.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1F1A74281940169200FFFC47;
-			remoteInfo = "Nimble-iOS";
-		};
-		82353168244707D700304F9F /* PBXContainerItemProxy */ = {
+		82BE056824470DB100658D07 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8235314B244707BF00304F9F /* OHHTTPStubs.xcodeproj */;
 			proxyType = 1;
@@ -368,6 +359,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82BE057F24470DCD00658D07 /* Kingfisher.framework in Frameworks */,
+				82BE058024470DCD00658D07 /* ReactiveSwift.framework in Frameworks */,
 				823530DD244704E500304F9F /* YoutubeEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +369,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82BE058124470DF900658D07 /* YoutubeEngine.framework in Frameworks */,
+				82BE058224470DF900658D07 /* Nimble.framework in Frameworks */,
+				82BE058324470DF900658D07 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,9 +669,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				82BE056924470DB100658D07 /* PBXTargetDependency */,
 				823531382447060600304F9F /* PBXTargetDependency */,
 				8235313A2447060600304F9F /* PBXTargetDependency */,
-				8235313C2447060600304F9F /* PBXTargetDependency */,
 			);
 			name = YoutubeEngine_Tests;
 			productName = Tests;
@@ -694,8 +690,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				82353169244707D700304F9F /* PBXTargetDependency */,
-				82353167244707CF00304F9F /* PBXTargetDependency */,
 				8235311E244705A400304F9F /* PBXTargetDependency */,
 			);
 			name = YoutubeEngine;
@@ -1077,25 +1071,15 @@
 			name = "Nimble-iOS";
 			targetProxy = 823531392447060600304F9F /* PBXContainerItemProxy */;
 		};
-		8235313C2447060600304F9F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ReactiveSwift-iOS";
-			targetProxy = 8235313B2447060600304F9F /* PBXContainerItemProxy */;
-		};
 		8235314A244706F900304F9F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Kingfisher;
 			targetProxy = 82353149244706F900304F9F /* PBXContainerItemProxy */;
 		};
-		82353167244707CF00304F9F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Nimble-iOS";
-			targetProxy = 82353166244707CF00304F9F /* PBXContainerItemProxy */;
-		};
-		82353169244707D700304F9F /* PBXTargetDependency */ = {
+		82BE056924470DB100658D07 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "OHHTTPStubs iOS Framework";
-			targetProxy = 82353168244707D700304F9F /* PBXContainerItemProxy */;
+			targetProxy = 82BE056824470DB100658D07 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1280,7 +1264,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoutubeEngine_Example.app/YoutubeEngine_Example";
 			};
 			name = Debug;
 		};
@@ -1296,7 +1279,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YoutubeEngine_Example.app/YoutubeEngine_Example";
 			};
 			name = Release;
 		};
