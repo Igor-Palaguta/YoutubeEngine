@@ -1,5 +1,5 @@
 # file options
---exclude Example/Pods,.build,.swiftpm,.git,.swiftpm
+--exclude Carthage,.build,.swiftpm,.git,.swiftpm
 
 # format options
 --indent 4

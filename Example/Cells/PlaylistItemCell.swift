@@ -1,25 +1,20 @@
 import Foundation
 import Kingfisher
+import UIKit
 import YoutubeEngine
 
-final class PlaylistCell: UITableViewCell {
+final class PlaylistItemCell: UITableViewCell {
     @IBOutlet private var thumbnailView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!
 
-    var playlist: Playlist! {
+    var playlistItem: PlaylistItem! {
         didSet {
             // swiftlint:disable:next force_unwrapping
-            let snippet = playlist.snippet!
-
+            let snippet = playlistItem.snippet!
             thumbnailView.kf.setImage(with: ImageResource(downloadURL: snippet.defaultImage.url),
                                       options: [.transition(.fade(0.3))])
 
             titleLabel.text = snippet.title
         }
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        thumbnailView.layer.cornerRadius = min(thumbnailView.bounds.midX, thumbnailView.bounds.midY)
     }
 }

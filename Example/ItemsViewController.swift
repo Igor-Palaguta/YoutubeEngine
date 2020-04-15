@@ -109,9 +109,9 @@ final class ItemsViewController: UITableViewController {
             destinationController.title = playlist.snippet!.title
             destinationController.model.mutableProvider.value = AnyItemsProvider { token, limit in
                 let request: PlaylistItemRequest = .itemsFromPlaylist(withID: playlist.id,
-                                                                requiredParts: [.snippet],
-                                                                limit: limit,
-                                                                pageToken: token)
+                                                                      requiredParts: [.snippet],
+                                                                      limit: limit,
+                                                                      pageToken: token)
                 return Engine.defaultEngine
                     .playlistItems(request)
                     .map { page in (page.items.map { .playlistItem($0) }, page.nextPageToken) }

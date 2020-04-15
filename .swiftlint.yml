@@ -98,7 +98,8 @@ excluded:
   - .git
   - .build
   - .swiftpm
-  - Example/Pods
+  - Pods
+  - Carthage
 
 custom_rules:
   tabs:

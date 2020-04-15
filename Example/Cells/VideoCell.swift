@@ -15,7 +15,7 @@ final class VideoCell: UITableViewCell {
         didSet {
             // swiftlint:disable:next force_unwrapping
             let snippet = video.snippet!
-            
+
             thumbnailView.kf.setImage(with: ImageResource(downloadURL: snippet.defaultImage.url),
                                       options: [.transition(.fade(0.3))])
 

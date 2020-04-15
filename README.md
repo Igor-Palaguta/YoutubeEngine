@@ -36,17 +36,17 @@ Supports Swift 5
 
 Cocoapods
 ```ruby
-pod "YoutubeEngine", :git => 'https://github.com/Igor-Palaguta/YoutubeEngine', :tag => '0.6.0'
+pod "YoutubeEngine", :git => 'https://github.com/Igor-Palaguta/YoutubeEngine', :tag => '0.7.0'
 ```
 
 Carthage
 ```ruby
-github "Igor-Palaguta/YoutubeEngine" ~> 0.6.0
+github "Igor-Palaguta/YoutubeEngine" ~> 0.7.0
 ```
 
 SPM
 ```swift
-.package(url: "https://github.com/Igor-Palaguta/YoutubeEngine", .upToNextMinor(from: "0.6.0"))
+.package(url: "https://github.com/Igor-Palaguta/YoutubeEngine", .upToNextMinor(from: "0.7.0"))
 ```
 
 ## Implemented API
