@@ -1,7 +1,7 @@
 import Foundation
 
 extension DateComponents {
-    static func makeComponents2(year: Int? = nil,
+    static func makeComponents(year: Int? = nil,
                                month: Int? = nil,
                                weekOfYear: Int? = nil,
                                day: Int? = nil,
