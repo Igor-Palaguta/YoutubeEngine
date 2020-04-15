@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Igor-Palaguta/YoutubeEngine.svg?branch=master)](https://travis-ci.org/Igor-Palaguta/YoutubeEngine)
+
 # YoutubeEngine
 
 Library with ReactiveCocoa api for Youtube. Allows easy access required parts of videos and channels in one call.
