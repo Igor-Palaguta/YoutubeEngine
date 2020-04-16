@@ -1,4 +1,4 @@
 language: swift
 osx_image: xcode11
 script:
-    - swift test
+    - swift test 2>&1 | xcpretty
